@@ -38,6 +38,9 @@ function WGUI.DrawLine(color, thickness, x1, y1, x2, y2)
 end
 
 function WGUI.HexadecimalColorToRGB(hex)
+    if not hex then
+        print(debug.traceback())
+    end
     hex = hex:gsub("#","")
     return 
     {
@@ -47,7 +50,13 @@ function WGUI.HexadecimalColorToRGB(hex)
     }
 end
 
-function WGUI.RGBToHexadecimalColor(r, g, b)
-    local rgb = (r * 0x10000) + (g * 0x100) + b
-    return "#" .. string.format("%06X", rgb)
+function WGUI.RGBToHexadecimalColor(rgb)
+    return "#" .. string.format("%06X", (rgb[1] * 0x10000) + (rgb[2] * 0x100) + rgb[3])
+end
+
+function WGUI.TemporalInterpolateRGBColor(currentColor, targetColor)
+    currentColor[1] = math.floor(currentColor[1] +  (targetColor[1] - currentColor[1]) * 0.1)
+    currentColor[2] = math.floor(currentColor[2] + (targetColor[2] - currentColor[2]) * 0.1)
+    currentColor[3] = math.floor(currentColor[3] + (targetColor[3] - currentColor[3]) * 0.1)
+    return WGUI.RGBToHexadecimalColor(currentColor)
 end

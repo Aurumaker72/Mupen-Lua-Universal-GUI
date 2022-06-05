@@ -49,7 +49,10 @@ function Appearance.Initialize()
     for k, v in pairs(Appearance.Themes.Dark) do
         if (type(v) == "string") then
             local rgb = WGUI.HexadecimalColorToRGB(Appearance.Themes.Dark[k]);
-            Appearance.Themes.Dark[k] = WGUI.RGBToHexadecimalColor(255 - rgb[1], 255 - rgb[2], 255 - rgb[3])
+            rgb[1] = 255 - rgb[1]
+            rgb[2] = 255 - rgb[2]
+            rgb[3] = 255 - rgb[3]
+            Appearance.Themes.Dark[k] = WGUI.RGBToHexadecimalColor(rgb)
         end
     end
 end

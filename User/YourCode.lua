@@ -74,6 +74,9 @@ function UserCodeOnInitialize()
                 MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 4, 128, 128, false, function(sender)
                     
                 end),
+                TestSlider = Slider:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 20 * 12, 128, 20, 0, 0, 10, false, function(sender)
+                    
+                end),
                 -- FunSlider2 = Slider:new(20, VERTICAL_SAFE_ZONE * 13, 128,
                 --     Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -128, -128, 127, false, function(sender)
                 --         Scenes["Home"].Controls["MainJoystick"].ValueY = sender.Value
