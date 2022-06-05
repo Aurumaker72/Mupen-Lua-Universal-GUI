@@ -5,20 +5,29 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 ![grafik](https://user-images.githubusercontent.com/48759429/172042835-9f99b721-abf0-418e-8de5-95047c57d922.png)
 
-*A button*
+*A button control*
 
 ![grafik](https://user-images.githubusercontent.com/48759429/172042856-bdfd57e4-596a-4d67-9dec-487c658d6e28.png)
 
-*A textbox*
+*A textbox control in read-write mode*
 
 ![grafik](https://user-images.githubusercontent.com/48759429/172042862-81524d8e-1630-4159-a149-8641a1e297b5.png)
 
-*A non-staggering slider*
+*A non-staggering trackbar control*
+
+![grafik](https://user-images.githubusercontent.com/48759429/172049713-9d056b9a-e19a-4965-a33c-02a410ac5568.png)
+
+*A joystick control in read-write mode*
 
 ## Usage
 **NOTE: This project is not ready to use as a library**
 
-Too add a new control, modify the `Controls = { ... }` block in `Main.lua` 
+#### Adding a new scene
+Add `YourKey = Scene:new({ ... })` in the `SceneManager.Initialize(...)` call
+
+#### Adding a new control
+Modify the `Controls = { ... }` block inside your desired scene
+
 
 ### Button
 ```lua
