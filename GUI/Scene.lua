@@ -1,22 +1,24 @@
 Scene = middleclass('Scene')
 
 function Scene:initialize(controls)
-	self.Controls = controls
+    self.Controls = controls
     self.IsActive = false
 end
 
 function Scene:Update()
-    for i = 1, table.getn(self.Controls), 1 do
-        self.Controls[i]:Update()
+    for key, control in pairs(self.Controls) do
+        control:Update()
     end
 end
 
 function Scene:Draw()
 
-    WGUI.FillRectangle(Appearance.Themes[CurrentTheme].WINDOW_BACK_COLOR, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
-        (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
+    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR,
+        Screen.Dimensions.Width - Screen.ExpandedOffset, 0, (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2,
+        Screen.Dimensions.Height)
 
-    for i = 1, table.getn(self.Controls), 1 do
-        self.Controls[i]:Draw()
+    for key, control in pairs(self.Controls) do
+        control:Draw()
     end
+
 end

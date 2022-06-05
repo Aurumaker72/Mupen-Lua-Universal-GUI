@@ -38,42 +38,46 @@ dofile(FOLDER_PROVIDER .. "Appearance.lua")
 Screen.Expand()
 
 -- Current theme
-CurrentTheme = "Classic"
+
 Appearance.Initialize()
 
 -- Create scenes with their controls
 SceneManager.Initialize({
 
-    Home = Scene:new(
-        {
-            -- scene controls
-            Button:new(20, VERTICAL_SAFE_ZONE * 2, 120, 32, "Go to settings", function(sender) 
-                SceneManager.ChangeScene("Settings")
-            end), 
+    Home = Scene:new({ -- scene controls
 
-            ToggleButton:new(20, VERTICAL_SAFE_ZONE * 5, 128, 64, CurrentTheme, function(sender) 
-                CurrentTheme = CurrentTheme == "Classic" and "Dark" or "Classic" 
-                sender.Text = CurrentTheme
-            end),
+    HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
+        SceneManager.ChangeScene("Home")
+    end), 
+    
+    SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings", function(sender)
+        SceneManager.ChangeScene("Settings")
+    end), 
+    
+    TestTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 143, 20, 5, function(sender)
+        if sender.Text == "17" then
+            sender.Text = "39"
+        end
+    end),
 
-            TextBox:new(20, VERTICAL_SAFE_ZONE * 10, 128, 20, 30, function(sender)
-                if sender.Text == "17" then
-                    sender.Text = "39"
-                end
-            end),
+    FunSlider = Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128, Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, 20, 20,
+        200, false, function(sender)
+            Scenes["Home"].Controls["TestTextBox"].Height = sender.Value;
+        end)}),
 
-            Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128, Appearance.Themes[CurrentTheme].SLIDER_TRACK_HEIGHT + 4, 0, 10, false, function(sender) end)
-        }
-    ),
-
-    Settings = Scene:new(
-        {
-            -- scene controls
-            Button:new(20, VERTICAL_SAFE_ZONE * 2, 120, 32, "Go to main page", function(sender) 
-                SceneManager.ChangeScene("Home")
-            end),
-        }
-    )
+    Settings = Scene:new({
+        
+    HomeButton =  Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
+        SceneManager.ChangeScene("Home")
+    end), 
+    
+    SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings", function(sender)
+        SceneManager.ChangeScene("Settings")
+    end), -- scene controls
+    DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4, 120, 32, "Dark", false, function(sender)
+        Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Dark" or "Classic")
+    end)
+    })
 })
 
 CurrentScene = Scenes.Home

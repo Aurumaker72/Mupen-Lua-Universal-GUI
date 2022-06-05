@@ -1,8 +1,8 @@
 ToggleButton = middleclass('ToggleButton', Button)
 
-function ToggleButton:initialize(x, y, w, h, text, clickCallback)
+function ToggleButton:initialize(x, y, w, h, text, isChecked, clickCallback)
     Button.initialize(self, x, y, w, h, text, clickCallback)
-    self.IsChecked = false
+    self.IsChecked = isChecked
 end
 
 function ToggleButton:Update()
@@ -13,28 +13,28 @@ function ToggleButton:Update()
 end
 
 function ToggleButton:Draw()
-    local borderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
-    Appearance.Themes[CurrentTheme].BUTTON_BORDER_COLOR
+    local borderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 
     if (self.IsChecked) then
-        borderColor = Appearance.Themes[CurrentTheme].BUTTON_HOVERED_BORDER_COLOR
+        borderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR
     end
 
     WGUI.FillRectangle(borderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
 
     local backColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
-    Appearance.Themes[CurrentTheme].BUTTON_PUSHED_COLOR or Appearance.Themes[CurrentTheme].BUTTON_BACK_COLOR
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
 
     if (self.IsChecked) then
-        backColor = Appearance.Themes[CurrentTheme].BUTTON_PUSHED_BACK_COLOR
+        backColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
     end
 
     wgui.setbrush(backColor)
     wgui.setpen(backColor)
     wgui.rect(self.X, self.Y, self.Width + self.X, self.Height + self.Y)
     if (self.Text) then
-        WGUI.DrawText(Appearance.Themes[CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width / 2 - 4 * self.Text:len(),
+        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width / 2 - 4 * self.Text:len(),
             self.Y + self.Height / 2 - 8)
     end
 end
