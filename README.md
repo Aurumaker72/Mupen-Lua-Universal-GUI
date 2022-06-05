@@ -50,3 +50,19 @@ Modify the `Controls = { ... }` block inside your desired scene
            print(sender.Text)
          end)
 ```
+
+## Features
+- Controls
+  - Button
+  - ToggleButton
+  - TextBox
+    - Read-only and Read-write mode
+    - Relative editing mode
+  - Slider
+    - Minimum/Maximum bounds
+    - Staggered increment
+  - Joystick
+    - Read-only and Read-write mode
+  - Label
+  - ~~ListView~~
+  - ~~Image~~
