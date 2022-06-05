@@ -1,8 +1,14 @@
 -- example for how to write your code
 -- DO NOT modify or interact with anything beyond Main.lua, Appearance.lua, Keyboard.lua, Mouse.lua or SceneManager.lua
 -- DO write controls and scenes here, mutate state, etc...
+
+-- btw this code sucks but it's just an example
+
 YourCode = {
-    Mario = {}
+    Mario = {},
+    WatchedFloats = {},
+    WatchedDWORDs = {},
+    CurrentTextBoxIndex = 10,
 }
 
 function UserCodeAtInputPoll()
@@ -10,10 +16,22 @@ function UserCodeAtInputPoll()
     YourCode.GlobalTimer = memory.readdword(0x00B2D5D4)
     YourCode.JoystickX = joypad.get().X
     YourCode.JoystickY = joypad.get().Y
-    Scenes["Home"].Controls["MarioHSpeedLabel"].Text = "HSpeed: " .. math.floor(DecodeDecToFloat(YourCode.Mario.HSpeed))
-    Scenes["Home"].Controls["GlobalTimerLabel"].Text = "Global Timer: " .. math.floor(YourCode.GlobalTimer)
+    Scenes["Home"].Controls["MarioHSpeedTextBox"].Text = "HSpeed: " ..
+                                                             math.floor(DecodeDecToFloat(YourCode.Mario.HSpeed))
+    Scenes["Home"].Controls["GlobalTimerTextBox"].Text = "Global Timer: " .. math.floor(YourCode.GlobalTimer)
     Scenes["Home"].Controls["MainJoystick"].ValueX = YourCode.JoystickX
     Scenes["Home"].Controls["MainJoystick"].ValueY = -YourCode.JoystickY
+
+    for k, v in pairs(YourCode.WatchedFloats) do
+        YourCode.WatchedFloats[k] = DecodeDecToFloat(memory.readdword(k))
+        Scenes.Home.Controls[k].Text = string.format("%08X", k) .. ": " .. YourCode.WatchedFloats[k] .. "f"
+    end
+
+    for k, v in pairs(YourCode.WatchedDWORDs) do
+        YourCode.WatchedDWORDs[k] = memory.readdword(k)
+        Scenes.Home.Controls[k].Text = string.format("%08X", k) .. ": " .. YourCode.WatchedDWORDs[k] .. "DW"
+    end
+
 end
 
 MoreMaths = {
@@ -74,35 +92,50 @@ function UserCodeOnInitialize()
     SceneManager.Initialize({
         Home = Scene:new({ -- scene controls
 
-            MarioHSpeedLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 2, 128, 20, ""),
-            GlobalTimerLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 3, 128, 20, ""),
-
-            MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 4, 128, 128, true,
+            NewAddressTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 7, 128, 20, 8, false, nil),
+            NewFloatButton = Button:new(HORIZONTAL_SAFE_ZONE + 128 + 5, VERTICAL_SAFE_ZONE * 7, 25, 20, "+f",
                 function(sender)
-                    
+                    local textBox = CurrentScene.Controls["NewAddressTextBox"]
+                    if textBox.Text and textBox.Text:len() == 8 then
+                        local address = tonumber(textBox.Text, 16)
+                        if address then
+                            YourCode.WatchedFloats[address] = 0
+                            -- creating control at runtime
+                            Scenes.Home.Controls[address] = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * YourCode.CurrentTextBoxIndex, 128, 20, nil, true, nil)
+                            YourCode.CurrentTextBoxIndex = YourCode.CurrentTextBoxIndex + 1
+                        end
+                    end
                 end),
-            TestSlider = Slider:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 20 * 12, 128, 20, 0, 0, 10, false,
+                NewDWORDButton = Button:new(HORIZONTAL_SAFE_ZONE + 128 + 35, VERTICAL_SAFE_ZONE * 7, 25, 20, "+D",
+                function(sender)
+                    local textBox = CurrentScene.Controls["NewAddressTextBox"]
+                    if textBox.Text and textBox.Text:len() == 8 then
+                        local address = tonumber(textBox.Text, 16)
+                        if address then
+                            YourCode.WatchedDWORDs[address] = 0
+                            -- creating control at runtime
+                            Scenes.Home.Controls[address] = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * YourCode.CurrentTextBoxIndex, 128, 20, nil, true, nil)
+                            YourCode.CurrentTextBoxIndex = YourCode.CurrentTextBoxIndex + 1
+                        end
+                    end
+                end),
+            MarioHSpeedTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 8, 128, 20, nil, true, nil),
+            GlobalTimerTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 9, 128, 20, nil, true, nil),
+
+            MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 128, 128, true,
                 function(sender)
 
                 end)
-            -- FunSlider2 = Slider:new(20, VERTICAL_SAFE_ZONE * 13, 128,
-            --     Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -128, -128, 127, false, function(sender)
-            --         Scenes["Home"].Controls["MainJoystick"].ValueY = sender.Value
-            --     end),
-            -- FunSlider = Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128,
-            --     Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -127, -127, 128, false, function(sender)
-            --         Scenes["Home"].Controls["MainJoystick"].ValueX = sender.Value
-            --     end)
+
         }),
 
         Settings = Scene:new({
-            DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4, 120, 32, "Dark",
+            DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 90, 20, "Inverted",
                 false, function(sender)
-                    Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Dark" or "Classic")
+                    Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Inverted" or "Classic")
                 end)
         })
-    }, 
-    {
+    }, {
         HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
             SceneManager.ChangeScene("Home")
         end),
@@ -110,7 +143,7 @@ function UserCodeOnInitialize()
         SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
             function(sender)
                 SceneManager.ChangeScene("Settings")
-            end),
+            end)
     })
 
     CurrentScene = Scenes.Home

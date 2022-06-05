@@ -1,12 +1,12 @@
 TextBox = middleclass('TextBox', Control)
 
-function TextBox:initialize(x, y, w, h, maxLength, textChangedCallback)
+function TextBox:initialize(x, y, w, h, maxLength, isReadOnly, textChangedCallback)
     Control.initialize(self, x, y, w, h)
     self.MaxLength = maxLength and maxLength or 10
     self.TextChangedCallback = textChangedCallback
     self.Text = ""
     self.Active = false
-    self.IsReadOnly = false
+    self.IsReadOnly = isReadOnly
     self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     self.CurrentBackColor = self.TargetBackColor
     self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
@@ -23,19 +23,35 @@ function TextBox:Update()
     end
 
     if self.Active and self.IsReadOnly == false then
-        for i = 0, 9, 1 do
-            if (Keyboard.KeyPressed("" .. i)) or (Keyboard.KeyPressed("numpad" .. i)) then
-                if self.CanTypeCharacter(self) then
-                    self.Text = self.Text .. i
-                    self.TextChangedCallback(self)
+        -- for i = 0, 9, 1 do
+        --     if (Keyboard.KeyPressed("" .. i)) or (Keyboard.KeyPressed("numpad" .. i)) then
+        --         if self.CanTypeCharacter(self) then
+        --             self.Text = self.Text .. i
+        --             if self.TextChangedCallback then
+        --                 self.TextChangedCallback(self)
+        --             end
+                    
+        --         end
+        --     end
+        -- end
+        for key, v in pairs(Keyboard.Input) do
+            if Keyboard.Input[key] and not Keyboard.LastInput[key] then
+            if key:len() == 1 and self.CanTypeCharacter(self) then
+                       self.Text = self.Text .. key
+                       if self.TextChangedCallback then
+                        self.TextChangedCallback(self)
+                       end
+                 
+                    end
                 end
             end
-        end
 
         if (Keyboard.KeyPressed("backspace")) then
             if self.Text:len() > 0 then
                 self.Text = self.Text:sub(1, -2)
-                self.TextChangedCallback(self)
+                if self.TextChangedCallback then
+                    self.TextChangedCallback(self)
+                end
             end
         end
     end
