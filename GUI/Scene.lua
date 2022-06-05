@@ -2,6 +2,7 @@ Scene = middleclass('Scene')
 
 function Scene:initialize(controls)
     self.Controls = controls
+    self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR
     self.IsActive = false
 end
 
@@ -13,7 +14,9 @@ end
 
 function Scene:Draw()
 
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR,
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+    
+    WGUI.FillRectangle(self.CurrentBackColor,
         Screen.Dimensions.Width - Screen.ExpandedOffset, 0, (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2,
         Screen.Dimensions.Height)
 

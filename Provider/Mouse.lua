@@ -20,10 +20,12 @@ function Mouse.IsInside(x,y,w,h)
 end
 
 function Mouse.IsDown()
+    -- TODO: left-handed mode support
     return Mouse._mouseTable["leftclick"] and true or false
 end
 
 function Mouse.IsClicked()
+    -- TODO: left-handed mode support
     return (Mouse._mouseTable["leftclick"] and not Mouse._previousMouseTable["leftclick"]) and true or false
 end
 

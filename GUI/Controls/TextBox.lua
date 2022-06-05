@@ -1,12 +1,16 @@
 TextBox = middleclass('TextBox', Control)
 
-function TextBox:initialize(x, y, w, h, maxLength, textChangedCallback)
+function TextBox:initialize(x, y, w, h, maxLength, isReadOnly, textChangedCallback)
     Control.initialize(self, x, y, w, h)
     self.MaxLength = maxLength and maxLength or 10
     self.TextChangedCallback = textChangedCallback
     self.Text = ""
     self.Active = false
-    self.IsReadOnly = false
+    self.IsReadOnly = isReadOnly
+    self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
+    self.CurrentBackColor = self.TargetBackColor
+    self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
+    self.CurrentBorderColor = self.TargetBorderColor
     if self.Height == 20 == false then
         print("violation: TextBox has an inappropriate height")
     end
@@ -19,22 +23,42 @@ function TextBox:Update()
     end
 
     if self.Active and self.IsReadOnly == false then
-        for i = 0, 9, 1 do
-            if (Keyboard.KeyPressed("" .. i)) or (Keyboard.KeyPressed("numpad" .. i)) then
-                if self.CanTypeCharacter(self) then
-                    self.Text = self.Text .. i
-                    self.TextChangedCallback(self)
+        -- for i = 0, 9, 1 do
+        --     if (Keyboard.KeyPressed("" .. i)) or (Keyboard.KeyPressed("numpad" .. i)) then
+        --         if self.CanTypeCharacter(self) then
+        --             self.Text = self.Text .. i
+        --             if self.TextChangedCallback then
+        --                 self.TextChangedCallback(self)
+        --             end
+                    
+        --         end
+        --     end
+        -- end
+        for key, v in pairs(Keyboard.Input) do
+            if Keyboard.Input[key] and not Keyboard.LastInput[key] then
+            if key:len() == 1 and self.CanTypeCharacter(self) then
+                       self.Text = self.Text .. key
+                       if self.TextChangedCallback then
+                        self.TextChangedCallback(self)
+                       end
+                 
+                    end
                 end
             end
-        end
 
         if (Keyboard.KeyPressed("backspace")) then
             if self.Text:len() > 0 then
                 self.Text = self.Text:sub(1, -2)
-                self.TextChangedCallback(self)
+                if self.TextChangedCallback then
+                    self.TextChangedCallback(self)
+                end
             end
         end
     end
+
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
+    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
+
 end
 
 function TextBox:CanTypeCharacter()
@@ -43,21 +67,21 @@ end
 
 function TextBox:Draw()
 
-    local borderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
+    self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
 
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-        borderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_HOVERED_BORDER_COLOR
+        self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_HOVERED_BORDER_COLOR
     end
     if self.Active then
-        borderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
+        self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
 
-    WGUI.FillRectangle(borderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
 
-    local backColor = self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
+    self.TargetBackColor = self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
 
-    WGUI.FillRectangle(backColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
+    WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
 end
