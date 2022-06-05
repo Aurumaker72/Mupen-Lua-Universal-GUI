@@ -22,6 +22,8 @@ dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
 dofile(FOLDER_HELPER .. "WGUI.lua")
 dofile(FOLDER_HELPER .. "Table.lua")
+dofile(FOLDER_GUI .. "Scene.lua")
+dofile(FOLDER_GUI .. "SceneManager.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Control.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Button.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ToggleButton.lua")
@@ -39,26 +41,45 @@ Screen.Expand()
 CurrentTheme = "Classic"
 Appearance.Initialize()
 
--- Define your controls and their callbacks!
-Controls = {
-    Button:new(20, VERTICAL_SAFE_ZONE * 2, 128, 64, "button", function(sender) 
-    
-    end), 
+-- Create scenes with their controls
+SceneManager.Initialize({
 
-    ToggleButton:new(20, VERTICAL_SAFE_ZONE * 5, 128, 64, CurrentTheme, function(sender) 
-        CurrentTheme = CurrentTheme == "Classic" and "Dark" or "Classic" 
-        sender.Text = CurrentTheme
-    end),
+    Home = Scene:new(
+        {
+            -- scene controls
+            Button:new(20, VERTICAL_SAFE_ZONE * 2, 120, 32, "Go to settings", function(sender) 
+                SceneManager.ChangeScene("Settings")
+            end), 
 
-    TextBox:new(20, VERTICAL_SAFE_ZONE * 10, 128, 20, 30, function(sender)
-        if sender.Text == "17" then
-            sender.Text = "39"
-        end
-    end), 
-    
-    Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128, Appearance.Themes[CurrentTheme].SLIDER_TRACK_HEIGHT + 4, 0, 10, false, function(sender)
+            ToggleButton:new(20, VERTICAL_SAFE_ZONE * 5, 128, 64, CurrentTheme, function(sender) 
+                CurrentTheme = CurrentTheme == "Classic" and "Dark" or "Classic" 
+                sender.Text = CurrentTheme
+            end),
 
-    end)}
+            TextBox:new(20, VERTICAL_SAFE_ZONE * 10, 128, 20, 30, function(sender)
+                if sender.Text == "17" then
+                    sender.Text = "39"
+                end
+            end),
+
+            Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128, Appearance.Themes[CurrentTheme].SLIDER_TRACK_HEIGHT + 4, 0, 10, false, function(sender) end)
+        }
+    ),
+
+    Settings = Scene:new(
+        {
+            -- scene controls
+            Button:new(20, VERTICAL_SAFE_ZONE * 2, 120, 32, "Go to main page", function(sender) 
+                SceneManager.ChangeScene("Home")
+            end),
+        }
+    )
+})
+
+CurrentScene = Scenes.Home
+CurrentScene.IsActive = true
+
+---------------------------------------------------------------------------------------------------------------------------------------
 
 function AtStop()
     -- Restore pre-resize window dimensions
@@ -70,17 +91,10 @@ function AtVisualInterrupt()
     Mouse.Update()
     Keyboard.Update()
 
-    WGUI.FillRectangle(Appearance.Themes[CurrentTheme].WINDOW_BACK_COLOR, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
-        (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
-
-    for i = 1, table.getn(Controls), 1 do
-        Controls[i]:Update()
+    if CurrentScene.IsActive then
+        CurrentScene:Update(CurrentScene)
+        CurrentScene:Draw(CurrentScene)
     end
-
-    for i = 1, table.getn(Controls), 1 do
-        Controls[i]:Draw()
-    end
-
 end
 
 function AtInputPoll()
