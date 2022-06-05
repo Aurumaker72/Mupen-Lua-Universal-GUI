@@ -19,8 +19,17 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 *A joystick control in read-write mode*
 
+<img src="https://user-images.githubusercontent.com/48759429/172062286-c1e637dd-8263-4a43-9c9f-e4169086b07a.gif" width="250"/>
+
+*Inverted theme*
+
+<img src="https://user-images.githubusercontent.com/48759429/172062375-c19b362f-d0d3-48cc-9a1f-fb7ecaac12c8.gif" width="250"/>
+
+*Button highlights*
+
 ## Usage
-**NOTE: This project is not ready to use as a library**
+**NOTE: This
+ project is not ready to use as a library**
 
 #### Adding a new scene
 Add `YourKey = Scene:new({ ... })` in the `SceneManager.Initialize(...)` call
