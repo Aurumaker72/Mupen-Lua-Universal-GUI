@@ -10,6 +10,7 @@ function AbsolutePathToCurrentFolder()
     return AbsolutePathToCurrentFile():sub(1, -("Main.lua"):len() - 1)
 end
 
+FOLDER_USER_CODE = AbsolutePathToCurrentFolder() .. "User" .. "\\"
 FOLDER_LIBRARY = AbsolutePathToCurrentFolder() .. "Library" .. "\\"
 FOLDER_EMULATOR = AbsolutePathToCurrentFolder() .. "Emulator" .. "\\"
 FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
@@ -17,6 +18,7 @@ FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
+dofile(FOLDER_USER_CODE .. "YourCode.lua")
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
@@ -43,70 +45,21 @@ Screen.Expand()
 
 Appearance.Initialize()
 
--- Create scenes with their controls
-SceneManager.Initialize({
-
-    Home = Scene:new({ -- scene controls
-
-        HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
-            SceneManager.ChangeScene("Home")
-        end),
-
-        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
-            function(sender)
-                SceneManager.ChangeScene("Settings")
-            end),
-
-        TestTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 143, 20, 5, function(sender)
-            if sender.Text == "17" then
-                sender.Text = "39"
-            end
-        end),
-
-        TheLabel = Label:new(HORIZONTAL_SAFE_ZONE, 20 + 80, 128, 20, "Hello, I am the"),
-
-        MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE * 5, VERTICAL_SAFE_ZONE * 14, 128, 128, false, function(sender)
-            Scenes["Home"].Controls["FunSlider"].Value = sender.ValueX
-            Scenes["Home"].Controls["FunSlider2"].Value = sender.ValueY
-        end),
-        FunSlider2 = Slider:new(20, VERTICAL_SAFE_ZONE * 13, 128,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -128, -128, 127, false, function(sender)
-                Scenes["Home"].Controls["MainJoystick"].ValueY = sender.Value
-            end),
-        FunSlider = Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -127, -127, 128, false, function(sender)
-                Scenes["Home"].Controls["MainJoystick"].ValueX = sender.Value
-            end)
-    }),
-
-    Settings = Scene:new({
-
-        HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
-            SceneManager.ChangeScene("Home")
-        end),
-
-        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
-            function(sender)
-                SceneManager.ChangeScene("Settings")
-            end), -- scene controls
-        DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4, 120, 32, "Dark", false,
-            function(sender)
-                Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Dark" or "Classic")
-            end)
-    })
-})
-
-CurrentScene = Scenes.Home
-CurrentScene.IsActive = true
+UserCodeOnInitialize()
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 function AtStop()
+
+    UserCodeAtStop()
+    
     -- Restore pre-resize window dimensions
     Screen.Contract()
 end
 
 function AtVisualInterrupt()
+
+    UserCodeAtVisualInterrupt()
 
     Mouse.Update()
     Keyboard.Update()
@@ -118,7 +71,7 @@ function AtVisualInterrupt()
 end
 
 function AtInputPoll()
-
+    UserCodeAtInputPoll()
 end
 
 -- Register callbacks
