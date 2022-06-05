@@ -13,9 +13,8 @@ function Joystick:initialize(x, y, w, h, readOnly, valueChangedCallback)
 end
 
 function Joystick:Update()
-    if self.IsReadOnly then
-        return
-    end
+    if self.IsReadOnly == false then
+    
 
     if self.IsCapturingMouse then
         if Mouse.IsDown() == false then
@@ -31,7 +30,7 @@ function Joystick:Update()
     if Mouse.IsDown() and Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
         self.IsCapturingMouse = true
     end
-
+end
     
     self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
     self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))

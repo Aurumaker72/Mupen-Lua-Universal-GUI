@@ -77,9 +77,9 @@ function UserCodeOnInitialize()
             MarioHSpeedLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 2, 128, 20, ""),
             GlobalTimerLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 3, 128, 20, ""),
 
-            MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 4, 128, 128, false,
+            MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 20 * 4, 128, 128, true,
                 function(sender)
-
+                    
                 end),
             TestSlider = Slider:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 20 * 12, 128, 20, 0, 0, 10, false,
                 function(sender)
