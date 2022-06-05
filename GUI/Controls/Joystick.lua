@@ -40,13 +40,16 @@ end
 
 function Joystick:Draw()
 
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE,
-        self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE + 1,
+        self.Y - BORDER_SIZE + 1, self.Width + self.X + BORDER_SIZE - 2, self.Height + self.Y + BORDER_SIZE - 2)
 
-    WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
+    WGUI.FillRectangle(self.CurrentBackColor, self.X + 1, self.Y + 1,
+        self.Width + self.X - 2, self.Height + self.Y - 2)
 
-    WGUI.FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
-    WGUI.DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
+    WGUI.FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width - 1,
+        self.Height - 1)
+    WGUI.DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width - 1,
+        self.Height - 1)
 
     local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
     local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
@@ -62,8 +65,8 @@ function Joystick:Draw()
 
     WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
         cX - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE)
+        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2 + 1,
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1,
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1)
 
 end
