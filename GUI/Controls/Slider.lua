@@ -8,11 +8,9 @@ function Slider:initialize(x, y, w, h, value, min, max, staggered, valueChangedC
     self.IsStaggered = staggered
     self.ValueChangedCallback = valueChangedCallback
 
-    self.CurrentHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR
-    self.TargetHeadColor = self.CurrentHeadColor
-
+    self.TargetHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR
+    self.CurrentHeadColor = self.TargetHeadColor
     self.CurrentTrackColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR
-    self.TargetTrackColor = self.CurrentTrackColor
 
 end
 
@@ -40,7 +38,7 @@ function Slider:Update()
     end
 
     self.CurrentHeadColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentHeadColor), WGUI.HexadecimalColorToRGB(self.TargetHeadColor))
-    self.CurrentTrackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentTrackColor), WGUI.HexadecimalColorToRGB(self.TargetTrackColor))
+    self.CurrentTrackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentTrackColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
 end
 
 function Slider:Draw()

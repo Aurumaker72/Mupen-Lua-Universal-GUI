@@ -64,10 +64,9 @@ function AtVisualInterrupt()
     Mouse.Update()
     Keyboard.Update()
 
-    if CurrentScene.IsActive then
-        CurrentScene:Update(CurrentScene)
-        CurrentScene:Draw(CurrentScene)
-    end
+    SceneManager.Update()
+    SceneManager.Draw()
+    
 end
 
 function AtInputPoll()
