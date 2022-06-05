@@ -32,39 +32,39 @@ end
 
 function Joystick:Draw()
 
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - BORDER_SIZE,
-        self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - BORDER_SIZE + 1,
+        self.Y - BORDER_SIZE + 1, self.Width + self.X + BORDER_SIZE - 2, self.Height + self.Y + BORDER_SIZE - 2)
 
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR, self.X, self.Y,
-        self.Width + self.X, self.Height + self.Y)
+    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR, self.X + 1, self.Y + 1,
+        self.Width + self.X - 2, self.Height + self.Y - 2)
 
-    WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR, self.X, self.Y, self.Width,
-        self.Height)
-    WGUI.DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 1, self.X, self.Y, self.Width,
-        self.Height)
+    WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR, self.X, self.Y, self.Width - 1,
+        self.Height - 1)
+    WGUI.DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 1, self.X, self.Y, self.Width - 1,
+        self.Height - 1)
 
     local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
     local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
 
-    WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 2, self.X + self.Width / 2,
-        self.Y + self.Height / 2, cX, cY)
-
     WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 1,
     self.X,
-    self.Y + self.Height / 2, 
-    self.X + self.Width, 
-    self.Y + self.Height / 2)
+    self.Y + self.Height / 2 - 1, 
+    self.X + self.Width - 2, 
+    self.Y + self.Height / 2 - 1)
 
     WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 1,
-    self.X + self.Width / 2,
+    self.X + self.Width / 2 - 1,
     self.Y, 
-    self.X + self.Width / 2, 
-    self.Y + self.Height)
+    self.X + self.Width / 2 - 1, 
+    self.Y + self.Height - 2)
+
+    WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 1, self.X + self.Width / 2 - 1,
+        self.Y + self.Height / 2 - 1, cX - 1, cY)
 
     WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
         cX - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2, 
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE, 
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE)
+        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2 + 1, 
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1, 
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1)
 
 end
