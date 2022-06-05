@@ -12,6 +12,17 @@ function WGUI.FillRectangle(color, x, y, r, b)
     wgui.rect(x, y, r, b)
 end
 
+function WGUI.FillEllipse(color, x, y, w, h)
+    wgui.setbrush(color)
+    wgui.setpen(color)
+    wgui.ellipse(x, y, x+w, y+h)
+end
+
+function WGUI.DrawEllipse(color, thickness, x, y, w, h)
+    wgui.setpen(color, thickness)
+    wgui.ellipse(x, y, x+w, y+h)
+end
+
 function WGUI.DrawText(color, text, x, y)
     wgui.setcolor(color)
     wgui.setfont(FONT_SIZE,"Arial","c")
@@ -19,6 +30,11 @@ function WGUI.DrawText(color, text, x, y)
         x, 
         y,
         text)
+end
+
+function WGUI.DrawLine(color, thickness, x1, y1, x2, y2)
+    wgui.setpen(color, thickness)
+    wgui.line(x1,y1,x2,y2)
 end
 
 function WGUI.HexadecimalColorToRGB(hex)

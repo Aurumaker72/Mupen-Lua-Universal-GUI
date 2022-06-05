@@ -29,6 +29,8 @@ dofile(FOLDER_GUI_CONTROLS .. "Button.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ToggleButton.lua")
 dofile(FOLDER_GUI_CONTROLS .. "TextBox.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Slider.lua")
+dofile(FOLDER_GUI_CONTROLS .. "Label.lua")
+dofile(FOLDER_GUI_CONTROLS .. "Joystick.lua")
 dofile(FOLDER_PROVIDER .. "Mouse.lua")
 dofile(FOLDER_PROVIDER .. "Keyboard.lua")
 dofile(FOLDER_PROVIDER .. "Appearance.lua")
@@ -46,37 +48,51 @@ SceneManager.Initialize({
 
     Home = Scene:new({ -- scene controls
 
-    HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
-        SceneManager.ChangeScene("Home")
-    end), 
-    
-    SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings", function(sender)
-        SceneManager.ChangeScene("Settings")
-    end), 
-    
-    TestTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 143, 20, 5, function(sender)
-        if sender.Text == "17" then
-            sender.Text = "39"
-        end
-    end),
+        HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
+            SceneManager.ChangeScene("Home")
+        end),
 
-    FunSlider = Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128, Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, 20, 20,
-        200, false, function(sender)
-            Scenes["Home"].Controls["TestTextBox"].Height = sender.Value;
-        end)}),
+        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
+            function(sender)
+                SceneManager.ChangeScene("Settings")
+            end),
+
+        TestTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 143, 20, 5, function(sender)
+            if sender.Text == "17" then
+                sender.Text = "39"
+            end
+        end),
+
+        TheLabel = Label:new(HORIZONTAL_SAFE_ZONE, 20 + 80, 128, 20, "Hello, I am the"),
+
+        MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE * 5, VERTICAL_SAFE_ZONE * 14, 128, 128, false, function(sender)
+            Scenes["Home"].Controls["FunSlider"].Value = sender.ValueX
+            Scenes["Home"].Controls["FunSlider2"].Value = sender.ValueY
+        end),
+        FunSlider2 = Slider:new(20, VERTICAL_SAFE_ZONE * 13, 128,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -128, -128, 127, false, function(sender)
+                Scenes["Home"].Controls["MainJoystick"].ValueY = sender.Value
+            end),
+        FunSlider = Slider:new(20, VERTICAL_SAFE_ZONE * 12, 128,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + 4, -127, -127, 128, false, function(sender)
+                Scenes["Home"].Controls["MainJoystick"].ValueX = sender.Value
+            end)
+    }),
 
     Settings = Scene:new({
-        
-    HomeButton =  Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
-        SceneManager.ChangeScene("Home")
-    end), 
-    
-    SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings", function(sender)
-        SceneManager.ChangeScene("Settings")
-    end), -- scene controls
-    DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4, 120, 32, "Dark", false, function(sender)
-        Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Dark" or "Classic")
-    end)
+
+        HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
+            SceneManager.ChangeScene("Home")
+        end),
+
+        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
+            function(sender)
+                SceneManager.ChangeScene("Settings")
+            end), -- scene controls
+        DarkModeToggleButton = ToggleButton:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4, 120, 32, "Dark", false,
+            function(sender)
+                Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Dark" or "Classic")
+            end)
     })
 })
 
