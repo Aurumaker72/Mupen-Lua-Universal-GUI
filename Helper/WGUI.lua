@@ -20,3 +20,18 @@ function WGUI.DrawText(color, text, x, y)
         y,
         text)
 end
+
+function WGUI.HexadecimalColorToRGB(hex)
+    hex = hex:gsub("#","")
+    return 
+    {
+        tonumber("0x"..hex:sub(1,2)), 
+        tonumber("0x"..hex:sub(3,4)), 
+        tonumber("0x"..hex:sub(5,6)),
+    }
+end
+
+function WGUI.RGBToHexadecimalColor(r, g, b)
+    local rgb = (r * 0x10000) + (g * 0x100) + b
+    return "#" .. string.format("%06X", rgb)
+end

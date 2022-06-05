@@ -42,21 +42,21 @@ end
 
 function TextBox:Draw()
 
-    local borderColor = TEXTBOX_BORDER_COLOR
+    local borderColor = Appearance.Themes[CurrentTheme].TEXTBOX_BORDER_COLOR
 
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-        borderColor = TEXTBOX_HOVERED_BORDER_COLOR
+        borderColor = Appearance.Themes[CurrentTheme].TEXTBOX_HOVERED_BORDER_COLOR
     end
     if self.Active then
-        borderColor = TEXTBOX_ACTIVE_BORDER_COLOR
+        borderColor = Appearance.Themes[CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
 
     WGUI.FillRectangle(borderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
 
-    local backColor = self.IsReadOnly and TEXTBOX_READONLY_BACK_COLOR or TEXTBOX_BACK_COLOR
+    local backColor = self.IsReadOnly and Appearance.Themes[CurrentTheme].TEXTBOX_READONLY_BACK_COLOR or Appearance.Themes[CurrentTheme].TEXTBOX_BACK_COLOR
 
     WGUI.FillRectangle(backColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
-    WGUI.DrawText(BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
+    WGUI.DrawText(Appearance.Themes[CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
 end

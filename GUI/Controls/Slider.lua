@@ -10,8 +10,8 @@ function Slider:initialize(x, y, w, h, min, max, staggered, valueChangedCallback
 end
 
 function Slider:IsMouseInside()
-    return Mouse.IsInside(self.X - SLIDER_HEAD_WIDTH, self.Y - SLIDER_HEAD_HEIGHT / 2, self.Width + SLIDER_HEAD_WIDTH,
-        self.Height + SLIDER_HEAD_HEIGHT)
+    return Mouse.IsInside(self.X - Appearance.Themes[CurrentTheme].SLIDER_HEAD_WIDTH, self.Y - Appearance.Themes[CurrentTheme].SLIDER_HEAD_HEIGHT / 2, self.Width + Appearance.Themes[CurrentTheme].SLIDER_HEAD_WIDTH,
+        self.Height + Appearance.Themes[CurrentTheme].SLIDER_HEAD_HEIGHT)
 end
 
 function Slider:Update()
@@ -36,18 +36,18 @@ end
 
 function Slider:Draw()
 
-    WGUI.FillRectangle(BUTTON_BACK_COLOR, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
+    WGUI.FillRectangle(Appearance.Themes[CurrentTheme].BUTTON_BACK_COLOR, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
-    WGUI.FillRectangle(SLIDER_TRACK_COLOR, self.X, self.Y + self.Height / 2 - SLIDER_TRACK_HEIGHT, self.Width + self.X,
-        self.Y + self.Height / 2 + SLIDER_TRACK_HEIGHT)
+    WGUI.FillRectangle(Appearance.Themes[CurrentTheme].SLIDER_TRACK_COLOR, self.X, self.Y + self.Height / 2 - Appearance.Themes[CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width + self.X,
+        self.Y + self.Height / 2 + Appearance.Themes[CurrentTheme].SLIDER_TRACK_HEIGHT)
 
-    local x = Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width) - SLIDER_HEAD_WIDTH / 2
-    local y = self.Y + self.Height / 2 - SLIDER_HEAD_HEIGHT / 2;
+    local x = Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width) - Appearance.Themes[CurrentTheme].SLIDER_HEAD_WIDTH / 2
+    local y = self.Y + self.Height / 2 - Appearance.Themes[CurrentTheme].SLIDER_HEAD_HEIGHT / 2;
 
-    local headColor = self.IsMouseInside(self) and SLIDER_HOVERED_HEAD_COLOR or
-                          SLIDER_HEAD_COLOR
+    local headColor = self.IsMouseInside(self) and Appearance.Themes[CurrentTheme].SLIDER_HOVERED_HEAD_COLOR or
+    Appearance.Themes[CurrentTheme].SLIDER_HEAD_COLOR
     if self.IsCapturingMouse then
-        headColor = SLIDER_PRESSED_HEAD_COLOR
+        headColor = Appearance.Themes[CurrentTheme].SLIDER_PRESSED_HEAD_COLOR
     end
-    WGUI.FillRectangle(headColor, x, y, x + SLIDER_HEAD_WIDTH, y + SLIDER_HEAD_HEIGHT)
+    WGUI.FillRectangle(headColor, x, y, x + Appearance.Themes[CurrentTheme].SLIDER_HEAD_WIDTH, y + Appearance.Themes[CurrentTheme].SLIDER_HEAD_HEIGHT)
 end
