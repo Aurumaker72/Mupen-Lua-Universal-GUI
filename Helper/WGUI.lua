@@ -6,6 +6,11 @@ function WGUI.FillRectangleBounds(color, x, y, w, h)
     wgui.rect(x, y, x+w, y+h)
 end
 
+function WGUI.DrawRectangleBounds(color, thickness, x, y, w, h)
+    wgui.setpen(color, thickness)
+    wgui.rect(x, y, x+w, y+h)
+end
+
 function WGUI.FillRectangle(color, x, y, r, b)
     wgui.setbrush(color)
     wgui.setpen(color)
@@ -60,3 +65,4 @@ function WGUI.TemporalInterpolateRGBColor(currentColor, targetColor)
     currentColor[3] = math.floor(currentColor[3] + (targetColor[3] - currentColor[3]) * 0.1)
     return WGUI.RGBToHexadecimalColor(currentColor)
 end
+

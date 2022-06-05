@@ -7,3 +7,8 @@ end
 function Numeric.Clamp(value, min, max)
     return math.max( min, math.min(value, max) )
 end
+
+function Numeric.TemporalInterpolateNumber(current, target)
+    current = math.floor(current +  (target - current) * 0.1)
+    return current
+end

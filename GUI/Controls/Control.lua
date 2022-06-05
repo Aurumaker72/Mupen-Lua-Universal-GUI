@@ -7,6 +7,7 @@ function Control:initialize(x,y,w,h)
 	self.Width = w
 	self.Height = h
 	self.IsCapturingMouse = false
+	self.Ticks = 0
 end
 
 function Control:GetRight()
@@ -17,6 +18,7 @@ function Control:GetBottom()
 	return self.Y + self.Height
 end
 
+function Control:PersistentUpdate() end
 function Control:Update() end
 function Control:Draw() end
 

@@ -56,17 +56,11 @@ function TextBox:Update()
         end
     end
 
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
 
 end
 
-function TextBox:CanTypeCharacter()
-    return (self.Text:len() * FONT_SIZE < self.Width) and (self.Text:len() + 1 <= self.MaxLength)
-end
-
-function TextBox:Draw()
-
+function TextBox:PersistentUpdate()
+    self.TargetBackColor = self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
 
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
@@ -75,11 +69,22 @@ function TextBox:Draw()
     if self.Active then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
+    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
+end
+
+function TextBox:CanTypeCharacter()
+    if type(self.Text) == "string" == false then
+        print("TextBox text was set to string")
+        return false
+    end
+    return (self.Text:len() * FONT_SIZE < self.Width) and (self.Text:len() + 1 <= self.MaxLength)
+end
+
+function TextBox:Draw()
 
     WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
-
-    self.TargetBackColor = self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
 
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 

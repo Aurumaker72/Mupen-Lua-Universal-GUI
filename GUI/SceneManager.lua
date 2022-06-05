@@ -17,18 +17,21 @@ function SceneManager.ChangeScene(scene)
 end
 
 function SceneManager.Update()
-    if CurrentScene.IsActive then
-        CurrentScene:Update(CurrentScene)
+
+    for k, scene in pairs(Scenes) do
+        scene:Update(scene)
     end
+
     for key, control in pairs(PersistentControls) do
+        control:PersistentUpdate()
         control:Update()
     end
 end
 
 function SceneManager.Draw()
-    if CurrentScene.IsActive then
-        CurrentScene:Draw(CurrentScene)
-    end
+
+    CurrentScene:Draw(CurrentScene)
+
     for key, control in pairs(PersistentControls) do
         control:Draw()
     end

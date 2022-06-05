@@ -9,16 +9,17 @@ YourCode = {
     WatchedFloats = {},
     WatchedDWORDs = {},
     CurrentTextBoxIndex = 10,
+    TargetHSpeed = 0,
 }
 
 function UserCodeAtInputPoll()
+    memory.writefloat(0x00B3B1C4, YourCode.TargetHSpeed)
     YourCode.Mario.HSpeed = memory.readdword(0x00B3B1C4)
-    YourCode.GlobalTimer = memory.readdword(0x00B2D5D4)
+    YourCode.Mario.XPosition = memory.readfloat(0x00B3B1AC)
     YourCode.JoystickX = joypad.get().X
     YourCode.JoystickY = joypad.get().Y
-    Scenes["Home"].Controls["MarioHSpeedTextBox"].Text = "HSpeed: " ..
-                                                             math.floor(DecodeDecToFloat(YourCode.Mario.HSpeed))
-    Scenes["Home"].Controls["GlobalTimerTextBox"].Text = "Global Timer: " .. math.floor(YourCode.GlobalTimer)
+    Scenes["Home"].Controls["MarioHSpeedTextBox"].Text = tostring(math.floor(DecodeDecToFloat(YourCode.Mario.HSpeed)))
+    Scenes["Home"].Controls["MarioXPositionTextBox"].Text =  YourCode.Mario.XPosition
     Scenes["Home"].Controls["MainJoystick"].ValueX = YourCode.JoystickX
     Scenes["Home"].Controls["MainJoystick"].ValueY = -YourCode.JoystickY
 
@@ -31,7 +32,7 @@ function UserCodeAtInputPoll()
         YourCode.WatchedDWORDs[k] = memory.readdword(k)
         Scenes.Home.Controls[k].Text = string.format("%08X", k) .. ": " .. YourCode.WatchedDWORDs[k] .. "DW"
     end
-
+    
 end
 
 MoreMaths = {
@@ -119,13 +120,29 @@ function UserCodeOnInitialize()
                         end
                     end
                 end),
-            MarioHSpeedTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 8, 128, 20, nil, true, nil),
-            GlobalTimerTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 9, 128, 20, nil, true, nil),
+            MarioHSpeedTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 8, 128, 20, nil, false, 
+            function(sender)
+                local val = tonumber(sender.Text)
+                YourCode.TargetHSpeed = val
+            end),
+            MarioXPositionTextBox = TextBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 9, 128, 20, nil, false, 
+            function(sender)
+                local val = tonumber(sender.Text)
+                memory.writedword(0x00B3B1AC, val)
+            end),
 
             MainJoystick = Joystick:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE + 40, 128, 128, true,
                 function(sender)
 
-                end)
+                end),
+
+            TheCarrousel = CarrouselButton:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 290, 124, 20, { "Classic", "Inverted", "Dark"}, function(sender)
+                Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
+            end),
+
+        }),
+
+        Memory = Scene:new({
 
         }),
 
@@ -134,13 +151,17 @@ function UserCodeOnInitialize()
                 false, function(sender)
                     Appearance.SetTheme(Appearance.CurrentTheme == "Classic" and "Inverted" or "Classic")
                 end)
-        })
+        }),
+        
     }, {
         HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
             SceneManager.ChangeScene("Home")
         end),
+        MemoryButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Memory", function(sender)
+            SceneManager.ChangeScene("Memory")
+        end),
 
-        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
+        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 143, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
             function(sender)
                 SceneManager.ChangeScene("Settings")
             end)

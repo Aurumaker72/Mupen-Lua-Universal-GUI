@@ -14,6 +14,11 @@ function Slider:initialize(x, y, w, h, value, min, max, staggered, valueChangedC
 
 end
 
+function Slider:PersistentUpdate()
+    self.CurrentHeadColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentHeadColor), WGUI.HexadecimalColorToRGB(self.TargetHeadColor))
+    self.CurrentTrackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentTrackColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
+end
+
 function Slider:IsMouseInside()
     return Mouse.IsInside(self.X - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH, self.Y - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT / 2, self.Width + Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
         self.Height + Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT)
@@ -37,8 +42,6 @@ function Slider:Update()
         self.IsCapturingMouse = true
     end
 
-    self.CurrentHeadColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentHeadColor), WGUI.HexadecimalColorToRGB(self.TargetHeadColor))
-    self.CurrentTrackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentTrackColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
 end
 
 function Slider:Draw()

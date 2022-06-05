@@ -11,9 +11,12 @@ function ToggleButton:Update()
         self.ClickCallback(self)
     end
 
+
+end
+
+function ToggleButton:PersistentUpdate()
     self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
     self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
-
 end
 
 function ToggleButton:Draw()

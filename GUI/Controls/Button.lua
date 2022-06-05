@@ -10,25 +10,28 @@ function Button:initialize(x, y, w, h, text, clickCallback)
     self.CurrentBorderColor = self.TargetBorderColor
 end
 
+function Button:PersistentUpdate()
+    self.TargetBorderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
+
+    self.TargetBackColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
+
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
+    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
+end
+
 function Button:Update()
     if Mouse.ClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.ClickCallback(self)
     end
-
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
-
 end
 
 function Button:Draw()
-    self.TargetBorderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
-    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 
     WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
 
-    self.TargetBackColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
-    Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     if (self.Text) then
