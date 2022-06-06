@@ -1,9 +1,11 @@
 CarrouselButton = middleclass('CarrouselButton', Control)
 
-function CarrouselButton:initialize(x, y, w, h, items, onSelectedItemChangedCallback)
+function CarrouselButton:initialize(x, y, w, h, items, wrapAround, onSelectedItemChangedCallback)
     Control.initialize(self, x, y, w, h)
     self.Items = items -- Must be of type "string" :)
     self.SelectedItemIndex = 1
+
+    self.WrapAround = wrapAround
 
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
 
@@ -30,16 +32,21 @@ end
 function CarrouselButton:Update()
 
     if Mouse.ClickedInside(self.LeftChevronX, self.LeftChevronY, self.LeftChevronWidth, self.LeftChevronHeight) then
-        self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
+        if self.WrapAround then
+            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex - 1, 1, #self.Items)
+        else
+            self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
+        end
         self.OnSelectedItemChangedCallback(self)
     end
-
     if Mouse.ClickedInside(self.RightChevronX, self.RightChevronY, self.RightChevronWidth, self.RightChevronHeight) then
-        self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
+        if self.WrapAround then
+            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + 1, 1, #self.Items)
+        else
+            self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
+        end
         self.OnSelectedItemChangedCallback(self)
     end
-
-    self.Ticks = self.Ticks + 1
 end
 
 function CarrouselButton:Draw()

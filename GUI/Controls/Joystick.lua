@@ -51,22 +51,25 @@ function Joystick:Draw()
     WGUI.FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
     WGUI.DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
 
-    local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
-    local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
-
-    WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 2, self.X + self.Width / 2,
-        self.Y + self.Height / 2, cX, cY)
-
     WGUI.DrawLine(self.CurrentBorderColor, 1, self.X, self.Y + self.Height / 2, self.X + self.Width,
         self.Y + self.Height / 2)
 
     WGUI.DrawLine(self.CurrentBorderColor, 1, self.X + self.Width / 2, self.Y, self.X + self.Width / 2,
         self.Y + self.Height)
+        
+    local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
+    local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
+
+    WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 3, self.X + self.Width / 2,
+        self.Y + self.Height / 2, cX , cY)
+
+    
 
     WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
         cX - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE)
+        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2 + 1,
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE + 1,
+        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE + 1) -- idk what the fuck is going on here
+                                                                          -- ellipse draw routine in gdi side is exhibiting small pixel precision issues
 
 end

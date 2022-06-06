@@ -9,6 +9,20 @@ function Numeric.Clamp(value, min, max)
 end
 
 function Numeric.TemporalInterpolateNumber(current, target)
-    current = math.floor(current +  (target - current) * 0.1)
+    return Numeric.TemporalInterpolateNumberWithSpeed(0.1, current, target)
+end
+
+function Numeric.TemporalInterpolateNumberWithSpeed(factor, current, target)
+    current = math.floor(current +  (target - current) * factor)
     return current
+end
+
+function Numeric.WrappingClamp(value, min, max) -- there has got to be branchless bithack for this!!!
+    if value > max then
+        return min
+    end
+    if value < min then
+        return max
+    end
+    return value
 end
