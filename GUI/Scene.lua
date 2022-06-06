@@ -21,9 +21,9 @@ end
 function Scene:Draw()
 
     
-    WGUI.FillRectangle(self.CurrentBackColor,
-        Screen.Dimensions.Width - Screen.ExpandedOffset, 0, (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2,
-        Screen.Dimensions.Height)
+    --WGUI.FillRectangle(self.CurrentBackColor,
+    --   Screen.Dimensions.Width - Screen.ExpandedOffset, 0, (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2,
+    --   Screen.Dimensions.Height)
 
     if self.IsActive then
         for key, control in pairs(self.Controls) do

@@ -13,7 +13,9 @@ end
 function Button:PersistentUpdate()
     self.TargetBorderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
     Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
-
+    if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+        self.ShouldPaint = true
+    end
     self.TargetBackColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
     Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
 
@@ -28,6 +30,11 @@ function Button:Update()
 end
 
 function Button:Draw()
+    if self.ShouldPaint then
+        self.ShouldPaint = false
+    else
+        return
+    end
 
     WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)

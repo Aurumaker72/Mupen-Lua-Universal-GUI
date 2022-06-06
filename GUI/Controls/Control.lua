@@ -8,6 +8,7 @@ function Control:initialize(x,y,w,h)
 	self.Height = h
 	self.IsCapturingMouse = false
 	self.Ticks = 0
+	self.ShouldPaint = true
 end
 
 function Control:GetRight()
