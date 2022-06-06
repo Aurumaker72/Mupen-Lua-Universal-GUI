@@ -65,7 +65,7 @@ function UserCodeOnInitialize()
             TheCarrousel = CarrouselButton:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 90, 124, 20, { "Classic", "Inverted", "Dark"}, true, function(sender)
                 Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
             end),
-            FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 120, 124, 20, { "Classic", "Inverted", "Dark", "The", "They", "Bey", "Ney" }, function(sender)
+            FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 120, 124, 20, { "A", "B", "C", "B", "C", "B", "C" }, function(sender)
                 --Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
             end),
         }),

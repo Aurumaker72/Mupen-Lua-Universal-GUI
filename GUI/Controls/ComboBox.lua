@@ -41,11 +41,11 @@ function ComboBox:Update()
             self.OnSelectedItemChangedCallback(self)
         end
     
-    if self.CurrentDropDownHeight > self.ItemHeight then
-        local baseY = self.CurrentDropDownHeight + self.ItemHeight
+    if self.CurrentDropDownHeight > self.TargetDropDownHeight / 2 and self.IsOpened then
+        local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
                 for i = 1, #self.Items, 1 do
-                    local thisY = baseY + (i * 20)
-                if Mouse.ClickedInside(self.X - BORDER_SIZE, 
+                    local thisY = baseY + (i * self.ItemHeight)
+                    if Mouse.ClickedInside(self.X - BORDER_SIZE, 
                 thisY, self.Width + BORDER_SIZE + 1, self.ItemHeight) then
                     self.SelectedItemIndex = i
                     self.OnSelectedItemChangedCallback(self)
@@ -61,11 +61,12 @@ function ComboBox:Draw()
 
         WGUI.FillRectangleBounds(self.CurrentBackColor, self.X, self.Y + self.Height, self.Width, self.CurrentDropDownHeight + self.ItemHeight / 2)
 
-        local baseY = self.CurrentDropDownHeight + self.ItemHeight --self.Y + self.Height - -self.CurrentDropDownHeight
+        local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
         for i = 1, #self.Items, 1 do
 
-            local thisY = baseY + (i * 20)
+            local thisY = baseY + (i * self.ItemHeight)
+
             if thisY > self.Y + self.Height - self.ItemHeight then
 
                 WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, BORDER_SIZE,
