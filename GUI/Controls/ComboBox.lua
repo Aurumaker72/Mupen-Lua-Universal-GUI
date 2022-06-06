@@ -42,8 +42,8 @@ function ComboBox:Update()
         end
     
     if self.CurrentDropDownHeight > self.ItemHeight then
-        local baseY = self.Y - self.Height + self.CurrentDropDownHeight - self.ItemHeight/2
-        for i = 1, #self.Items, 1 do
+        local baseY = self.CurrentDropDownHeight - self.ItemHeight
+                for i = 1, #self.Items, 1 do
             local thisY = baseY + (i * 20) - self.ItemHeight
                 if Mouse.ClickedInside(self.X - BORDER_SIZE, 
                 thisY, self.Width + BORDER_SIZE + 1, self.ItemHeight) then
@@ -61,7 +61,7 @@ function ComboBox:Draw()
 
         WGUI.FillRectangleBounds(self.CurrentBackColor, self.X, self.Y + self.Height, self.Width, self.CurrentDropDownHeight + self.ItemHeight / 2)
 
-        local baseY = self.Y - self.Height + self.CurrentDropDownHeight - self.ItemHeight/2
+        local baseY = self.CurrentDropDownHeight - self.ItemHeight --self.Y + self.Height - -self.CurrentDropDownHeight
         for i = 1, #self.Items, 1 do
 
             local thisY = baseY + (i * 20) - self.ItemHeight
