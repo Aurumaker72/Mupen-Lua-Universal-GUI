@@ -4,6 +4,9 @@ function ComboBox:initialize(x, y, w, h, items, onSelectedItemChangedCallback)
     Control.initialize(self, x, y, w, h)
 
     self.Items = items -- Must be of type "string" :)
+    self.ItemCurrentBackColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
+    self.ItemCurrentBorderColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR)
+
     self.SelectedItemIndex = 1
     self.ItemHeight = 20
     self.IsOpened = false
@@ -26,6 +29,16 @@ end
 function ComboBox:PersistentUpdate()
     self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
         WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+
+    for i = 1, #self.Items, 1 do
+        self.ItemCurrentBackColors[i] = WGUI.TemporalInterpolateRGBColor(
+            WGUI.HexadecimalColorToRGB(self.ItemCurrentBackColors[i]),
+        WGUI.HexadecimalColorToRGB(self.SelectedItemIndex == i and Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.ItemCurrentBorderColors[i] = WGUI.TemporalInterpolateRGBColor(
+            WGUI.HexadecimalColorToRGB(self.ItemCurrentBorderColors[i]),
+        WGUI.HexadecimalColorToRGB(self.SelectedItemIndex == i and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+
+    end
 end
 
 function ComboBox:SetOpen(isOpen)
@@ -62,7 +75,8 @@ function ComboBox:Draw()
 
     if self.CurrentDropDownHeight > 0 then
 
-        WGUI.FillRectangleBounds(self.CurrentBackColor, self.X, self.Y + self.Height, self.Width, self.CurrentDropDownHeight + self.ItemHeight / 2)
+        WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 
+        BORDER_SIZE, self.X - BORDER_SIZE, self.Y + self.Height - BORDER_SIZE, self.Width + BORDER_SIZE+1, self.CurrentDropDownHeight + self.ItemHeight / 2 + BORDER_SIZE+1)
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
@@ -72,15 +86,21 @@ function ComboBox:Draw()
 
             if thisY > self.Y + self.Height - self.ItemHeight then
 
-                WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, BORDER_SIZE,
-                self.X - BORDER_SIZE, 
-                thisY, self.Width + BORDER_SIZE + 1, self.ItemHeight)
+                WGUI.FillRectangleBounds(self.ItemCurrentBackColors[i],
+                self.X, 
+                thisY, self.Width, self.ItemHeight)
 
+                
+
+                --WGUI.DrawRectangleBounds(self.ItemCurrentBorderColors[i], BORDER_SIZE,
+                --self.X - BORDER_SIZE, 
+                --thisY, self.Width + BORDER_SIZE, self.ItemHeight)
 
                 WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, 
             self.Items[i], 
             self.X + 3, 
-            thisY)
+            thisY + 2)
+
             end
             
 
@@ -94,10 +114,13 @@ function ComboBox:Draw()
 
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.RightChevronText, self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
+    
+    --WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
+    --    self.X + self.Width / 2 - FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
+    --    self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
-        self.X + self.Width / 2 - FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
-        self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
-
+    self.X + 3,
+    self.Y + 2)
 
     
 
