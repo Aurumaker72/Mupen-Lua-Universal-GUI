@@ -19,29 +19,23 @@ function ToggleButton:PersistentUpdate()
     Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     self.TargetBackColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
     Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
+    
+    if (self.IsChecked) then
+        self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR
+        self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
+    end
 
     self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
     self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
 end
 
 function ToggleButton:Draw()
-
-    if (self.IsChecked) then
-        self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR
-    end
-
     WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE,
         self.Height + self.Y + BORDER_SIZE)
 
-
-    if (self.IsChecked) then
-        self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
-    end
-
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
-
     if (self.Text) then
-        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width / 2 - 4 * self.Text:len(),
-            self.Y + self.Height / 2 - 8)
+        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width/2 - FONT_SIZE/3 * self.Text:len(),
+            self.Y + self.Height / 2 - 7.5)
     end
 end

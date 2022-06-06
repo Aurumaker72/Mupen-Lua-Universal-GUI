@@ -19,7 +19,6 @@ function ComboBox:initialize(x, y, w, h, items, onSelectedItemChangedCallback)
     self.RightChevronHeight = self.Height
     self.RightChevronText = self.IsOpened and "^" or "v"
 
-
     self.TargetDropDownHeight = 0
     self.CurrentDropDownHeight = self.TargetDropDownHeight
 
@@ -45,7 +44,6 @@ function ComboBox:SetOpen(isOpen)
     self.IsOpened = isOpen
     self.TargetDropDownHeight = self.IsOpened and self.ItemHeight * #self.Items or -self.ItemHeight
     self.RightChevronText = self.IsOpened and "^" or "v"
-
 end
 
 function ComboBox:Update()
@@ -57,18 +55,39 @@ function ComboBox:Update()
             self.OnSelectedItemChangedCallback(self)
         end
     
+    
     if self.CurrentDropDownHeight > self.TargetDropDownHeight / 2 and self.IsOpened then
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
                 for i = 1, #self.Items, 1 do
                     local thisY = baseY + (i * self.ItemHeight)
                     if Mouse.ClickedInside(self.X - BORDER_SIZE, 
                 thisY, self.Width + BORDER_SIZE + 1, self.ItemHeight) then
-                    self.SelectedItemIndex = i
-                    self.OnSelectedItemChangedCallback(self)
+                    self.SetSelectedIndex(self, i)
                 end
         end
-        
+        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height + self.CurrentDropDownHeight) then
+            self.PerformKeyboardNavigation(self)
+        end
+    else
+        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+            self.PerformKeyboardNavigation(self)
+        end
+
     end
+end
+
+function ComboBox:PerformKeyboardNavigation()
+    if Keyboard.KeyPressed("down") then
+        self.SetSelectedIndex(self, self.SelectedItemIndex + 1)
+    end
+    if Keyboard.KeyPressed("up") then
+        self.SetSelectedIndex(self, self.SelectedItemIndex - 1)
+    end
+end
+
+function ComboBox:SetSelectedIndex(index)
+    self.SelectedItemIndex = Numeric.WrappingClamp(index, 1, #self.Items)
+    self.OnSelectedItemChangedCallback(self)
 end
 
 function ComboBox:Draw()
@@ -90,21 +109,12 @@ function ComboBox:Draw()
                 self.X, 
                 thisY, self.Width, self.ItemHeight)
 
-                
-
-                --WGUI.DrawRectangleBounds(self.ItemCurrentBorderColors[i], BORDER_SIZE,
-                --self.X - BORDER_SIZE, 
-                --thisY, self.Width + BORDER_SIZE, self.ItemHeight)
-
                 WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, 
-            self.Items[i], 
-            self.X + 3, 
-            thisY + 2)
+                self.Items[i], 
+                self.X + 3, 
+                thisY + 2)
 
             end
-            
-
-            --WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[i], self.X - BORDER_SIZE, self.Y + self.Height - BORDER_SIZE + (i * (20 + BORDER_SIZE)))
         end
     end
 
@@ -114,11 +124,8 @@ function ComboBox:Draw()
 
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.RightChevronText, self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
-    
-    --WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
-    --    self.X + self.Width / 2 - FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
-    --    self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
-    WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
+
+        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
     self.X + 3,
     self.Y + 2)
 

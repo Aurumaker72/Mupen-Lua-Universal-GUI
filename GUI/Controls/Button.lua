@@ -35,8 +35,8 @@ function Button:Draw()
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     if (self.Text) then
-        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width / 2 - FONT_SIZE / 3 * self.Text:len(),
-            self.Y + self.Height / 2 - 8)
+        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + self.Width/2 - FONT_SIZE/3 * self.Text:len(),
+            self.Y + self.Height / 2 - 7.5)
     end
 
     

@@ -1,6 +1,6 @@
 Screen = {
     IsExpanded = false,
-    ExpandedOffset = 200,
+    ExpandedOffset = 222,
     Dimensions = {
         InitialWidth = 0,
         InitialHeight = 0,

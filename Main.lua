@@ -18,7 +18,7 @@ FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
-dofile(FOLDER_USER_CODE .. "YourCode.lua")
+dofile(FOLDER_USER_CODE .. "InputDirection.lua")
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
