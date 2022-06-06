@@ -65,6 +65,10 @@ BORDER_SIZE = 1
 
 
 function Appearance.SetTheme(theme)
+    if not Appearance.Themes[theme] then
+        print("The theme \"" .. theme .. "\" was invalid and not applied")
+        return
+    end
     Appearance.CurrentTheme = theme
 end
 

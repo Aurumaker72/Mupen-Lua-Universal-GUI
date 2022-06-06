@@ -6,6 +6,7 @@ function ComboBox:initialize(x, y, w, h, items, onSelectedItemChangedCallback)
     self.Items = items -- Must be of type "string" :)
     self.SelectedItemIndex = 1
     self.ItemHeight = 20
+    self.IsOpened = false
 
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
 
@@ -13,8 +14,8 @@ function ComboBox:initialize(x, y, w, h, items, onSelectedItemChangedCallback)
     self.RightChevronY = self.Y
     self.RightChevronWidth = Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH
     self.RightChevronHeight = self.Height
+    self.RightChevronText = self.IsOpened and "^" or "v"
 
-    self.IsOpened = false
 
     self.TargetDropDownHeight = 0
     self.CurrentDropDownHeight = self.TargetDropDownHeight
@@ -30,6 +31,8 @@ end
 function ComboBox:SetOpen(isOpen)
     self.IsOpened = isOpen
     self.TargetDropDownHeight = self.IsOpened and self.ItemHeight * #self.Items or -self.ItemHeight
+    self.RightChevronText = self.IsOpened and "^" or "v"
+
 end
 
 function ComboBox:Update()
@@ -89,7 +92,7 @@ function ComboBox:Draw()
         self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
-    WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, "v", self.X + self.Width -
+    WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.RightChevronText, self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
         self.X + self.Width / 2 - FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
