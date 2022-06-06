@@ -73,7 +73,7 @@ function Appearance.SetTheme(theme)
 end
 
 function Appearance.Initialize()
-    Appearance.Themes.Inverted = Table.Copy(Appearance.Themes.Classic)
+    Appearance.Themes.Inverted = Table.DeepCopy(Appearance.Themes.Classic)
 
     for k, v in pairs(Appearance.Themes.Inverted) do
         if (type(v) == "string") then

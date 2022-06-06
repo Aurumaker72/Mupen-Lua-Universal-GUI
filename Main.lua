@@ -63,19 +63,20 @@ function AtVisualInterrupt()
 
     UserCodeAtVisualInterrupt()
 
-    Mouse.Update()
-    Keyboard.Update()
 
-    SceneManager.Update()
     SceneManager.Draw()
     
 end
 
-function AtInputPoll()
-    UserCodeAtInputPoll()
+function AtInterval()
+    Mouse.Update()
+    Keyboard.Update()
+
+    SceneManager.Update()
+
 end
 
 -- Register callbacks
 emu.atstop(AtStop)
-emu.atinput(AtInputPoll)
+emu.atinterval(AtInterval)
 emu.atvi(AtVisualInterrupt)
