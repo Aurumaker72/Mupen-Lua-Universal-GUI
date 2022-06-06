@@ -1,7 +1,7 @@
 Label = middleclass('Label', Control)
 
-function Label:initialize(x, y, w, h, text)
-    Control.initialize(self, x, y, w, h)
+function Label:initialize(x, y, text)
+    Control.initialize(self, x, y, 1, 1)
     self.Text = text
     self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
 end
@@ -10,9 +10,11 @@ function Label:Update()
 end
 
 function Label:Draw()
-    if (self.Text) then
+    if self.Text then
         WGUI.DrawText(self.CurrentForeColor, self.Text, self.X, self.Y)
-    end
+    else
+        print("Label has no text")
+    end 
 end
 
 function Label:PersistentUpdate()

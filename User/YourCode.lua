@@ -48,29 +48,20 @@ function UserCodeOnInitialize()
             YLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4 + 133, 128, 30, "")
 
         }),
-
-        Memory = Scene:new({}),
-
         Settings = Scene:new({
-            TheCarrousel = CarrouselButton:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 90, 124, 20,
-                {"Classic", "Inverted", "Dark"}, true, function(sender)
-                    Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
-                end),
             FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 120, 124, 20,
-                {"A", "B", "C", "B", "C", "B", "C"}, function(sender)
-                    -- Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
-                end)
+                {"Classic", "Inverted", "Dark"}, function(sender)
+                     Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
+                end),
+            SelectYourDisease = Label:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 90, "Select your theme:"),
+
         })
 
     }, {
         HomeButton = Button:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE, 70, 32, "Home", function(sender)
             SceneManager.ChangeScene("Home")
         end),
-        MemoryButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Memory", function(sender)
-            SceneManager.ChangeScene("Memory")
-        end),
-
-        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 143, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
+        SettingsButton = Button:new(HORIZONTAL_SAFE_ZONE * 2 + 70, VERTICAL_SAFE_ZONE, 70, 32, "Settings",
             function(sender)
                 SceneManager.ChangeScene("Settings")
             end)
