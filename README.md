@@ -27,7 +27,12 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 *Button highlights*
 
+<img src="https://user-images.githubusercontent.com/48759429/172204289-d435637d-33e4-4d35-9d18-714766337f32.gif" width="250"/>
+
+*A ComboBox control*
+
 ## Usage
+
 
 #### Adding a new scene
 Add `YourKey = Scene:new({ ... })` in the `SceneManager.Initialize(...)` call
