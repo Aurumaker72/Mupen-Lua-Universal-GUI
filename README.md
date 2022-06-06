@@ -28,8 +28,6 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 *Button highlights*
 
 ## Usage
-**NOTE: This
- project is not ready to use as a library**
 
 #### Adding a new scene
 Add `YourKey = Scene:new({ ... })` in the `SceneManager.Initialize(...)` call
@@ -61,8 +59,12 @@ Modify the `Controls = { ... }` block inside your desired scene
   - Slider
     - Minimum/Maximum bounds
     - Staggered increment
+    - Read-only and Read-write mode
   - Joystick
     - Read-only and Read-write mode
   - Label
+  - CarrouselButton
+    - Wrap-around
+  - ComboBox
   - ~~ListView~~
   - ~~Image~~
