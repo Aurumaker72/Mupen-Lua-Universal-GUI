@@ -47,9 +47,7 @@ function UserCodeOnInitialize()
 
             end),
             YLabel = Label:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4 + 133, 128, 30, ""),
-            FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE, VERTICAL_SAFE_ZONE * 4 + 190, 128, 20, { "Classic", "Inverted", "Dark" }, function(sender)
-                
-            end),
+            
         }),
 
         Memory = Scene:new({
@@ -58,6 +56,9 @@ function UserCodeOnInitialize()
 
         Settings = Scene:new({
             TheCarrousel = CarrouselButton:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 90, 124, 20, { "Classic", "Inverted", "Dark"}, true, function(sender)
+                Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
+            end),
+            FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 120, 124, 20, { "Classic", "Inverted", "Dark" }, function(sender)
                 Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
             end),
         }),
