@@ -46,12 +46,14 @@ function WGUI.HexadecimalColorToRGB(hex)
     if not hex then
         print(debug.traceback())
     end
-    hex = hex:gsub("#","")
+    -- OPTIMIZATION: dont copy and reallocate string, just shift logic by one
+    --hex = hex:gsub("#","")
     return 
     {
-        tonumber("0x"..hex:sub(1,2)), 
-        tonumber("0x"..hex:sub(3,4)), 
-        tonumber("0x"..hex:sub(5,6)),
+    -- OPTIMIZATION: dont reallocate string due to concatenation, just specify explicit radix
+        tonumber(hex:sub(2,3), 16), 
+        tonumber(hex:sub(4,5), 16), 
+        tonumber(hex:sub(6,7), 16),
     }
 end
 
@@ -60,7 +62,7 @@ function WGUI.RGBToHexadecimalColor(rgb)
 end
 
 function WGUI.TemporalInterpolateRGBColor(currentColor, targetColor)
-    currentColor[1] = math.floor(currentColor[1] +  (targetColor[1] - currentColor[1]) * 0.1)
+    currentColor[1] = math.floor(currentColor[1] + (targetColor[1] - currentColor[1]) * 0.1)
     currentColor[2] = math.floor(currentColor[2] + (targetColor[2] - currentColor[2]) * 0.1)
     currentColor[3] = math.floor(currentColor[3] + (targetColor[3] - currentColor[3]) * 0.1)
     return WGUI.RGBToHexadecimalColor(currentColor)

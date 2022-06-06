@@ -50,7 +50,7 @@ function UserCodeOnInitialize()
         }),
         Settings = Scene:new({
             FuckThisShit = ComboBox:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 120, 124, 20,
-                {"Classic", "Inverted", "Dark"}, function(sender)
+                {"Classic", "Inverted", "Dark", "Fuck"}, function(sender)
                      Appearance.SetTheme(sender.Items[sender.SelectedItemIndex])
                 end),
             SelectYourDisease = Label:new(HORIZONTAL_SAFE_ZONE + 20, VERTICAL_SAFE_ZONE + 90, "Select your theme:"),
