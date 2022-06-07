@@ -63,7 +63,8 @@ Modify the `Controls = { ... }` block inside your desired scene
   - ToggleButton
   - TextBox
     - Read-only and Read-write mode
-    - Relative editing mode
+    - Character deletion
+    - Numeric/Alphanumeric mode
   - Slider
     - Minimum/Maximum bounds
     - Staggered increment
