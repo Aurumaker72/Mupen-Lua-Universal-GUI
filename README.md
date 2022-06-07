@@ -1,4 +1,7 @@
 # Mupen-Lua Universal GUI
+
+⚠️ **This framework is not ready for production, expect API changes**
+
 Lua framework for Mupen64 which allows flexible, highly customizable and straightforward creation of GUIs
 
 ## Examples
@@ -19,17 +22,17 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 *A joystick control in read-write mode*
 
-<img src="https://user-images.githubusercontent.com/48759429/172062286-c1e637dd-8263-4a43-9c9f-e4169086b07a.gif" width="250"/>
+<img src="https://user-images.githubusercontent.com/48759429/172204289-d435637d-33e4-4d35-9d18-714766337f32.gif" width="250"/>
 
-*Inverted theme*
+*A ComboBox control which sets the theme*
 
 <img src="https://user-images.githubusercontent.com/48759429/172062375-c19b362f-d0d3-48cc-9a1f-fb7ecaac12c8.gif" width="250"/>
 
 *Button highlights*
 
-<img src="https://user-images.githubusercontent.com/48759429/172204289-d435637d-33e4-4d35-9d18-714766337f32.gif" width="250"/>
+![grafik](https://user-images.githubusercontent.com/48759429/172351451-a422fcfd-5d84-4338-bd8f-60dd6136831b.png)
 
-*A ComboBox control*
+*Example frontend port of InputDirection Lua*
 
 ## Usage
 
@@ -60,7 +63,8 @@ Modify the `Controls = { ... }` block inside your desired scene
   - ToggleButton
   - TextBox
     - Read-only and Read-write mode
-    - Relative editing mode
+    - Character deletion
+    - Numeric/Alphanumeric mode
   - Slider
     - Minimum/Maximum bounds
     - Staggered increment
