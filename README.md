@@ -58,6 +58,12 @@ Modify the `Controls = { ... }` block inside your desired scene
 ```
 
 ## Features
+- Scenes (Tabs)
+  - Switch with one function call
+  - Can define non-scene (persistent) controls for navigation OR scene-linked controls
+- Theming
+- Compatibility
+  - (WIP) Automatically scales controls depending on resolution 
 - Controls
   - Button
   - ToggleButton
