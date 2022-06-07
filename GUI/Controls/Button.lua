@@ -4,21 +4,15 @@ function Button:initialize(x, y, w, h, text, clickCallback)
     Control.initialize(self, x, y, w, h)
     self.Text = text
     self.ClickCallback = clickCallback
-    self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
-    self.CurrentBackColor = self.TargetBackColor
-    self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
-    self.CurrentBorderColor = self.TargetBorderColor
+    self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
+    self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 end
 
 function Button:PersistentUpdate()
-    self.TargetBorderColor = Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
-    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
-
-    self.TargetBackColor = (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
-    Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
-
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor), WGUI.HexadecimalColorToRGB((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsDown()) and
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
+    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
 end
 
 function Button:Update()

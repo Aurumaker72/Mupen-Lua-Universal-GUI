@@ -95,15 +95,21 @@ function UserCodeOnInitialize()
           ParameterDumpLabel4 = Label:new(5, 290 + (FONT_SIZE + 5) * 4, "some value"),
           ParameterDumpLabel5 = Label:new(5, 290 + (FONT_SIZE + 5) * 5, "some value"),
           ParameterDumpLabel6 = Label:new(5, 290 + (FONT_SIZE + 5) * 6, "some value"),
-          Fuck = ComboBox:new(5, 290 + (FONT_SIZE + 10) * 7, 180, 20, {"Classic", "Dark", "Inverted"}, function(o)
-              Appearance.SetTheme(o.Items[o.SelectedItemIndex])
-          end),
-
+          
+          
         }),
-
-    }, {
         
+        Settings = Scene:new({
+            Fuck = ComboBox:new(5, 5, 180, 20, {"Classic", "Dark", "Inverted"}, function(o)
+                Appearance.SetTheme(o.Items[o.SelectedItemIndex])
+            end),
+        }),
     })
+    PersistentControls = {
+        NavigationCarrouselButton = CarrouselButton:new(0, 290 + (FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
+            SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
+        end),
+    }
 
     CurrentScene = Scenes.Main
     CurrentScene.IsActive = true
