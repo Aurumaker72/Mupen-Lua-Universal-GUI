@@ -50,7 +50,7 @@ function ComboBox:Update()
     self.CurrentDropDownHeight =
         Numeric.TemporalInterpolateNumber(self.CurrentDropDownHeight, self.TargetDropDownHeight)
 
-        if Mouse.ClickedInside(self.RightChevronX, self.RightChevronY, self.RightChevronWidth, self.RightChevronHeight) then
+        if Mouse.ClickedInside(self.X, self.Y, self.Width, self.Height) then
             self.SetOpen(self, not self.IsOpened)
             self.OnSelectedItemChangedCallback(self)
         end

@@ -1,11 +1,13 @@
 Screen = {
     IsExpanded = false,
-    ExpandedOffset = 222,
+    ExpandedOffset = 227,
     Dimensions = {
         InitialWidth = 0,
         InitialHeight = 0,
         Width = 0,
         Height = 0,
+        ScalingX = 1,
+        ScalingY = 1,
     }
 }
 
@@ -14,10 +16,16 @@ function Screen.Dimensions.Update()
     d = wgui.info()
     Screen.Dimensions.Width = d.width
     Screen.Dimensions.Height = d.height
+
+    
     if Screen.Dimensions.InitialWidth == 0 or Screen.Dimensions.InitialHeight == 0 then
         Screen.Dimensions.InitialWidth = d.width
         Screen.Dimensions.InitialHeight = d.height
-    end
+
+        Screen.Dimensions.ScalingX = Screen.Dimensions.Width / 800
+        Screen.Dimensions.ScalingY = Screen.Dimensions.Height / 600
+        
+        end
 end
 
 function Screen.Expand()
@@ -26,8 +34,7 @@ function Screen.Expand()
     if Screen.IsExpanded then
         return
     end
-
-    wgui.resize(Screen.Dimensions.Width + Screen.ExpandedOffset, Screen.Dimensions.Height)
+    wgui.resize(math.tointeger (math.floor(Screen.Dimensions.Width + (Screen.ExpandedOffset))), Screen.Dimensions.Height)
     Screen.Dimensions.Update()
     IsExpanded = true
 

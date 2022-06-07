@@ -2,10 +2,10 @@
 Control = middleclass('Control')
 
 function Control:initialize(x,y,w,h)
-	self.X = x + Screen.Dimensions.Width - Screen.ExpandedOffset
-	self.Y = y
-	self.Width = w
-	self.Height = h
+	self.X = (x * Screen.Dimensions.ScalingX  + Screen.Dimensions.Width - Screen.ExpandedOffset)
+	self.Y = y * Screen.Dimensions.ScalingY
+	self.Width = w * Screen.Dimensions.ScalingX
+	self.Height = h * Screen.Dimensions.ScalingY
 	self.IsCapturingMouse = false
 	self.Ticks = 0
 end

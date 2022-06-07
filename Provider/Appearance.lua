@@ -73,6 +73,8 @@ function Appearance.SetTheme(theme)
 end
 
 function Appearance.Initialize()
+
+    --FONT_SIZE = math.floor(FONT_SIZE * Screen.Dimensions.ScalingX)
     Appearance.Themes.Inverted = Table.DeepCopy(Appearance.Themes.Classic)
 
     for k, v in pairs(Appearance.Themes.Inverted) do
