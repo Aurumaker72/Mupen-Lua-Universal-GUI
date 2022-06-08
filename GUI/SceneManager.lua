@@ -26,6 +26,16 @@ function SceneManager.Update()
         control:PersistentUpdate()
         control:Update()
     end
+
+    -- update outside of scene context to avoid context switch and thus invalid state
+    for k, scene in pairs(Scenes) do
+        for i = 1, #scene.QueuedCallbacks, 1 do
+            scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
+            scene.QueuedCallbacks[i] = nil
+            scene.QueuedCallbackParameters[i] = nil
+        end
+    end
+    
 end
 
 function SceneManager.Draw()
