@@ -36,13 +36,13 @@ function ToggleButton:PersistentUpdate()
 end
 
 function ToggleButton:Draw()
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE,
-        self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
 
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
     if (self.Text) then
         WGUI.DrawText(self.IsChecked and Appearance.Themes[Appearance.CurrentTheme].TOGGLEBUTTON_CHECKED_FORE_COLOR or
                           Appearance.Themes[Appearance.CurrentTheme].TOGGLEBUTTON_UNCHECKED_FORE_COLOR, self.Text,
-            self.X + self.Width / 2 - FONT_SIZE / 3 * self.Text:len(), self.Y + self.Height / 2 - 7.5)
+            self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 * self.Text:len(), self.Y + self.Height / 2 - 7.5)
     end
 end

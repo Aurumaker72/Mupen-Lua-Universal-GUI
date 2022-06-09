@@ -49,8 +49,8 @@ end
 end
 
 function CarrouselButton:Draw()
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - BORDER_SIZE,
-        self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     -- WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, 1, self.LeftChevronX, self.LeftChevronY, self.LeftChevronWidth, self.LeftChevronHeight)
@@ -61,7 +61,7 @@ function CarrouselButton:Draw()
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, ">", self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
-        self.X + self.Width / 2 - FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
+        self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
         self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
 
 end

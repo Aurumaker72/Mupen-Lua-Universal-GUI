@@ -51,7 +51,7 @@ function UserCodeOnInitialize()
         end),
 
         Always99 = ToggleButton:new(mainScene, 136, 5, 55, 22, "Always", false, function(o)
-            if Scenes.MainScene.Controls.StrainTo99.IsChecked then
+            if Scenes.Main.Controls.StrainTo99.IsChecked then
                 InputDirection.SpeedTrickMode = "Always"
             else
                 o.IsChecked = false
@@ -61,7 +61,7 @@ function UserCodeOnInitialize()
 
         StrainTo99 = ToggleButton:new(mainScene, 194, 5, 29, 22, ".99", false, function(o)
             if o.IsChecked == false then
-                Scenes.MainScene.Controls.Always99.IsChecked = false
+                Scenes.Main.Controls.Always99.IsChecked = false
                 InputDirection.SpeedTrickMode = "None"
             end
         end),
@@ -92,12 +92,12 @@ function UserCodeOnInitialize()
         ResetMagnitude = Button:new(mainScene, 141, 260, 76, 21, "Reset Mag.", function(o)
 
         end),
-        ParameterDumpLabel1 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 1, "some value"),
-        ParameterDumpLabel2 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 2, "some value"),
-        ParameterDumpLabel3 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 3, "some value"),
-        ParameterDumpLabel4 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 4, "some value"),
-        ParameterDumpLabel5 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 5, "some value"),
-        ParameterDumpLabel6 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 6, "some value"),
+        ParameterDumpLabel1 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 1, "some value"),
+        ParameterDumpLabel2 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 2, "some value"),
+        ParameterDumpLabel3 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 3, "some value"),
+        ParameterDumpLabel4 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 4, "some value"),
+        ParameterDumpLabel5 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 5, "some value"),
+        ParameterDumpLabel6 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 6, "some value"),
         SwitchScene = Button:new(mainScene, 141, 300, 76, 21, "settings", function(o)
             print("Changing to Settings")
             SceneManager.ChangeScene("Settings")
@@ -107,7 +107,7 @@ function UserCodeOnInitialize()
     })
 
     settingsScene:AddControls({
-        Fuck = ComboBox:new(mainScene, 5, 5, 180, 20, {"Classic", "Dark", "Inverted"}, function(o)
+        Fuck = ComboBox:new(mainScene, 5, 5, 180, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
         SwitchScene = Button:new(mainScene, 141, 300, 76, 21, "home", function(o)
@@ -121,7 +121,7 @@ function UserCodeOnInitialize()
         Settings = settingsScene,
     },
     {
-    NavigationCarrouselButton = CarrouselButton:new(mainScene, 0, 290 + (FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
+    NavigationCarrouselButton = CarrouselButton:new(mainScene, 0, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
         SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
     end)
     })

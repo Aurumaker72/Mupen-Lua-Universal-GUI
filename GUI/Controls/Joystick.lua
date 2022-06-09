@@ -50,8 +50,8 @@ function Joystick:Draw()
 
     
 
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE + 1, self.Y - BORDER_SIZE + 1,
-        self.Width + self.X + BORDER_SIZE - 2, self.Height + self.Y + BORDER_SIZE - 2)
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1, self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1,
+        self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE - 2, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE - 2)
 
     WGUI.FillRectangle(self.CurrentBackColor, self.X + 1, self.Y + 1, self.Width + self.X - 2, self.Height + self.Y - 2)
 

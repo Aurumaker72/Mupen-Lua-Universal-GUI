@@ -70,7 +70,7 @@ function ComboBox:Update()
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
         for i = 1, #self.Items, 1 do
             local thisY = baseY + (i * self.ItemHeight)
-            if Mouse.IsPrimaryClickedInside(self.X - BORDER_SIZE, thisY, self.Width + BORDER_SIZE + 1, self.ItemHeight) then
+            if Mouse.IsPrimaryClickedInside(self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, thisY, self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1, self.ItemHeight) then
                 self.SetSelectedIndex(self, i)
                 itemWasClicked = true
             end
@@ -107,9 +107,9 @@ function ComboBox:Draw()
 
     if self.CurrentDropDownHeight > 0 then
 
-        WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, BORDER_SIZE,
-            self.X - BORDER_SIZE, self.Y + self.Height - BORDER_SIZE, self.Width + BORDER_SIZE + 1,
-            self.CurrentDropDownHeight + self.ItemHeight / 2 + BORDER_SIZE + 1)
+        WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+            self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1,
+            self.CurrentDropDownHeight + self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
@@ -128,8 +128,8 @@ function ComboBox:Draw()
         end
     end
 
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - BORDER_SIZE,
-        self.Y - BORDER_SIZE, self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.RightChevronText, self.X +

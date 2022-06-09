@@ -81,13 +81,13 @@ function TextBox:CanTypeCharacter()
         print("TextBox text was set to string")
         return false
     end
-    return (self.Text:len() * FONT_SIZE < self.Width) and (self.Text:len() + 1 <= self.MaxLength)
+    return (self.Text:len() * Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE < self.Width) and (self.Text:len() + 1 <= self.MaxLength)
 end
 
 function TextBox:Draw()
 
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE, self.Y - BORDER_SIZE,
-        self.Width + self.X + BORDER_SIZE, self.Height + self.Y + BORDER_SIZE)
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
 
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 

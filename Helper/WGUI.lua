@@ -30,7 +30,7 @@ end
 
 function WGUI.DrawText(color, text, x, y)
     wgui.setcolor(color)
-    wgui.setfont(FONT_SIZE,"Arial","c")
+    wgui.setfont(Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE,Appearance.Themes[Appearance.CurrentTheme].FONT_NAME,"c")
     wgui.text(
         x, 
         y,
