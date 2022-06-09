@@ -29,7 +29,7 @@ Appearance = {
             SLIDER_TRACK_HEIGHT = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             FONT_SIZE = 10,
-            FONT_NAME = "Arial",
+            FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
         },
         Dark = {
@@ -60,7 +60,7 @@ Appearance = {
             SLIDER_TRACK_HEIGHT = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             FONT_SIZE = 10,
-            FONT_NAME = "Arial",
+            FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
         },
         DarkFlat = {
@@ -91,7 +91,7 @@ Appearance = {
             SLIDER_TRACK_HEIGHT = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             FONT_SIZE = 10,
-            FONT_NAME = "Arial",
+            FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
         },
         Inverted = {
