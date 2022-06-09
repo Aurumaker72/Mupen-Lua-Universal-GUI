@@ -5,6 +5,9 @@ Keyboard = {
 
 
 function Keyboard.KeyPressed(key)
+    if not key then
+        return false
+    end
     return Keyboard.Input[key] and not Keyboard.LastInput[key]
 end
 

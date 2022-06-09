@@ -34,23 +34,23 @@ function UserCodeOnInitialize()
 
     mainScene:AddControls({
 
-        StrainingDisable = ToggleButton:new(mainScene, 5, 5, 126, 30, "Disabled", false, function(o)
+        StrainingDisable = ToggleButton:new(mainScene, "M", 5, 5, 126, 30, "Disabled", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingMatchYaw = ToggleButton:new(mainScene, 5, 5 + 35 * 1, 126, 30, " Match Yaw ", false, function(o)
+        StrainingMatchYaw = ToggleButton:new(mainScene, "Y", 5, 5 + 35 * 1, 126, 30, " Match Yaw ", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingReverseAngle = ToggleButton:new(mainScene,5, 5 + 35 * 2, 126, 30, "   Reverse Angle", false, function(o)
+        StrainingReverseAngle = ToggleButton:new(mainScene, "R", 5, 5 + 35 * 2, 126, 30, "   Reverse Angle", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingMatchAngle = ToggleButton:new(mainScene,5, 5 + 35 * 3, 126, 30, "Match Angle", false, function(o)
+        StrainingMatchAngle = ToggleButton:new(mainScene, "A", 5, 5 + 35 * 3, 126, 30, "Match Angle", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        Joystick = Joystick:new(mainScene,5, 5 + 35 * 4, 128, 128, true, function(o)
+        Joystick = Joystick:new(mainScene, 5, 5 + 35 * 4, 128, 128, true, function(o)
 
         end),
 
-        Always99 = ToggleButton:new(mainScene, 136, 5, 55, 22, "Always", false, function(o)
+        Always99 = ToggleButton:new(mainScene, "N", 136, 5, 55, 22, "Always", false, function(o)
             if Scenes.Main.Controls.StrainTo99.IsChecked then
                 InputDirection.SpeedTrickMode = "Always"
             else
@@ -59,22 +59,22 @@ function UserCodeOnInitialize()
             end
         end),
 
-        StrainTo99 = ToggleButton:new(mainScene, 194, 5, 29, 22, ".99", false, function(o)
+        StrainTo99 = ToggleButton:new(mainScene, "S", 194, 5, 29, 22, ".99", false, function(o)
             if o.IsChecked == false then
                 Scenes.Main.Controls.Always99.IsChecked = false
                 InputDirection.SpeedTrickMode = "None"
             end
         end),
-        Left = ToggleButton:new(mainScene, 136, 31, 40, 22, "    Left", false, function(o)
+        Left = ToggleButton:new(mainScene, nil, 136, 31, 40, 22, "    Left", false, function(o)
 
         end),
-        Right = ToggleButton:new(mainScene, 179, 31, 44, 22, "   Right", false, function(o)
+        Right = ToggleButton:new(mainScene, nil, 179, 31, 44, 22, "   Right", false, function(o)
 
         end),
-        DYaw = ToggleButton:new(mainScene, 136, 57, 87, 22, "DYaw", false, function(o)
+        DYaw = ToggleButton:new(mainScene, nil, 136, 57, 87, 22, "DYaw", false, function(o)
 
         end),
-        Swim = ToggleButton:new(mainScene, 136, 83, 87, 22, "Swim", false, function(o)
+        Swim = ToggleButton:new(mainScene, nil, 136, 83, 87, 22, "Swim", false, function(o)
 
         end),
         AngleTextBox = TextBox:new(mainScene, 137, 110, 85, 30, 5, false, true, function(o)
@@ -86,10 +86,10 @@ function UserCodeOnInitialize()
         end),
         XLabel = Label:new(mainScene, 148, 194, "X: "),
         YLabel = Label:new(mainScene, 147, 211, "Y: "),
-        Speedkick = ToggleButton:new(mainScene, 141, 235, 76, 21, "Speedkick", false, function(o)
+        Speedkick = ToggleButton:new(mainScene, nil, 141, 235, 76, 21, "Speedkick", false, function(o)
 
         end),
-        ResetMagnitude = Button:new(mainScene, 141, 260, 76, 21, "Reset Mag.", function(o)
+        ResetMagnitude = Button:new(mainScene, "G", 141, 260, 76, 21, "Reset Mag.", function(o)
 
         end),
         ParameterDumpLabel1 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 1, "some value"),
@@ -98,7 +98,7 @@ function UserCodeOnInitialize()
         ParameterDumpLabel4 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 4, "some value"),
         ParameterDumpLabel5 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 5, "some value"),
         ParameterDumpLabel6 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 6, "some value"),
-        SwitchScene = Button:new(mainScene, 141, 300, 76, 21, "settings", function(o)
+        SwitchScene = Button:new(mainScene, nil, 141, 300, 76, 21, "settings", function(o)
             print("Changing to Settings")
             SceneManager.ChangeScene("Settings")
         end),
@@ -109,12 +109,13 @@ function UserCodeOnInitialize()
     })
 
     settingsScene:AddControls({
-        Fuck = ComboBox:new(mainScene, 5, 5, 180, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
-            Appearance.SetTheme(o.Items[o.SelectedItemIndex])
-        end),
-        SwitchScene = Button:new(mainScene, 141, 300, 76, 21, "home", function(o)
+        
+        SwitchScene = Button:new(mainScene, nil, 141, 300, 76, 21, "home", function(o)
             print("Changing to Main")
             SceneManager.ChangeScene("Main")
+        end),
+        Fuck = ComboBox:new(mainScene, 5, 5, 180, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
+            Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
     })
 

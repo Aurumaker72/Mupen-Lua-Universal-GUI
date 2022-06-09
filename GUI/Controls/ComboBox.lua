@@ -65,7 +65,7 @@ function ComboBox:Update()
 
     if self.CurrentDropDownHeight > self.TargetDropDownHeight / 2 and self.IsOpened then
 
-        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height + self.CurrentDropDownHeight) then
+        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height + self.CurrentDropDownHeight + self.ItemHeight / 2) then
             self.PerformKeyboardNavigation(self)
         end
 

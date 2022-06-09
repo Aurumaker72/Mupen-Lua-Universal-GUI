@@ -1,20 +1,25 @@
 Button = middleclass('Button', Control)
 
-function Button:initialize(containingScene, x, y, w, h, text, primaryMouseClickCallback, secondaryMouseClickCallback)
+function Button:initialize(containingScene, clickKey, x, y, w, h, text, primaryMouseClickCallback, secondaryMouseClickCallback)
     Control.initialize(self, containingScene, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
     self.Text = text
+    self.ClickKey = clickKey
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
+
 end
 
 function Button:PersistentUpdate()
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
-        WGUI.HexadecimalColorToRGB((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) and
+    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(
+        WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
+        WGUI.HexadecimalColorToRGB(
+            ((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or Keyboard.KeyHeld(self.ClickKey)) and
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+
     self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor),
-        WGUI.HexadecimalColorToRGB(Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
+        WGUI.HexadecimalColorToRGB((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyHeld(self.ClickKey)) and
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
     self.CurrentForeColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentForeColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
@@ -22,7 +27,7 @@ end
 
 function Button:Update()
 
-    if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) then
+    if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyPressed(self.ClickKey) then
         self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.PrimaryMouseClickCallback, self)
     end
 
