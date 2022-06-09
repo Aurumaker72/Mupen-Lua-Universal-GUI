@@ -11,14 +11,17 @@ function Joystick:initialize(containingScene, x, y, w, h, readOnly, valueChanged
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     self.CurrentSecondaryBackColor = Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR
+    self.TargetJoystickTipSize = Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE
+    self.CurrentJoystickTipSize =  self.TargetJoystickTipSize
 end
 
 function Joystick:Update()
     if self.IsReadOnly == false then
 
         if self.IsCapturingMouse then
-            if Mouse.IsDown() == false then
+            if Mouse.IsPrimaryDown() == false then
                 self.IsCapturingMouse = false
+                self.TargetJoystickTipSize = Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE
             else
                 self.ValueX = Numeric.Remap(Numeric.Clamp(self.X - Mouse.X, -self.Width, 0), 0, -self.Width, -128, 127)
                 self.ValueY =
@@ -29,8 +32,9 @@ function Joystick:Update()
             end
         end
 
-        if Mouse.IsDown() and Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+        if Mouse.IsPrimaryDown() and Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
             self.IsCapturingMouse = true
+            self.TargetJoystickTipSize = Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE * 2
         end
     end
 
@@ -44,6 +48,7 @@ function Joystick:PersistentUpdate()
     self.CurrentSecondaryBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(
         self.CurrentSecondaryBackColor), WGUI.HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+    self.CurrentJoystickTipSize = Numeric.TemporalInterpolateNumberWithSpeed(0.2, self.CurrentJoystickTipSize, self.TargetJoystickTipSize)
 end
 
 function Joystick:Draw()
@@ -81,13 +86,11 @@ function Joystick:Draw()
     WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 1, self.X + self.Width / 2 - 1,
         self.Y + self.Height / 2 - 1, cX - 1, cY)
     
-        
-
     WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
-        cX - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
-        cY - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2 + 1,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1,
-        Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1) -- idk what the fuck is going on here
+        cX - self.CurrentJoystickTipSize / 2,
+        cY - self.CurrentJoystickTipSize / 2 + 1,
+        self.CurrentJoystickTipSize - 1,
+        self.CurrentJoystickTipSize - 1) -- idk what the fuck is going on here
     -- ellipse draw routine in gdi side is exhibiting small pixel precision issues
 
     
