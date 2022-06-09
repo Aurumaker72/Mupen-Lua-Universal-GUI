@@ -43,7 +43,7 @@ function Slider:Update()
         return
     end
     if self.IsCapturingMouse then
-        if Mouse.IsDown() == false then
+        if Mouse.IsPrimaryDown() == false then
             self.IsCapturingMouse = false
         else
             local val = Numeric.Remap(Numeric.Clamp(self.X - Mouse.X, -self.Width, 0), 0, -self.Width, self.Minimum,
@@ -55,7 +55,7 @@ function Slider:Update()
         end
     end
 
-    if Mouse.IsDown() and self.IsMouseInside(self) then
+    if Mouse.IsPrimaryDown() and self.IsMouseInside(self) then
         self.IsCapturingMouse = true
     end
 
