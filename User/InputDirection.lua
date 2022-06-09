@@ -17,6 +17,13 @@ function InputDirection.SetStrainMode(mode)
 end
 
 function UserCodeAtInputPoll()
+    local controller = joypad.get(1)
+    controller.Y = -controller.Y
+    Scenes.Main.Controls.Joystick.ValueX = controller.X
+    Scenes.Main.Controls.XLabel.Text = "X: " ..controller.X
+    Scenes.Main.Controls.Joystick.ValueY = controller.Y
+    Scenes.Main.Controls.YLabel.Text = "Y: " .. controller.Y
+    Scenes.Main.Controls.Joystick.Magnitude = math.sqrt( math.max(0, math.abs(controller.X)) ^ 2 + math.max(0, math.abs(controller.Y) ) ^ 2)
 
 end
 
@@ -64,10 +71,10 @@ function UserCodeOnInitialize()
         Right = ToggleButton:new(mainScene, 179, 31, 44, 22, "   Right", false, function(o)
 
         end),
-        DYaw = ToggleButton:new(mainScene, 136, 57, 87, 22, "    DYaw  ", false, function(o)
+        DYaw = ToggleButton:new(mainScene, 136, 57, 87, 22, "DYaw", false, function(o)
 
         end),
-        Swim = ToggleButton:new(mainScene, 136, 83, 87, 22, " Swim ", false, function(o)
+        Swim = ToggleButton:new(mainScene, 136, 83, 87, 22, "Swim", false, function(o)
 
         end),
         AngleTextBox = TextBox:new(mainScene, 137, 110, 85, 30, 5, false, true, function(o)
@@ -82,7 +89,7 @@ function UserCodeOnInitialize()
         Speedkick = ToggleButton:new(mainScene, 141, 235, 76, 21, "Speedkick", false, function(o)
 
         end),
-        ResetMagnitude = Button:new(mainScene, 141, 260, 76, 21, " Reset Mag.", function(o)
+        ResetMagnitude = Button:new(mainScene, 141, 260, 76, 21, "Reset Mag.", function(o)
 
         end),
         ParameterDumpLabel1 = Label:new(mainScene, 5, 290 + (FONT_SIZE + 5) * 1, "some value"),

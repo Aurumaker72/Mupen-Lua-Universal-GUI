@@ -5,6 +5,7 @@ function Joystick:initialize(containingScene, x, y, w, h, readOnly, valueChanged
     self.ValueChangedCallback = valueChangedCallback
     self.ValueX = 0
     self.ValueY = 0
+    self.Magnitude = nil
     self.IsReadOnly = readOnly
 
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
@@ -47,6 +48,8 @@ end
 
 function Joystick:Draw()
 
+    
+
     WGUI.FillRectangle(self.CurrentBorderColor, self.X - BORDER_SIZE + 1, self.Y - BORDER_SIZE + 1,
         self.Width + self.X + BORDER_SIZE - 2, self.Height + self.Y + BORDER_SIZE - 2)
 
@@ -55,6 +58,17 @@ function Joystick:Draw()
     WGUI.FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width - 1, self.Height - 1)
     WGUI.DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width - 1, self.Height - 1)
 
+    if self.Magnitude and self.Magnitude == 0 == false then
+        wgui.setbrush(self.CurrentSecondaryBackColor)
+        local clampedMagnitude = Numeric.Clamp(self.Magnitude, 0, math.max(self.Width, self.Height))
+        WGUI.DrawEllipse(self.CurrentBorderColor,
+        1,
+        self.X + self.Width / 2 - clampedMagnitude / 2,
+        self.Y + self.Height / 2- clampedMagnitude / 2,
+        clampedMagnitude,
+        clampedMagnitude)
+    end
+    
     WGUI.DrawLine(self.CurrentBorderColor, 1, self.X, self.Y + self.Height / 2 - 1, self.X + self.Width - 1,
         self.Y + self.Height / 2 - 1)
 
@@ -66,6 +80,8 @@ function Joystick:Draw()
 
     WGUI.DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 1, self.X + self.Width / 2 - 1,
         self.Y + self.Height / 2 - 1, cX - 1, cY)
+    
+        
 
     WGUI.FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
         cX - Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE / 2,
@@ -73,5 +89,7 @@ function Joystick:Draw()
         Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1,
         Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_SIZE - 1) -- idk what the fuck is going on here
     -- ellipse draw routine in gdi side is exhibiting small pixel precision issues
+
+    
 end
 

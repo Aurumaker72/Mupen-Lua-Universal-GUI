@@ -80,3 +80,4 @@ end
 emu.atstop(AtStop)
 emu.atinterval(AtInterval)
 emu.atvi(AtVisualInterrupt)
+emu.atinput(UserCodeAtInputPoll)
