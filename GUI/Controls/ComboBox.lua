@@ -13,6 +13,8 @@ function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemC
     self.IsOpened = false
 
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
+    self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
+    self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 
     self.RightChevronX = self.X + self.Width - Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH
     self.RightChevronY = self.Y
@@ -29,6 +31,8 @@ end
 function ComboBox:PersistentUpdate()
     self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
         WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.CurrentForeColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentForeColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+        self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
 
     for i = 1, #self.Items, 1 do
         self.ItemCurrentBackColors[i] = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(
@@ -45,8 +49,8 @@ end
 
 function ComboBox:SetOpen(isOpen)
     self.IsOpened = isOpen
-    self.TargetDropDownHeight = self.IsOpened and (self.ItemHeight * Screen.Dimensions.ScalingY * #self.Items) or
-                                    -self.ItemHeight * Screen.Dimensions.ScalingY
+    self.TargetDropDownHeight = self.IsOpened and (self.ItemHeight * #self.Items) or
+                                    -self.ItemHeight
     self.RightChevronText = self.IsOpened and "^" or "v"
 end
 
@@ -107,7 +111,7 @@ function ComboBox:Draw()
 
     if self.CurrentDropDownHeight > 0 then
 
-        WGUI.DrawRectangleBounds(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        WGUI.DrawRectangleBounds(self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
             self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1,
             self.CurrentDropDownHeight + self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
 
@@ -121,21 +125,21 @@ function ComboBox:Draw()
 
                 WGUI.FillRectangleBounds(self.ItemCurrentBackColors[i], self.X, thisY, self.Width, self.ItemHeight)
 
-                WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[i], self.X + 3,
+                WGUI.DrawText(self.CurrentForeColor, self.Items[i], self.X + 3,
                     thisY + 2)
 
             end
         end
     end
 
-    WGUI.FillRectangle(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
         self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
-    WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.RightChevronText, self.X +
+    WGUI.DrawText(self.CurrentForeColor, self.RightChevronText, self.X +
         self.Width - Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
 
-    WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Items[self.SelectedItemIndex],
+    WGUI.DrawText(self.CurrentForeColor, self.Items[self.SelectedItemIndex],
         self.X + 3, self.Y + 2)
 
 end

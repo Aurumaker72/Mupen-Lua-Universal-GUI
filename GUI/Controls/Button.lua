@@ -5,6 +5,7 @@ function Button:initialize(containingScene, x, y, w, h, text, primaryMouseClickC
     self.Text = text
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
+    self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
 end
 
 function Button:PersistentUpdate()
@@ -16,6 +17,7 @@ function Button:PersistentUpdate()
         WGUI.HexadecimalColorToRGB(Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    self.CurrentForeColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentForeColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
 end
 
 function Button:Update()
@@ -37,7 +39,7 @@ function Button:Draw()
     WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
 
     if (self.Text) then
-        WGUI.DrawText(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text,
+        WGUI.DrawText(self.CurrentForeColor, self.Text,
             self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 * self.Text:len(), self.Y + self.Height / 2 - 7.5)
     end
 
