@@ -66,7 +66,9 @@ Modify the `Controls = { ... }` block inside your desired scene
   - (WIP) Automatically scales controls depending on resolution 
 - Controls
   - Button
+    - Keyboard interaction
   - ToggleButton
+    - Keyboard interaction
   - TextBox
     - Read-only and Read-write mode
     - Character deletion
