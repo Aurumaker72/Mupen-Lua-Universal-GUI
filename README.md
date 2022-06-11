@@ -82,6 +82,8 @@ Modify the `Controls = { ... }` block inside your desired scene
   - Label
   - CarrouselButton
     - Wrap-around
+    - Keyboard interaction
   - ComboBox
+    - Keyboard interaction 
   - ~~ListView~~
   - ~~Image~~
