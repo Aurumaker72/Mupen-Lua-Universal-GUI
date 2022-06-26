@@ -38,24 +38,30 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 
 #### Adding a new scene
-Add `YourKey = Scene:new({ ... })` in the `SceneManager.Initialize(...)` call
-
-#### Adding a new control
-Modify the `Controls = { ... }` block inside your desired scene
-
-
-### Button
+Create a new scene using the `Scene` constructor and pass in `nil`
 ```lua
-     Button:new(
-         20, -- X Position
-         VERTICAL_SAFE_ZONE*2, -- Y Position
-         128, -- Width
-         64, -- Height
-         "button", -- Text (optional)
-         function(sender) -- Click callback (sender is the control instance)
-           print(sender.Text)
-         end)
+local mainScene = Scene:new(nil)
 ```
+
+#### Adding controls to your scene
+Add a controls table to the created scene by using its `AddControls(t)` method
+```lua
+mainScene:AddControls({
+
+YourButton = Button:new(
+     mainScene, -- The scene containing the button
+     nil, -- The keyboard key associated with the button (nil disables keyboard interaction)
+     20, -- X 
+     20, -- Y
+     128, -- Width
+     64, -- Height
+     "Hello World", -- Text 
+     function(o) -- Interaction callback, o is reference to button
+          print(o.Text)
+     end)
+})
+```
+
 
 ## Features
 - Scenes (Tabs)
