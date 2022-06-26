@@ -91,9 +91,9 @@ function ComboBox:Update()
         end
         self.PerformKeyboardNavigation(self)
     else
-        -- if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-        --     self.PerformKeyboardNavigation(self)
-        -- end
+        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+            self.PerformKeyboardNavigation(self)
+        end
 
     end
 end
