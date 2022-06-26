@@ -129,6 +129,9 @@ function UserCodeOnInitialize()
                 CurrentRenderer = GDIPlusRenderer:new()
             end
         end),
+        Test39 = CarrouselButton:new(mainScene, 40, 200, 140, 20, {"a", "b", "c", "d"}, true, function(o)
+            
+        end)
     })
 
     SceneManager.Initialize({

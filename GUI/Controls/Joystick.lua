@@ -67,7 +67,7 @@ function Joystick:Draw()
     if self.Magnitude and self.Magnitude == 0 == false then
         wgui.setbrush(self.CurrentSecondaryBackColor)
         local clampedMagnitude = Numeric.Clamp(self.Magnitude, 0, math.max(self.Width, self.Height))
-        CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X + self.Width / 2 - clampedMagnitude / 2,
+        CurrentRenderer:DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR, 1, self.X + self.Width / 2 - clampedMagnitude / 2,
             self.Y + self.Height / 2 - clampedMagnitude / 2, clampedMagnitude, clampedMagnitude)
     end
 

@@ -36,8 +36,8 @@ end
 
 function CarrouselButton:Update()
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-        if Mouse.IsPrimaryClickedInside(self.LeftChevronX, self.LeftChevronY, self.LeftChevronWidth,
-            self.LeftChevronHeight) or Keyboard.KeyPressed("left") then
+        if Mouse.IsPrimaryClickedInside(self.LeftChevronX, self.LeftChevronY, self.Width / 2,
+            self.Height) or Keyboard.KeyPressed("left") then
             if self.WrapAround then
                 self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex - 1, 1, #self.Items)
             else
@@ -45,7 +45,7 @@ function CarrouselButton:Update()
             end
             self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
         end
-        if Mouse.IsPrimaryClickedInside(self.RightChevronX, self.RightChevronY, self.RightChevronWidth,
+        if Mouse.IsPrimaryClickedInside(self.X + self.Width / 2, self.RightChevronY, self.Width / 2,
             self.RightChevronHeight) or Keyboard.KeyPressed("right") then
             if self.WrapAround then
                 self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + 1, 1, #self.Items)
