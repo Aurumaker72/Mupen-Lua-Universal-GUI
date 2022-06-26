@@ -128,7 +128,7 @@ function UserCodeOnInitialize()
         SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
     end)
     },
-    GDIPlusRenderer:new())
+    GDIRenderer:new())
     
     
     CurrentScene = Scenes.Main
