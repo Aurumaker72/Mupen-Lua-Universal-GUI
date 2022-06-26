@@ -65,7 +65,9 @@ function Slider:Draw()
     CurrentRenderer:FillRectangle(self.CurrentTrackColor, self.X, self.Y + self.Height / 2 -
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-
+        CurrentRenderer:FillRectangle(self.CurrentTrackColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height / 2 -
+        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT - - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
     if self.IsCapturingMouse then
         self.CurrentHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR
     end

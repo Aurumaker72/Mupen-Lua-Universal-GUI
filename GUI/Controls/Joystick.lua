@@ -57,12 +57,12 @@ function Joystick:Draw()
     CurrentRenderer:FillRectangle(self.CurrentBorderColor,
         self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
         self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2,
-        self.Height + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2)
+        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1,
+        self.Height + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
     CurrentRenderer:FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width, self.Height)
 
-    CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width - 1, self.Height - 1)
-    CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width - 1, self.Height - 1)
+    CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
+    CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
 
     if self.Magnitude and self.Magnitude == 0 == false then
         wgui.setbrush(self.CurrentSecondaryBackColor)
@@ -75,7 +75,7 @@ function Joystick:Draw()
         self.Y + self.Height / 2 - 1)
 
     CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X + self.Width / 2 - 1, self.Y,
-        self.X + self.Width / 2 - 1, self.Y + self.Height - 2)
+        self.X + self.Width / 2 - 1, self.Y + self.Height)
 
     local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
     local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
