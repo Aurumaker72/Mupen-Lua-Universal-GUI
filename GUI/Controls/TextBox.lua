@@ -12,9 +12,6 @@ function TextBox:initialize(containingScene, x, y, w, h, maxLength, isReadOnly, 
     self.CurrentBackColor = self.TargetBackColor
     self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
     self.CurrentBorderColor = self.TargetBorderColor
-    if self.Height == 20 == false then
-        print("violation: TextBox has an inappropriate height")
-    end
 end
 
 function TextBox:Update()
@@ -70,10 +67,10 @@ function TextBox:PersistentUpdate()
     if self.Active then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
-        WGUI.HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor),
-        WGUI.HexadecimalColorToRGB(self.TargetBorderColor))
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBackColor),
+        Color.HexadecimalColorToRGB(self.TargetBackColor))
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBorderColor),
+        Color.HexadecimalColorToRGB(self.TargetBorderColor))
 end
 
 function TextBox:CanTypeCharacter()
@@ -81,15 +78,20 @@ function TextBox:CanTypeCharacter()
         print("TextBox text was set to string")
         return false
     end
-    return (self.Text:len() * Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE < self.Width) and (self.Text:len() + 1 <= self.MaxLength)
+    return (self.Text:len() * Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE < self.Width) and
+               (self.Text:len() + 1 <= self.MaxLength)
 end
 
 function TextBox:Draw()
 
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
+    CurrentRenderer:FillRectangle(self.CurrentBorderColor,
+        self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2,
+        self.Height + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2)
+    CurrentRenderer:FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width, self.Height)
 
-    WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
-
-    WGUI.DrawText(self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
+    CurrentRenderer:DrawText(
+        self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
 end

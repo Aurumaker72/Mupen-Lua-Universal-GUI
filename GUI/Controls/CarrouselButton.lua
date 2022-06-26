@@ -25,45 +25,52 @@ function CarrouselButton:initialize(containingScene, x, y, w, h, items, wrapArou
 end
 
 function CarrouselButton:PersistentUpdate()
-    self.CurrentBackColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBackColor),
-        WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-        self.CurrentForeColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentForeColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
-        self.CurrentBorderColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentBorderColor), WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBackColor),
+        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentForeColor),
+        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBorderColor),
+        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
 
 end
 
 function CarrouselButton:Update()
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-    if Mouse.IsPrimaryClickedInside(self.LeftChevronX, self.LeftChevronY, self.LeftChevronWidth, self.LeftChevronHeight) or Keyboard.KeyPressed("left") then
-        if self.WrapAround then
-            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex - 1, 1, #self.Items)
-        else
-            self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
+        if Mouse.IsPrimaryClickedInside(self.LeftChevronX, self.LeftChevronY, self.LeftChevronWidth,
+            self.LeftChevronHeight) or Keyboard.KeyPressed("left") then
+            if self.WrapAround then
+                self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex - 1, 1, #self.Items)
+            else
+                self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
+            end
+            self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
         end
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
-    end
-    if Mouse.IsPrimaryClickedInside(self.RightChevronX, self.RightChevronY, self.RightChevronWidth, self.RightChevronHeight) or Keyboard.KeyPressed("right") then
-        if self.WrapAround then
-            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + 1, 1, #self.Items)
-        else
-            self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
+        if Mouse.IsPrimaryClickedInside(self.RightChevronX, self.RightChevronY, self.RightChevronWidth,
+            self.RightChevronHeight) or Keyboard.KeyPressed("right") then
+            if self.WrapAround then
+                self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + 1, 1, #self.Items)
+            else
+                self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
+            end
+            self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
         end
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
     end
-end
 end
 
 function CarrouselButton:Draw()
-    WGUI.FillRectangle(self.CurrentBorderColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + self.X + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Height + self.Y + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
-    WGUI.FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width + self.X, self.Height + self.Y)
+    CurrentRenderer:FillRectangle(self.CurrentBorderColor,
+        self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2,
+        self.Height + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2)
+    CurrentRenderer:FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width, self.Height)
 
-    WGUI.DrawText(self.CurrentForeColor, "<",
-        self.X + Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 5, self.Y + 2)
-    WGUI.DrawText(self.CurrentForeColor, ">", self.X + self.Width -
+    CurrentRenderer:DrawText(self.CurrentForeColor, "<", self.X +
+        Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 5, self.Y + 2)
+    CurrentRenderer:DrawText(self.CurrentForeColor, ">", self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
-    WGUI.DrawText(self.CurrentForeColor, self.Items[self.SelectedItemIndex],
-        self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 * self.Items[self.SelectedItemIndex]:len(),
-        self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
+    CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[self.SelectedItemIndex],
+        self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 *
+            self.Items[self.SelectedItemIndex]:len(), self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
 
 end

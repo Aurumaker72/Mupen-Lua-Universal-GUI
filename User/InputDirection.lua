@@ -102,7 +102,7 @@ function UserCodeOnInitialize()
             print("Changing to Settings")
             SceneManager.ChangeScene("Settings")
         end),
-        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 100, false, true, function(o)
+        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 100, false, false, function(o)
             print(o.Value)
         end),
         
@@ -127,7 +127,8 @@ function UserCodeOnInitialize()
     NavigationCarrouselButton = CarrouselButton:new(mainScene, 0, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
         SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
     end)
-    })
+    },
+    GDIPlusRenderer:new())
     
     
     CurrentScene = Scenes.Main

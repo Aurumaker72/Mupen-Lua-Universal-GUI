@@ -123,11 +123,11 @@ function Appearance.Initialize()
 
     for k, v in pairs(Appearance.Themes.Inverted) do
         if k:find("COLOR") then
-            local rgb = WGUI.HexadecimalColorToRGB(Appearance.Themes.Inverted[k]);
+            local rgb = Color.HexadecimalColorToRGB(Appearance.Themes.Inverted[k]);
             rgb[1] = 255 - rgb[1]
             rgb[2] = 255 - rgb[2]
             rgb[3] = 255 - rgb[3]
-            Appearance.Themes.Inverted[k] = WGUI.RGBToHexadecimalColor(rgb)
+            Appearance.Themes.Inverted[k] = Color.RGBToHexadecimalColor(rgb)
         end
     end
 end

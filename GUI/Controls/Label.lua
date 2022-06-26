@@ -11,14 +11,14 @@ end
 
 function Label:Draw()
     if self.Text then
-        WGUI.DrawText(self.CurrentForeColor, self.Text, self.X, self.Y)
+        CurrentRenderer:DrawText(self.CurrentForeColor, self.Text, self.X, self.Y)
     else
         print("Label has no text")
     end
 end
 
 function Label:PersistentUpdate()
-    self.CurrentForeColor = WGUI.TemporalInterpolateRGBColor(WGUI.HexadecimalColorToRGB(self.CurrentForeColor),
-        WGUI.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentForeColor),
+        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
 end
 

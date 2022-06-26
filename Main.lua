@@ -16,14 +16,18 @@ FOLDER_EMULATOR = AbsolutePathToCurrentFolder() .. "Emulator" .. "\\"
 FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
 FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
+FOLDER_GUI_RENDERERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Renderers" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 dofile(FOLDER_USER_CODE .. "InputDirection.lua")
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
-dofile(FOLDER_HELPER .. "WGUI.lua")
+dofile(FOLDER_HELPER .. "Color.lua")
 dofile(FOLDER_HELPER .. "Table.lua")
+dofile(FOLDER_GUI_RENDERERS .. "Renderer.lua")
+dofile(FOLDER_GUI_RENDERERS .. "GDIRenderer.lua")
+dofile(FOLDER_GUI_RENDERERS .. "GDIPlusRenderer.lua")
 dofile(FOLDER_GUI .. "Scene.lua")
 dofile(FOLDER_GUI .. "SceneManager.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Control.lua")
