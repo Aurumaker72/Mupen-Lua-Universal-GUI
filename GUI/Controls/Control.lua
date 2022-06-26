@@ -29,7 +29,8 @@ function Control:Update()
 end
 function Control:Draw()
 end
-
+function Control:ModalDraw()
+end
 function Control:PointToSelf(x, y)
 
 end

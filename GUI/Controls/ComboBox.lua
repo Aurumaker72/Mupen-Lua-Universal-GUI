@@ -112,10 +112,9 @@ function ComboBox:SetSelectedIndex(index)
     self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
 end
 
-function ComboBox:Draw()
-
+function ComboBox:ModalDraw()
     if self.CurrentDropDownHeight > 0 then
-
+        
         CurrentRenderer:DrawRectangle(self.CurrentBorderColor,
             Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
             self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height -
@@ -139,7 +138,15 @@ function ComboBox:Draw()
 
             end
         end
+        if math.floor(self.CurrentDropDownHeight) == math.floor(self.TargetDropDownHeight) == false then
+            self:Draw()
+        end
     end
+end
+
+function ComboBox:Draw()
+
+    
 
     CurrentRenderer:FillRectangle(self.CurrentBorderColor,
         self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,

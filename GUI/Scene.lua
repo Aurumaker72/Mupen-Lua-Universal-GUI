@@ -47,6 +47,9 @@ function Scene:Draw()
         for key, control in pairs(self.Controls) do
             control:Draw()
         end
+        for key, control in pairs(self.Controls) do
+            control:ModalDraw()
+        end
     end
 
 end
