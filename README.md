@@ -44,7 +44,7 @@ local mainScene = Scene:new(nil)
 ```
 
 #### Adding controls to your scene
-Add a controls table to the created scene by using its `AddControls(t)` method
+Add a controls dictionary to the created scene by using its `AddControls(t)` method
 ```lua
 mainScene:AddControls({
 
@@ -62,6 +62,27 @@ YourButton = Button:new(
 })
 ```
 
+#### Starting up the Scene Manager
+After defining your scenes and their respective controls, you need to signal the startup to `SceneManager` 
+```lua
+SceneManager.Initialize(
+
+    { -- Dictionary of your scenes
+        Main = mainScene,
+    },
+    
+    { -- Dictionary of controls which are persistent (scene independent)
+    
+    },
+    
+    GDIRenderer:new() -- Instance of a rendering backend
+)
+
+-- Set the `CurrentScene` to the key of your main scene
+CurrentScene = Scenes.Main
+-- now activate it. it should begin operating normally after this
+CurrentScene.IsActive = true
+```
 
 ## Features
 - Scenes (Tabs)
