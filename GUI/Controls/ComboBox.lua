@@ -50,6 +50,12 @@ function ComboBox:PersistentUpdate()
 end
 
 function ComboBox:SetOpen(isOpen)
+    -- aww yeah extreme time complexity
+    for key, control in pairs(self.ContainingScene.Controls) do
+        if control:isInstanceOf(ComboBox) and control.IsOpened and control == self == false then
+            return
+        end
+    end
     self.IsOpened = isOpen
     self.TargetDropDownHeight = self.IsOpened and (self.ItemHeight * #self.Items) or -self.ItemHeight
     self.RightChevronText = self.IsOpened and "^" or "v"
@@ -65,11 +71,7 @@ function ComboBox:Update()
     end
 
     if self.CurrentDropDownHeight > self.TargetDropDownHeight / 2 and self.IsOpened then
-
-        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height + self.CurrentDropDownHeight + self.ItemHeight / 2) then
-            self.PerformKeyboardNavigation(self)
-        end
-
+        
         local itemWasClicked = false
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
@@ -87,11 +89,11 @@ function ComboBox:Update()
             itemWasClicked == false then
             self.SetOpen(self, false)
         end
-
+        self.PerformKeyboardNavigation(self)
     else
-        if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-            self.PerformKeyboardNavigation(self)
-        end
+        -- if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+        --     self.PerformKeyboardNavigation(self)
+        -- end
 
     end
 end

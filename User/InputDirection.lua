@@ -109,13 +109,25 @@ function UserCodeOnInitialize()
     })
 
     settingsScene:AddControls({
-        
-        SwitchScene = Button:new(mainScene, nil, 141, 300, 76, 21, "home", function(o)
+        RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
+        ThemeLabel = Label:new(settingsScene, 5, 5, "Theme"),
+
+        SwitchScene = Button:new(settingsScene, nil, 141, 300, 76, 21, "home", function(o)
             print("Changing to Main")
             SceneManager.ChangeScene("Main")
         end),
-        Fuck = ComboBox:new(mainScene, 5, 5, 180, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
+        Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
+        end),
+        
+        RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+" }, function(o)
+            -- when the GC pressure is high
+            if o.Items[o.SelectedItemIndex] == "GDI" then
+                CurrentRenderer = GDIRenderer:new()
+            end
+            if o.Items[o.SelectedItemIndex] == "GDI+" then
+                CurrentRenderer = GDIPlusRenderer:new()
+            end
         end),
     })
 

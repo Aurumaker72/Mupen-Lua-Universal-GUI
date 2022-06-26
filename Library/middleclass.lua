@@ -186,4 +186,8 @@ middleclass = {
   
   setmetatable(middleclass, { __call = function(_, ...) return middleclass.class(...) end })
   
+  function siOf(obj1, str)
+	return tostring(obj1):gsub("instance of class ", ""):match( "^%s*(.-)%s*$") == str
+  end
+
   return middleclass
