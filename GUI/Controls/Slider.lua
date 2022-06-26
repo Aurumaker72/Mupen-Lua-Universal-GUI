@@ -65,16 +65,21 @@ function Slider:Draw()
     CurrentRenderer:FillRectangle(self.CurrentTrackColor, self.X, self.Y + self.Height / 2 -
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-        CurrentRenderer:FillRectangle(self.CurrentTrackColor, self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height / 2 -
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT - - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
+    CurrentRenderer:FillRectangle(self.CurrentTrackColor,
+        self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Y + self.Height / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT -
+            -Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, Appearance.Themes[Appearance.CurrentTheme]
+            .SLIDER_TRACK_HEIGHT + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
     if self.IsCapturingMouse then
         self.CurrentHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR
     end
 
-    CurrentRenderer:FillRectangle(self.CurrentHeadColor,
-        Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width) -
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2, self.Y + Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
+    CurrentRenderer:FillRectangle(self.CurrentHeadColor, (self.Minimum == self.Maximum and self.X or
+        Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width)) -
+        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
+        self.Y + Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT - Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
+        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT -
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
 end

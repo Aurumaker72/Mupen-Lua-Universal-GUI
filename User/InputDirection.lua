@@ -102,7 +102,7 @@ function UserCodeOnInitialize()
             print("Changing to Settings")
             SceneManager.ChangeScene("Settings")
         end),
-        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 100, false, false, function(o)
+        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 5, false, false, function(o)
             print(o.Value)
         end),
         
