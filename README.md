@@ -30,9 +30,9 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 *Button highlights*
 
-![grafik](https://user-images.githubusercontent.com/48759429/172351451-a422fcfd-5d84-4338-bd8f-60dd6136831b.png)
+<img src="https://user-images.githubusercontent.com/48759429/177013242-e448a242-cc01-430a-922c-ccaea79e996f.png" height="400"/>
 
-*Example frontend port of InputDirection Lua*
+*Example user program*
 
 ## Usage
 
