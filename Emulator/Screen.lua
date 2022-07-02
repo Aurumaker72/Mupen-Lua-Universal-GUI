@@ -28,7 +28,7 @@ function Screen.Dimensions.Update()
         if Screen.Dimensions.Height < Screen.DesignerHeight then
             Screen.Dimensions.ScalingY = Screen.Dimensions.Height / Screen.DesignerHeight
         end
-        Screen.ExpandedOffset = 227 * Screen.Dimensions.ScalingX
+        Screen.ExpandedOffset = 228 * Screen.Dimensions.ScalingX
 
     end
 end

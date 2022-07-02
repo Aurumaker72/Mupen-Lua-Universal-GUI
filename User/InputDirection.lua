@@ -34,23 +34,23 @@ function UserCodeOnInitialize()
 
     mainScene:AddControls({
 
-        StrainingDisable = ToggleButton:new(mainScene, "M", 5, 5, 126, 30, "Disabled", false, function(o)
+        StrainingDisable = ToggleButton:new(mainScene, "M", 5, 5, 127, 30, "Disabled", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingMatchYaw = ToggleButton:new(mainScene, "Y", 5, 5 + 35 * 1, 126, 30, " Match Yaw ", false, function(o)
+        StrainingMatchYaw = ToggleButton:new(mainScene, "Y", 5, 5 + 35 * 1, 127, 30, " Match Yaw ", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingReverseAngle = ToggleButton:new(mainScene, "R", 5, 5 + 35 * 2, 126, 30, "   Reverse Angle", false, function(o)
+        StrainingReverseAngle = ToggleButton:new(mainScene, "R", 5, 5 + 35 * 2, 127, 30, "   Reverse Angle", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        StrainingMatchAngle = ToggleButton:new(mainScene, "A", 5, 5 + 35 * 3, 126, 30, "Match Angle", false, function(o)
+        StrainingMatchAngle = ToggleButton:new(mainScene, "A", 5, 5 + 35 * 3, 127, 30, "Match Angle", false, function(o)
             InputDirection.SetStrainMode(o.Text)
         end),
-        Joystick = Joystick:new(mainScene, 5, 5 + 35 * 4, 128, 128, true, function(o)
+        Joystick = Joystick:new(mainScene, 5, 5 + 141, 128, 128, true, function(o)
 
         end),
 
-        Always99 = ToggleButton:new(mainScene, "N", 136, 5, 55, 22, "Always", false, function(o)
+        Always99 = ToggleButton:new(mainScene, "N", 137, 5, 54, 22, "Always", false, function(o)
             if Scenes.Main.Controls.StrainTo99.IsChecked then
                 InputDirection.SpeedTrickMode = "Always"
             else
@@ -59,37 +59,37 @@ function UserCodeOnInitialize()
             end
         end),
 
-        StrainTo99 = ToggleButton:new(mainScene, "S", 194, 5, 29, 22, ".99", false, function(o)
+        StrainTo99 = ToggleButton:new(mainScene, "S", 195, 5, 29, 22, ".99", false, function(o)
             if o.IsChecked == false then
                 Scenes.Main.Controls.Always99.IsChecked = false
                 InputDirection.SpeedTrickMode = "None"
             end
         end),
-        Left = ToggleButton:new(mainScene, nil, 136, 31, 40, 22, "    Left", false, function(o)
+        Left = ToggleButton:new(mainScene, nil, 137, 31, 39, 22, "    Left", false, function(o)
 
         end),
-        Right = ToggleButton:new(mainScene, nil, 179, 31, 44, 22, "   Right", false, function(o)
+        Right = ToggleButton:new(mainScene, nil, 180, 31, 44, 22, "   Right", false, function(o)
 
         end),
-        DYaw = ToggleButton:new(mainScene, nil, 136, 57, 87, 22, "DYaw", false, function(o)
+        DYaw = ToggleButton:new(mainScene, nil, 137, 57, 87, 22, "DYaw", false, function(o)
 
         end),
-        Swim = ToggleButton:new(mainScene, nil, 136, 83, 87, 22, "Swim", false, function(o)
+        Swim = ToggleButton:new(mainScene, nil, 137, 83, 87, 22, "Swim", false, function(o)
 
         end),
-        AngleTextBox = TextBox:new(mainScene, 137, 110, 85, 30, 5, false, true, function(o)
+        AngleTextBox = TextBox:new(mainScene, 138, 110, 85, 30, 5, false, true, function(o)
 
         end),
-        MagnitudeLabel = Label:new(mainScene, 148, 144, "Magnitude"),
-        MagnitudeTextBox = TextBox:new(mainScene, 141, 163, 75, 23, 3, false, true, function(o)
+        MagnitudeLabel = Label:new(mainScene, 147, 144, "Magnitude"),
+        MagnitudeTextBox = TextBox:new(mainScene, 142, 163, 76, 23, 3, false, true, function(o)
 
         end),
-        XLabel = Label:new(mainScene, 148, 194, "X: "),
-        YLabel = Label:new(mainScene, 148, 211, "Y: "),
-        Speedkick = ToggleButton:new(mainScene, nil, 141, 235, 76, 21, "Speedkick", false, function(o)
+        XLabel = Label:new(mainScene, 148, 192, "X: "),
+        YLabel = Label:new(mainScene, 148, 209, "Y: "),
+        Speedkick = ToggleButton:new(mainScene, nil, 142, 235, 76, 21, "Speedkick", false, function(o)
             Appearance.SetTheme(o.IsChecked and "Classic" or "Dark")
         end),
-        ResetMagnitude = Button:new(mainScene, "G", 141, 260, 76, 21, "Reset Mag.", function(o)
+        ResetMagnitude = Button:new(mainScene, "G", 142, 260, 76, 21, "Reset Mag.", function(o)
 
         end),
         ParameterDumpLabel1 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 1, "some value"),
@@ -98,11 +98,11 @@ function UserCodeOnInitialize()
         ParameterDumpLabel4 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 4, "some value"),
         ParameterDumpLabel5 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 5, "some value"),
         ParameterDumpLabel6 = Label:new(mainScene, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 6, "some value"),
-        SwitchScene = Button:new(mainScene, nil, 141, 300, 76, 21, "settings", function(o)
+        SwitchScene = Button:new(mainScene, nil, 142, 300, 76, 21, "settings", function(o)
             print("Changing to Settings")
             SceneManager.ChangeScene("Settings")
         end),
-        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 5, false, false, function(o)
+        Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 100, false, false, function(o)
             print(o.Value)
         end),
         
@@ -133,13 +133,13 @@ function UserCodeOnInitialize()
             
         end)
     })
-
+    
     SceneManager.Initialize({
         Main = mainScene,
         Settings = settingsScene,
     },
     {
-    NavigationCarrouselButton = CarrouselButton:new(mainScene, 0, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
+    NavigationCarrouselButton = CarrouselButton:new(mainScene, 1, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 9, Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
         SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
     end)
     },
