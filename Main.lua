@@ -80,8 +80,13 @@ function AtInterval()
 
 end
 
+function AtReset()
+    Screen.Expand()
+end
+
 -- Register callbacks
 emu.atstop(AtStop)
 emu.atinterval(AtInterval)
 emu.atvi(AtVisualInterrupt)
 emu.atinput(UserCodeAtInputPoll)
+emu.atreset(AtReset)
