@@ -4,9 +4,12 @@ function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemC
     Control.initialize(self, containingScene, x, y, w, h, nil, nil)
 
     self.Items = items -- Must be of type "string" :)
-    self.ItemCurrentBackColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
-    self.ItemCurrentBorderColors = Table.Create(#self.Items,
-        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR)
+    --self.ItemCurrentBackColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
+    --self.ItemCurrentBorderColors = Table.Create(#self.Items,
+    --    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR)
+
+    self.CurrentItemBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
+    self.CurrentItemSelectedBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
 
     self.SelectedItemIndex = 1
     self.ItemHeight = 20
@@ -40,24 +43,13 @@ function ComboBox:PersistentUpdate()
     self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
         CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
-
+    self.CurrentItemBackColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentItemBackColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.CurrentItemSelectedBackColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentItemSelectedBackColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
     self.CurrentRightChevronY = Numeric.TemporalInterpolateNumberWithSpeed(0.5, self.CurrentRightChevronY, self.TargetRightChevronY)
-
-    for i = 1, #self.Items, 1 do
-        self.ItemCurrentBackColors[i] = Color.TemporalInterpolateRGBColor(
-            CurrentRenderer:HexadecimalColorToRGB(self.ItemCurrentBackColors[i]),
-            CurrentRenderer:HexadecimalColorToRGB(self.SelectedItemIndex == i and
-                                                      Appearance.Themes[Appearance.CurrentTheme]
-                                                          .BUTTON_PUSHED_BACK_COLOR or
-                                                      Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-        self.ItemCurrentBorderColors[i] = Color.TemporalInterpolateRGBColor(
-            CurrentRenderer:HexadecimalColorToRGB(self.ItemCurrentBorderColors[i]),
-            CurrentRenderer:HexadecimalColorToRGB(self.SelectedItemIndex == i and
-                                                      Appearance.Themes[Appearance.CurrentTheme]
-                                                          .BUTTON_HOVERED_BORDER_COLOR or
-                                                      Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-
-    end
 
 end
 
@@ -149,7 +141,7 @@ function ComboBox:ModalDraw()
 
             if thisY > self.Y + self.Height - self.ItemHeight then
 
-                CurrentRenderer:FillRectangle(self.ItemCurrentBackColors[i], self.X, thisY, self.Width, self.ItemHeight)
+                CurrentRenderer:FillRectangle(self.SelectedItemIndex == i and self.CurrentItemSelectedBackColor or self.CurrentItemBackColor, self.X, thisY, self.Width, self.ItemHeight)
 
                 CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[i], self.X + 3, thisY + 2)
 
