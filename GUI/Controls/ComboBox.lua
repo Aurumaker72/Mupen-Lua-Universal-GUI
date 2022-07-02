@@ -104,7 +104,7 @@ function ComboBox:Update()
     end
 
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
-        self.TargetRightChevronY = self.Y + (self.IsOpened and 5 or -5)
+        self.TargetRightChevronY = self.Y + (self.IsOpened and -5 or 5)
     else
         self.TargetRightChevronY = (self.Y)
     end
