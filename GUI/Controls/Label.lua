@@ -18,7 +18,7 @@ function Label:Draw()
 end
 
 function Label:PersistentUpdate()
-    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentForeColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentForeColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
 end
 

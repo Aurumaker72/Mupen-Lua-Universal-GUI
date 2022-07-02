@@ -9,8 +9,7 @@ PersistentControls = {}
 function SceneManager.Initialize(scenes, persistentControls, renderer)
     Scenes = scenes
     PersistentControls = persistentControls
-    CurrentRenderer = renderer
-    print("Utilizing " .. (CurrentRenderer.IsStable and "stable" or "unstable") .. tostring(CurrentRenderer):gsub("instance of class", "") .. " backend")
+    RendererManager.SetCurrentRenderer(renderer)
 end
 
 function SceneManager.ChangeScene(scene)

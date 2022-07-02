@@ -41,12 +41,12 @@ function Joystick:Update()
 end
 
 function Joystick:PersistentUpdate()
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBackColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBorderColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
-    self.CurrentSecondaryBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(
-        self.CurrentSecondaryBackColor), Color.HexadecimalColorToRGB(
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    self.CurrentSecondaryBackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(
+        self.CurrentSecondaryBackColor), CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
     self.CurrentJoystickTipSize = Numeric.TemporalInterpolateNumberWithSpeed(0.2, self.CurrentJoystickTipSize,
         self.TargetJoystickTipSize)

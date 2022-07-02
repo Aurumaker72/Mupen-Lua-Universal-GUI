@@ -29,24 +29,32 @@ function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemC
 end
 
 function ComboBox:PersistentUpdate()
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBackColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentForeColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
-    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBorderColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentForeColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
 
     for i = 1, #self.Items, 1 do
-        self.ItemCurrentBackColors[i] = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(
-            self.ItemCurrentBackColors[i]), Color.HexadecimalColorToRGB(
-            self.SelectedItemIndex == i and Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or
-                Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-        self.ItemCurrentBorderColors[i] = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(
-            self.ItemCurrentBorderColors[i]), Color.HexadecimalColorToRGB(
-            self.SelectedItemIndex == i and Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
-                Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.ItemCurrentBackColors[i] = Color.TemporalInterpolateRGBColor(
+            CurrentRenderer:HexadecimalColorToRGB(self.ItemCurrentBackColors[i]),
+            CurrentRenderer:HexadecimalColorToRGB(self.SelectedItemIndex == i and
+                                                      Appearance.Themes[Appearance.CurrentTheme]
+                                                          .BUTTON_PUSHED_BACK_COLOR or
+                                                      Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.ItemCurrentBorderColors[i] = Color.TemporalInterpolateRGBColor(
+            CurrentRenderer:HexadecimalColorToRGB(self.ItemCurrentBorderColors[i]),
+            CurrentRenderer:HexadecimalColorToRGB(self.SelectedItemIndex == i and
+                                                      Appearance.Themes[Appearance.CurrentTheme]
+                                                          .BUTTON_HOVERED_BORDER_COLOR or
+                                                      Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
 
     end
+
 end
 
 function ComboBox:SetOpen(isOpen)
@@ -67,11 +75,11 @@ function ComboBox:Update()
 
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.SetOpen(self, not self.IsOpened)
-        self.OnSelectedItemChangedCallback(self)
+        --self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
     end
 
-    if self.CurrentDropDownHeight > self.TargetDropDownHeight / 2 and self.IsOpened then
-        
+    if self.CurrentDropDownHeight > self.TargetDropDownHeight / 4 and self.IsOpened then
+
         local itemWasClicked = false
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
@@ -114,14 +122,12 @@ end
 
 function ComboBox:ModalDraw()
     if self.CurrentDropDownHeight > 0 then
-        
-        CurrentRenderer:DrawRectangle(self.CurrentBorderColor,
-            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+
+        CurrentRenderer:DrawRectangle(self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
             self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height -
-                Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Width +
-                Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1,
-            self.CurrentDropDownHeight + self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE +
-                1)
+                Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
+            self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1, self.CurrentDropDownHeight +
+                self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
@@ -131,8 +137,7 @@ function ComboBox:ModalDraw()
 
             if thisY > self.Y + self.Height - self.ItemHeight then
 
-                CurrentRenderer:FillRectangle(self.ItemCurrentBackColors[i], self.X, thisY, self.Width,
-                    self.ItemHeight)
+                CurrentRenderer:FillRectangle(self.ItemCurrentBackColors[i], self.X, thisY, self.Width, self.ItemHeight)
 
                 CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[i], self.X + 3, thisY + 2)
 
@@ -145,8 +150,6 @@ function ComboBox:ModalDraw()
 end
 
 function ComboBox:Draw()
-
-    
 
     CurrentRenderer:FillRectangle(self.CurrentBorderColor,
         self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,

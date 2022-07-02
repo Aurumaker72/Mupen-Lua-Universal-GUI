@@ -16,3 +16,9 @@ function Renderer:DrawText(color, text, x, y)
 end
 function Renderer:DrawLine(color, thickness, x1, y1, x2, y2)
 end
+function Renderer:HexadecimalColorToRGB(hex)
+    
+end
+
+function Renderer:RGBToHexadecimalColor(rgb)
+end

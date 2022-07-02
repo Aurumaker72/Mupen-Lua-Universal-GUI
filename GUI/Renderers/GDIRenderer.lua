@@ -32,3 +32,17 @@ function GDIRenderer:DrawLine(color, thickness, x1, y1, x2, y2)
     wgui.setpen(color, thickness)
     wgui.line(x1,y1,x2,y2)
 end
+
+function GDIRenderer:HexadecimalColorToRGB(hex)
+    return  -- OPTIMIZATION: dont copy and reallocate string, instead shift logic indexing by one
+    {       -- OPTIMIZATION: dont reallocate string due to concatenation, insetad specify explicit radix
+        tonumber(hex:sub(2,3), 16), 
+        tonumber(hex:sub(4,5), 16), 
+        tonumber(hex:sub(6,7), 16),
+    }
+end
+
+function GDIRenderer:RGBToHexadecimalColor(rgb)
+        -- OPTIMIZATION: dont reallocate string due to concatenation, instead use prepend # inside format specifier
+        return string.format("#%06X", (rgb[1] * 0x10000) + (rgb[2] * 0x100) + rgb[3])--"#" .. string.format("%06X", (rgb[1] * 0x10000) + (rgb[2] * 0x100) + rgb[3])
+end

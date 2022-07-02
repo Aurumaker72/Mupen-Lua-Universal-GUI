@@ -25,10 +25,10 @@ function Slider:PersistentUpdate()
         self.TargetHeadColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     end
 
-    self.CurrentHeadColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentHeadColor),
-        Color.HexadecimalColorToRGB(self.TargetHeadColor))
-    self.CurrentTrackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentTrackColor),
-        Color.HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
+    self.CurrentHeadColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentHeadColor),
+        CurrentRenderer:HexadecimalColorToRGB(self.TargetHeadColor))
+    self.CurrentTrackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentTrackColor),
+        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
 end
 
 function Slider:IsMouseInside()

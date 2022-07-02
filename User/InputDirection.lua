@@ -87,7 +87,7 @@ function UserCodeOnInitialize()
         XLabel = Label:new(mainScene, 148, 194, "X: "),
         YLabel = Label:new(mainScene, 147, 211, "Y: "),
         Speedkick = ToggleButton:new(mainScene, nil, 141, 235, 76, 21, "Speedkick", false, function(o)
-
+            Appearance.SetTheme(o.IsChecked and "Classic" or "Dark")
         end),
         ResetMagnitude = Button:new(mainScene, "G", 141, 260, 76, 21, "Reset Mag.", function(o)
 
@@ -123,10 +123,10 @@ function UserCodeOnInitialize()
         RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+" }, function(o)
             -- when the GC pressure is high
             if o.Items[o.SelectedItemIndex] == "GDI" then
-                CurrentRenderer = GDIRenderer:new()
+                RendererManager.SetCurrentRenderer(GDIRenderer:new())
             end
             if o.Items[o.SelectedItemIndex] == "GDI+" then
-                CurrentRenderer = GDIPlusRenderer:new()
+                RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
             end
         end),
         Test39 = CarrouselButton:new(mainScene, 40, 200, 140, 20, {"a", "b", "c", "d"}, true, function(o)

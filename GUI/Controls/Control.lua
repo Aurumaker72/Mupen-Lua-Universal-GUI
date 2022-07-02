@@ -1,7 +1,7 @@
 Control = middleclass('Control')
 
 function Control:initialize(containingScene, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
-    if not containingScene then -- nvm the parameters shift to left
+    if not containingScene then -- nvm the parameters shift to left this is useless
         print("You forgot to pass in a reference to the containing scene!")
     end
     self.ContainingScene = containingScene -- let's hope this is a pointer to scene table and not a copy lmfao

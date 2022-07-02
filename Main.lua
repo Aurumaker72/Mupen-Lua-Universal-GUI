@@ -25,6 +25,7 @@ dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
 dofile(FOLDER_HELPER .. "Color.lua")
 dofile(FOLDER_HELPER .. "Table.lua")
+dofile(FOLDER_GUI_RENDERERS .. "RendererManager.lua")
 dofile(FOLDER_GUI_RENDERERS .. "Renderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIRenderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIPlusRenderer.lua")
@@ -47,11 +48,10 @@ dofile(FOLDER_PROVIDER .. "Appearance.lua")
 -- Expand window for our drawing area
 Screen.Expand()
 
--- Current theme
-
-Appearance.Initialize()
-
 UserCodeOnInitialize()
+
+-- Appearance requires renderer initialization
+Appearance.Initialize()
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 

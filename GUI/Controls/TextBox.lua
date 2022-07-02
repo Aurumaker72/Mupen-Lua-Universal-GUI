@@ -67,10 +67,10 @@ function TextBox:PersistentUpdate()
     if self.Active then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBackColor),
-        Color.HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(Color.HexadecimalColorToRGB(self.CurrentBorderColor),
-        Color.HexadecimalColorToRGB(self.TargetBorderColor))
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
+        CurrentRenderer:HexadecimalColorToRGB(self.TargetBackColor))
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
+        CurrentRenderer:HexadecimalColorToRGB(self.TargetBorderColor))
 end
 
 function TextBox:CanTypeCharacter()
