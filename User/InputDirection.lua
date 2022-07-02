@@ -85,7 +85,7 @@ function UserCodeOnInitialize()
 
         end),
         XLabel = Label:new(mainScene, 148, 194, "X: "),
-        YLabel = Label:new(mainScene, 147, 211, "Y: "),
+        YLabel = Label:new(mainScene, 148, 211, "Y: "),
         Speedkick = ToggleButton:new(mainScene, nil, 141, 235, 76, 21, "Speedkick", false, function(o)
             Appearance.SetTheme(o.IsChecked and "Classic" or "Dark")
         end),
