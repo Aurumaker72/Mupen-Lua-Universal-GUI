@@ -16,8 +16,10 @@ function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemC
     self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 
-    self.RightChevronX = self.X + self.Width - Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH
-    self.RightChevronY = self.Y
+    --self.RightChevronX = self.X + self.Width - Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH
+    self.CurrentRightChevronY = self.Y
+    self.TargetRightChevronY = self.CurrentRightChevronY
+
     self.RightChevronWidth = Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH
     self.RightChevronHeight = self.Height
     self.RightChevronText = self.IsOpened and "^" or "v"
@@ -38,6 +40,8 @@ function ComboBox:PersistentUpdate()
     self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
         CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+
+    self.CurrentRightChevronY = Numeric.TemporalInterpolateNumberWithSpeed(0.5, self.CurrentRightChevronY, self.TargetRightChevronY)
 
     for i = 1, #self.Items, 1 do
         self.ItemCurrentBackColors[i] = Color.TemporalInterpolateRGBColor(
@@ -73,6 +77,8 @@ function ComboBox:Update()
     self.CurrentDropDownHeight =
         Numeric.TemporalInterpolateNumber(self.CurrentDropDownHeight, self.TargetDropDownHeight)
 
+    
+
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.SetOpen(self, not self.IsOpened)
         --self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
@@ -103,6 +109,12 @@ function ComboBox:Update()
             self.PerformKeyboardNavigation(self)
         end
 
+    end
+
+    if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
+        self.TargetRightChevronY = self.Y + (self.IsOpened and 5 or -5)
+    else
+        self.TargetRightChevronY = (self.Y)
     end
 end
 
@@ -159,7 +171,7 @@ function ComboBox:Draw()
     CurrentRenderer:FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.RightChevronText, self.X + self.Width -
-        Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.Y + 2)
+        Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.CurrentRightChevronY)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[self.SelectedItemIndex], self.X + 3, self.Y + 2)
 

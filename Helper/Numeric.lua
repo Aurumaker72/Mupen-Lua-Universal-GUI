@@ -17,6 +17,13 @@ function Numeric.TemporalInterpolateNumberWithSpeed(factor, current, target)
     return current
 end
 
+function Numeric.TemporalInterpolateNumberWithEpsilon(e, current, target)
+    if target - current < e then
+        return target
+    end
+    return Numeric.TemporalInterpolateNumber(current, target)
+end
+
 function Numeric.WrappingClamp(value, min, max) -- there has got to be branchless bithack for this!!!
     if value > max then
         return min

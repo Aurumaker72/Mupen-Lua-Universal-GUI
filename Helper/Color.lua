@@ -1,5 +1,5 @@
 Color = {
-    InterpolationEpsilon = 15
+    InterpolationEpsilon = 5
 } -- potential namespace conflict
 
 function Color.TemporalInterpolateRGBColor(currentColor, targetColor)
