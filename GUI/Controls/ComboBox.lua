@@ -58,12 +58,19 @@ function ComboBox:PersistentUpdate()
 
 end
 
-function ComboBox:SetOpen(isOpen)
-    -- aww yeah extreme time complexity
+function ComboBox:IsAnotherComboBoxOpenInScene()
+    -- refactor to O(1) using dict cache
     for key, control in pairs(self.ContainingScene.Controls) do
         if control:isInstanceOf(ComboBox) and control.IsOpened and control == self == false then
-            return
+            return true
         end
+    end
+    return false
+end
+
+function ComboBox:SetOpen(isOpen)
+    if self:IsAnotherComboBoxOpenInScene() then
+        return
     end
     self.IsOpened = isOpen
     self.TargetDropDownHeight = self.IsOpened and (self.ItemHeight * #self.Items) or -self.ItemHeight
@@ -114,6 +121,9 @@ function ComboBox:Update()
 end
 
 function ComboBox:PerformKeyboardNavigation()
+    if self:IsAnotherComboBoxOpenInScene() then
+        return
+    end
     if Keyboard.KeyPressed("down") then
         self.SetSelectedIndex(self, self.SelectedItemIndex + 1)
     end
