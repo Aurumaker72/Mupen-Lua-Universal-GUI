@@ -84,12 +84,7 @@ end
 
 function TextBox:Draw()
 
-    CurrentRenderer:FillRectangle(self.CurrentBorderColor,
-        self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Y - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2,
-        self.Height + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE * 2)
-    CurrentRenderer:FillRectangle(self.CurrentBackColor, self.X, self.Y, self.Width, self.Height)
+    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(
         self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or

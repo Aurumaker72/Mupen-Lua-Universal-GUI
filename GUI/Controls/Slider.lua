@@ -25,9 +25,11 @@ function Slider:PersistentUpdate()
         self.TargetHeadColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     end
 
-    self.CurrentHeadColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentHeadColor),
+    self.CurrentHeadColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentHeadColor),
         CurrentRenderer:HexadecimalColorToRGB(self.TargetHeadColor))
-    self.CurrentTrackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentTrackColor),
+    self.CurrentTrackColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentTrackColor),
         CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
 end
 
@@ -55,7 +57,6 @@ function Slider:Update()
         end
     end
 
-    
     if Mouse.IsPrimaryClicked() and self.IsMouseInside(self) then
         self.IsCapturingMouse = true
     end
@@ -63,15 +64,13 @@ function Slider:Update()
 end
 
 function Slider:Draw()
-    CurrentRenderer:FillRectangle(self.CurrentTrackColor, self.X, self.Y + self.Height / 2 -
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
+
+    RendererHelper.DrawBorderedRectangle(self.CurrentTrackColor,
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y + self.Height / 2 -
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-    CurrentRenderer:FillRectangle(self.CurrentTrackColor,
-        self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Y + self.Height / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT -
-            -Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-        self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, Appearance.Themes[Appearance.CurrentTheme]
-            .SLIDER_TRACK_HEIGHT + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE)
+
     if self.IsCapturingMouse then
         self.CurrentHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR
     end
