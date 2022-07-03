@@ -7,6 +7,7 @@ Appearance = {
             BUTTON_BACK_COLOR = "#E1E1E1",
             BUTTON_FORE_COLOR = "#000000",
             BUTTON_HOVERED_BORDER_COLOR = "#0078D7",
+            BUTTON_HOVERED_BACK_COLOR = "#E5F1FB",
             BUTTON_PUSHED_BACK_COLOR = "#C5E1F7",
             TEXTBOX_BACK_COLOR = "#FFFFFF",
             TEXTBOX_READONLY_BACK_COLOR = "#F0F0F0",
