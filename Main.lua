@@ -83,7 +83,6 @@ end
 function AtReset()
     Screen.Expand()
 end
-
 -- Register callbacks
 emu.atstop(AtStop)
 emu.atinterval(AtInterval)
