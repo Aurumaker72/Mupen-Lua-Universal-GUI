@@ -6,33 +6,24 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 ## Examples
 
-![grafik](https://user-images.githubusercontent.com/48759429/172042835-9f99b721-abf0-418e-8de5-95047c57d922.png)
-
-*A button control*
-
-![grafik](https://user-images.githubusercontent.com/48759429/172042856-bdfd57e4-596a-4d67-9dec-487c658d6e28.png)
-
-*A textbox control in read-write mode*
-
-![grafik](https://user-images.githubusercontent.com/48759429/172042862-81524d8e-1630-4159-a149-8641a1e297b5.png)
-
-*A non-staggering trackbar control*
-
-![grafik](https://user-images.githubusercontent.com/48759429/172049713-9d056b9a-e19a-4965-a33c-02a410ac5568.png)
-
-*A joystick control in read-write mode*
-
 <img src="https://user-images.githubusercontent.com/48759429/172204289-d435637d-33e4-4d35-9d18-714766337f32.gif" width="250"/>
 
 *A ComboBox control which sets the theme*
 
-<img src="https://user-images.githubusercontent.com/48759429/172062375-c19b362f-d0d3-48cc-9a1f-fb7ecaac12c8.gif" width="250"/>
-
-*Button highlights*
-
 <img src="https://user-images.githubusercontent.com/48759429/177013242-e448a242-cc01-430a-922c-ccaea79e996f.png" height="400"/>
 
 *Example user program*
+
+## Arhitecture
+This framework is split into two major code sections:
+- Framework (Internal)
+- User (External)
+
+The user writes code inside the `User` directory. This code includes implementation of their domain logic and definition of scenes.
+
+The user mustn't modify any code outside of the User directory and must interact with the framework over predefined functions, not mutating data manually (e.g.:
+✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
+❌ ```CurrentRenderer = GDIRenderer:new()```)
 
 ## Usage
 
@@ -90,29 +81,12 @@ CurrentScene.IsActive = true
   - Can define non-scene (persistent) controls for navigation OR scene-linked controls
 - Theming
 - Compatibility
-  - (WIP) Automatically scales controls depending on resolution 
-- Controls
-  - Button
-    - Keyboard interaction
-  - ToggleButton
-    - Keyboard interaction
-  - TextBox
-    - Read-only and Read-write mode
-    - Character deletion
-    - Numeric/Alphanumeric mode
-  - Slider
-    - Minimum/Maximum bounds
-    - Staggered increment
-    - Read-only and Read-write mode
-  - Joystick
-    - Read-only and Read-write mode
-  - Label
-  - CarrouselButton
-    - Wrap-around
-    - Keyboard interaction
-  - ComboBox
-    - Keyboard interaction 
-  - ~~ListView~~
-  - ~~Expander~~
-  - ~~Image~~
-  - 
+  - Automatically scales controls depending on resolution
+
+|                      | Button | ToggleButton | TextBox                                 | Slider | Joystick                       | ComboBox | CarrouselButton |
+|----------------------|--------|--------------|-----------------------------------------|--------|--------------------------------|----------|-----------------|
+| Animations           | ✔️      | ✔️            | ✔️                                       | ✔️      | ✔️                              | ✔️        | ✔️               |
+| Transitions          | ✔️      | ✔️            | ➖                                       | ➖      | ✔️                              | ✔️        | ❌               |
+| Keyboard interaction | ✔️      | ✔️            | ✔️                                       | ❌      | ❌                              | ✔️        | ✔️               |
+| Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
+| Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
