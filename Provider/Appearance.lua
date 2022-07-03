@@ -114,6 +114,13 @@ VERTICAL_SAFE_ZONE = 30
 HORIZONTAL_SAFE_ZONE = 3
 
 
+function Appearance.GetThemeNames()
+    local names = {}
+    for k, v in pairs(Appearance.Themes) do
+        names[#names + 1] = k
+    end
+    return names
+end
 
 function Appearance.SetTheme(theme)
     if not Appearance.Themes[theme] then
@@ -125,7 +132,6 @@ end
 
 function Appearance.Initialize()
 
-    --FONT_SIZE = math.floor(FONT_SIZE * Screen.Dimensions.ScalingX)
     Appearance.Themes.Inverted = Table.DeepCopy(Appearance.Themes.Classic)
 
     for k, v in pairs(Appearance.Themes.Inverted) do
@@ -137,6 +143,8 @@ function Appearance.Initialize()
             Appearance.Themes.Inverted[k] = CurrentRenderer:RGBToHexadecimalColor(rgb)
         end
     end
+
+    Appearance.SetTheme("Classic")
 end
 
 

@@ -55,7 +55,8 @@ function Slider:Update()
         end
     end
 
-    if Mouse.IsPrimaryDown() and self.IsMouseInside(self) then
+    
+    if Mouse.IsPrimaryClicked() and self.IsMouseInside(self) then
         self.IsCapturingMouse = true
     end
 

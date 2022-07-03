@@ -116,7 +116,7 @@ function UserCodeOnInitialize()
             print("Changing to Main")
             SceneManager.ChangeScene("Main")
         end),
-        Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "Inverted", "DarkFlat"}, function(o)
+        Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, { "Classic", "Dark", "DarkFlat", "Inverted" } , function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
         
@@ -150,8 +150,9 @@ function UserCodeOnInitialize()
     CurrentScene.IsActive = true
 
     --InputDirection.SetStrainMode(Scenes.Main.Controls.StrainingDisable.Text)
-
+    
     UserCodeAtInputPoll()
+
 end
 
 function UserCodeAtStop()
