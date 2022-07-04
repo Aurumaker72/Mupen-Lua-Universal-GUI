@@ -46,10 +46,42 @@ function TextBox:Update()
 
         if (Keyboard.KeyPressed("backspace")) then
             if self.Text:len() > 0 then
-                self.Text = self.Text:sub(1, -2)
+                if Keyboard.KeyHeld("control") then
+                    self.Text = ""
+                else
+                    self.Text = self.Text:sub(1, -2)
+                end
                 if self.TextChangedCallback then
                     self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.TextChangedCallback, self)
                 end
+            end
+        end
+    end
+
+    if self.Active then
+
+        if Keyboard.KeyHeld("control") and Keyboard.KeyPressed("C") then
+            ClipboardManager.Copy(tostring(self.Text))
+        end
+
+        if Keyboard.KeyHeld("control") and Keyboard.KeyPressed("V") then
+            local canTryPaste = false -- self.NumericOnly and (Numeric.IsNumeric(ClipboardManager.ClipboardBuffer)) or true
+
+            if self.NumericOnly then
+                if Numeric.IsNumeric(ClipboardManager.ClipboardBuffer) then
+                    canTryPaste = true
+                end
+            else
+                canTryPaste = true
+            end
+
+            if canTryPaste then
+                if ClipboardManager.ClipboardBuffer:len() > self.MaxLength then
+                    ClipboardManager.Copy(ClipboardManager.ClipboardBuffer:sub(1, self.MaxLength))
+                end
+                self.Text = ClipboardManager.Paste(self.Text)
+            else
+                print("Can\'t paste this")
             end
         end
     end
@@ -67,24 +99,27 @@ function TextBox:PersistentUpdate()
     if self.Active then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
+    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
         CurrentRenderer:HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
+    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
         CurrentRenderer:HexadecimalColorToRGB(self.TargetBorderColor))
 end
 
 function TextBox:CanTypeCharacter()
-    if type(self.Text) == "string" == false then
-        print("TextBox text was set to string")
-        return false
-    end
+    -- if type(self.Text) == "string" == false then
+    --    print("TextBox text has invalid type")
+    --    return false
+    -- end
     return (self.Text:len() * Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE < self.Width) and
                (self.Text:len() + 1 <= self.MaxLength)
 end
 
 function TextBox:Draw()
 
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor,
+        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(
         self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or

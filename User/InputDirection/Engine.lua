@@ -114,7 +114,6 @@ function Engine.inputsForAngle()
 		goal = goal + 32 * speedsign * Engine.getDyawsign()
 	end
 	if (Settings.SelectedItem == "MatchAngle" and Settings.DYaw == true) then
-		print("a")
 		goal = Engine.getEffectiveAngle(Engine.getDyaw(goal))
 		if (Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or Memory.Mario.Action == 0x010208B0 or Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343 and ENABLE_REVERSE_ANGLE_ON_WALLKICK == 1) then
 			goal = (goal + 32768) % 65536
@@ -212,6 +211,7 @@ end
 local function magnitude(x, y)
 	return math.sqrt(math.max(0, math.abs(x)-6)^2 + math.max(0, math.abs(y)-6)^2)
 end
+
 local function clamp(min, n, max)
 	if n < min then return min end
 	if n > max then return max end

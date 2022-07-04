@@ -1,6 +1,5 @@
 -- NOTE: this breaks everything mentioned in the arhitecture README section
 -- i put this shit together in 15 minutes before eating
-
 InputDirection = {}
 
 FOLDER_INPUTDIRECTION = FOLDER_USER_CODE .. "InputDirection" .. "\\"
@@ -70,7 +69,7 @@ function UserCodeOnInitialize()
         StrainingMatchAngle = ToggleButton:new(mainScene, nil, 5, 5 + 35 * 3, 127, 30, "Match Angle", false, function(o)
             InputDirection.SetStrainMode(o.Text:gsub('%s+', ''))
         end),
-        Joystick = Joystick:new(mainScene, 5, 5 + 141, 128, 128, true, function(o)
+        Joystick = Joystick:new(mainScene, 5, 145, 128, 128, true, function(o)
 
         end),
 
@@ -117,42 +116,30 @@ function UserCodeOnInitialize()
                 InputDirection.SetGoalMag(tonumber(o.Text))
             end
         end),
-        Speedkick = ToggleButton:new(mainScene, nil, 142, 253-21-3, 76, 21, "Speedkick", false, function(o)
+        Speedkick = Button:new(mainScene, nil, 142, 253 - 21 - 3, 76, 21, "Speedkick", function(o)
             InputDirection.SetGoalMag(48)
         end),
         ResetMagnitude = Button:new(mainScene, "G", 142, 253, 76, 21, "Reset Mag.", function(o)
             InputDirection.SetGoalMag(127)
-        end),
-        --ParameterDumpLabel1 = Label:new(mainScene, 5,
+        end)
+        -- ParameterDumpLabel1 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 1, "some value"),
-        --ParameterDumpLabel2 = Label:new(mainScene, 5,
+        -- ParameterDumpLabel2 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 2, "some value"),
-        --ParameterDumpLabel3 = Label:new(mainScene, 5,
+        -- ParameterDumpLabel3 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 3, "some value"),
-        --ParameterDumpLabel4 = Label:new(mainScene, 5,
+        -- ParameterDumpLabel4 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 4, "some value"),
-        --ParameterDumpLabel5 = Label:new(mainScene, 5,
+        -- ParameterDumpLabel5 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 5, "some value"),
-        --ParameterDumpLabel6 = Label:new(mainScene, 5,
+        -- ParameterDumpLabel6 = Label:new(mainScene, 5,
         --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 6, "some value"),
-        --SwitchScene = Button:new(mainScene, nil, 142, 300, 76, 21, "settings", function(o)
-        --    print("Changing to Settings")
-        --    SceneManager.ChangeScene("Settings")
-        --end),
-        --Test2 = Slider:new(mainScene, 141, 340, 76, 21, 0, 0, 100, false, false, function(o)
-        --    print(o.Value)
-        --end)
-
     })
 
     settingsScene:AddControls({
         RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
         ThemeLabel = Label:new(settingsScene, 5, 5, "Theme"),
 
-        --SwitchScene = Button:new(settingsScene, nil, 141, 300, 76, 21, "home", function(o)
-        --    print("Changing to Main")
-        --    SceneManager.ChangeScene("Main")
-        --end),
         Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
@@ -165,7 +152,7 @@ function UserCodeOnInitialize()
             if o.Items[o.SelectedItemIndex] == "GDI+" then
                 RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
             end
-        end),
+        end)
     })
 
     SceneManager.Initialize({

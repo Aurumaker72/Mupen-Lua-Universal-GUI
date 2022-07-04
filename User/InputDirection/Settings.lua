@@ -1,3 +1,4 @@
+-- VM equivalent
 Settings = {
 	goalAngle = 0,
 	goalMag = 127,
