@@ -47,4 +47,7 @@ function SceneManager.Draw()
     for key, control in pairs(PersistentControls) do
         control:Draw()
     end
+
+    CurrentRenderer:FinalizeFrame()
+    
 end

@@ -5,8 +5,8 @@ InputDirection = {}
 FOLDER_INPUTDIRECTION = FOLDER_USER_CODE .. "InputDirection" .. "\\"
 print(FOLDER_INPUTDIRECTION)
 
+dofile(FOLDER_INPUTDIRECTION .. "Broker.lua")
 dofile(FOLDER_INPUTDIRECTION .. "Memory.lua")
-dofile(FOLDER_INPUTDIRECTION .. "Settings.lua")
 dofile(FOLDER_INPUTDIRECTION .. "Joypad.lua")
 dofile(FOLDER_INPUTDIRECTION .. "Angles.lua")
 dofile(FOLDER_INPUTDIRECTION .. "Engine.lua")
@@ -53,15 +53,15 @@ function UserCodeAtInputPoll()
 	Scenes.Main.Controls.Action.Text = "Action: " .. Engine.GetCurrentAction()
     
     local distmoved = Engine.GetTotalDistMoved()
-	if (Settings.DistanceMeasurement == false) then
-		distmoved = Settings.DistanceMeasurementSaved
+	if (Broker.DistanceMeasurement == false) then
+		distmoved = Broker.DistanceMeasurementSaved
 	end
 	Scenes.Main.Controls.MovedDist.Text = "Moved Dist: " .. distmoved
 
 end
 
 function InputDirection.SetStrainMode(mode)
-    Settings.SelectedItem = mode
+    Broker.SelectedItem = mode
     Scenes.Main.Controls.StrainingDisable.IsChecked = mode == Scenes.Main.Controls.StrainingDisable.Text:gsub('%s+', '')
     Scenes.Main.Controls.StrainingMatchYaw.IsChecked = mode ==
                                                            Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', '')
@@ -73,35 +73,40 @@ function InputDirection.SetStrainMode(mode)
             '%s+', '')
 end
 
+function InputDirection.SetGoalAngle(goalAngle)
+    Broker.GoalAngle = goalAngle
+    Scenes.Main.Controls.AngleTextBox.Text = tostring(goalAngle)
+end
+
 function InputDirection.SetGoalMag(goalMag)
-    Settings.goalMag = goalMag
+    Broker.GoalMagnitude = goalMag
     Scenes.Main.Controls.Joystick.Magnitude = goalMag
     Scenes.Main.Controls.MagnitudeTextBox.Text = tostring(goalMag) -- CAREFUL! Type swap scary
 end
 
 function InputDirection.SetBias(left, right)
-    Settings.Left = left
-    Settings.Right = right
-    Scenes.Main.Controls.Left.IsChecked = Settings.Left
-    Scenes.Main.Controls.Right.IsChecked = Settings.Right
+    Broker.Left = left
+    Broker.Right = right
+    Scenes.Main.Controls.Left.IsChecked = Broker.Left
+    Scenes.Main.Controls.Right.IsChecked = Broker.Right
 end
 
 function InputDirection.SetTargetStrain(targetStrain, always)
-    Settings.Always = always
-    Settings.TargetStrain = targetStrain
+    Broker.Always = always
+    Broker.TargetStrain = targetStrain
 
-    if not Settings.TargetStrain then
-        Settings.Always = false
+    if not Broker.TargetStrain then
+        Broker.Always = false
     end
 
-    Scenes.Main.Controls.StrainTo99.IsChecked = Settings.TargetStrain
-    Scenes.Main.Controls.Always99.IsChecked = Settings.Always
+    Scenes.Main.Controls.StrainTo99.IsChecked = Broker.TargetStrain
+    Scenes.Main.Controls.Always99.IsChecked = Broker.Always
 end
 
 function UserCodeOnInitialize()
 
     local mainScene = Scene:new(nil)
-    local settingsScene = Scene:new(nil)
+    local BrokerScene = Scene:new(nil)
 
     mainScene:AddControls({
 
@@ -136,14 +141,14 @@ function UserCodeOnInitialize()
             InputDirection.SetBias(Scenes.Main.Controls.Left.IsChecked, o.IsChecked)
         end),
         DYaw = ToggleButton:new(mainScene, nil, 137, 57, 87, 22, "DYaw", false, function(o)
-            Settings.DYaw = o.IsChecked
+            Broker.DYaw = o.IsChecked
         end),
         Swim = ToggleButton:new(mainScene, nil, 137, 83, 87, 22, "Swim", false, function(o)
-            Settings.Swimming = o.IsChecked
+            Broker.Swimming = o.IsChecked
         end),
         AngleTextBox = TextBox:new(mainScene, 138, 110, 85, 30, 5, false, true, function(o)
             if not (o.Text == "" or o.Text:find("%D")) then
-                Settings.goalAngle = tonumber(o.Text)
+                Broker.GoalAngle = tonumber(o.Text)
             end
         end),
         MagnitudeLabel = Label:new(mainScene, 147, 144, "Magnitude"),
@@ -174,15 +179,15 @@ function UserCodeOnInitialize()
         MovedDist =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 14, ""),
     })
 
-    settingsScene:AddControls({
-        RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
-        ThemeLabel = Label:new(settingsScene, 5, 5, "Theme"),
+    BrokerScene:AddControls({
+        RendererLabel = Label:new(BrokerScene, 5, 30, "Renderer"),
+        ThemeLabel = Label:new(BrokerScene, 5, 5, "Theme"),
 
-        Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
+        Fuck = ComboBox:new(BrokerScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
 
-        RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+"}, function(o)
+        RendererBackendComboBox = ComboBox:new(BrokerScene, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"}, function(o)
             -- when the GC pressure is high
             if o.Items[o.SelectedItemIndex] == "GDI" then
                 RendererManager.SetCurrentRenderer(GDIRenderer:new())
@@ -190,12 +195,15 @@ function UserCodeOnInitialize()
             if o.Items[o.SelectedItemIndex] == "GDI+" then
                 RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
             end
+            if o.Items[o.SelectedItemIndex] == "Batched GDI" then
+                RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
+            end
         end)
     })
 
     SceneManager.Initialize({
         Main = mainScene,
-        Settings = settingsScene
+        Broker = BrokerScene
     }, {
         NavigationCarrouselButton = CarrouselButton:new(mainScene, 5, 290 +
             (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
@@ -208,6 +216,7 @@ function UserCodeOnInitialize()
     CurrentScene.IsActive = true
 
     InputDirection.SetStrainMode("Disabled")
+    InputDirection.SetGoalAngle(0)
     InputDirection.SetGoalMag(127)
     InputDirection.SetBias(true, false)
 

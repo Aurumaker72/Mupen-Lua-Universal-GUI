@@ -8,12 +8,12 @@
 -- local pow = math.pow
 
 -- local function getDigit(value, length, digit)
--- 	if digit == nil then digit = Settings.Layout.TextArea.selectedChar end
+-- 	if digit == nil then digit = Broker.Layout.TextArea.selectedChar end
 -- 	return (value // pow(10, length - digit)) % 10
 -- end
 
 -- local function updateDigit(value, length, digit_value, digit)
--- 	if digit == nil then digit = Settings.Layout.TextArea.selectedChar end
+-- 	if digit == nil then digit = Broker.Layout.TextArea.selectedChar end
 -- 	local old_digit_value = getDigit(value, length, digit)
 -- 	local new_value = value + (digit_value - old_digit_value) * pow(10, length - digit)
 -- 	local max = pow(10, length)
@@ -24,7 +24,7 @@
 -- 	{
 -- 		name = "ignore y",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.IGNORE_Y],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.IGNORE_Y],
 -- 		box = {
 -- 			Drawing.Screen.Width + 130,
 -- 			490,
@@ -35,20 +35,20 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.dist_button.ignore_y == true
+-- 			return Broker.Layout.Button.dist_button.ignore_y == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.dist_button.ignore_y == true) then
--- 				Settings.Layout.Button.dist_button.ignore_y = false
+-- 			if (Broker.Layout.Button.dist_button.ignore_y == true) then
+-- 				Broker.Layout.Button.dist_button.ignore_y = false
 -- 			else
--- 				Settings.Layout.Button.dist_button.ignore_y = true
+-- 				Broker.Layout.Button.dist_button.ignore_y = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = ".99",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.POINT_99],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.POINT_99],
 -- 		box = {
 -- 			Drawing.Screen.Width + 185,
 -- 			5,
@@ -59,21 +59,21 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.strain_button.target_strain == true
+-- 			return Broker.Layout.Button.strain_button.target_strain == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.strain_button.target_strain == true) then
--- 				Settings.Layout.Button.strain_button.target_strain = false
--- 				Settings.Layout.Button.strain_button.always = false
+-- 			if (Broker.Layout.Button.strain_button.target_strain == true) then
+-- 				Broker.Layout.Button.strain_button.target_strain = false
+-- 				Broker.Layout.Button.strain_button.always = false
 -- 			else
--- 				Settings.Layout.Button.strain_button.target_strain = true
+-- 				Broker.Layout.Button.strain_button.target_strain = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "always .99",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.ALWAYS_99],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.ALWAYS_99],
 -- 		box = {
 -- 			Drawing.Screen.Width + 129,
 -- 			5,
@@ -84,20 +84,20 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.strain_button.always == true
+-- 			return Broker.Layout.Button.strain_button.always == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.strain_button.always == true) then
--- 				Settings.Layout.Button.strain_button.always = false
--- 			elseif (Settings.Layout.Button.strain_button.target_strain == true) then
--- 				Settings.Layout.Button.strain_button.always = true
+-- 			if (Broker.Layout.Button.strain_button.always == true) then
+-- 				Broker.Layout.Button.strain_button.always = false
+-- 			elseif (Broker.Layout.Button.strain_button.target_strain == true) then
+-- 				Broker.Layout.Button.strain_button.always = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = ".99 left",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.LEFT_99],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.LEFT_99],
 -- 		box = {
 -- 			Drawing.Screen.Width + 130,
 -- 			31,
@@ -108,20 +108,20 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.strain_button.left == true
+-- 			return Broker.Layout.Button.strain_button.left == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.strain_button.left == true and Settings.Layout.Button.strain_button.right == true) then
--- 				Settings.Layout.Button.strain_button.left = false
+-- 			if (Broker.Layout.Button.strain_button.left == true and Broker.Layout.Button.strain_button.right == true) then
+-- 				Broker.Layout.Button.strain_button.left = false
 -- 			else
--- 				Settings.Layout.Button.strain_button.left = true
+-- 				Broker.Layout.Button.strain_button.left = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = ".99 right",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.RIGHT_99],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.RIGHT_99],
 -- 		box = {
 -- 			Drawing.Screen.Width + 170,
 -- 			31,
@@ -132,20 +132,20 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.strain_button.right == true
+-- 			return Broker.Layout.Button.strain_button.right == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.strain_button.right == true and Settings.Layout.Button.strain_button.left == true) then
--- 				Settings.Layout.Button.strain_button.right = false
+-- 			if (Broker.Layout.Button.strain_button.right == true and Broker.Layout.Button.strain_button.left == true) then
+-- 				Broker.Layout.Button.strain_button.right = false
 -- 			else
--- 				Settings.Layout.Button.strain_button.right = true
+-- 				Broker.Layout.Button.strain_button.right = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "dyaw",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.DYAW],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DYAW],
 -- 		box = {
 -- 			Drawing.Screen.Width + 130,
 -- 			57,
@@ -156,20 +156,20 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.strain_button.dyaw == true
+-- 			return Broker.Layout.Button.strain_button.dyaw == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.strain_button.dyaw == true) then
--- 				Settings.Layout.Button.strain_button.dyaw = false
+-- 			if (Broker.Layout.Button.strain_button.dyaw == true) then
+-- 				Broker.Layout.Button.strain_button.dyaw = false
 -- 			else
--- 				Settings.Layout.Button.strain_button.dyaw = true
+-- 				Broker.Layout.Button.strain_button.dyaw = true
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "dist moved",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.DIST_MOVED],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DIST_MOVED],
 -- 		box = {
 -- 			Drawing.Screen.Width + 5,
 -- 			490,
@@ -180,24 +180,24 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.dist_button.enabled == true
+-- 			return Broker.Layout.Button.dist_button.enabled == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.dist_button.enabled == false) then
--- 				Settings.Layout.Button.dist_button.enabled = true
--- 				Settings.Layout.Button.dist_button.axis.x = MoreMaths.DecodeDecToFloat(Memory.Mario.X)
--- 				Settings.Layout.Button.dist_button.axis.y = MoreMaths.DecodeDecToFloat(Memory.Mario.Y)
--- 				Settings.Layout.Button.dist_button.axis.z = MoreMaths.DecodeDecToFloat(Memory.Mario.Z)
+-- 			if (Broker.Layout.Button.dist_button.enabled == false) then
+-- 				Broker.Layout.Button.dist_button.enabled = true
+-- 				Broker.Layout.Button.dist_button.axis.x = MoreMaths.DecodeDecToFloat(Memory.Mario.X)
+-- 				Broker.Layout.Button.dist_button.axis.y = MoreMaths.DecodeDecToFloat(Memory.Mario.Y)
+-- 				Broker.Layout.Button.dist_button.axis.z = MoreMaths.DecodeDecToFloat(Memory.Mario.Z)
 -- 			else
--- 				Settings.Layout.Button.dist_button.enabled = false
--- 				Settings.Layout.Button.dist_button.dist_moved_save = Engine.GetTotalDistMoved()
+-- 				Broker.Layout.Button.dist_button.enabled = false
+-- 				Broker.Layout.Button.dist_button.dist_moved_save = Engine.GetTotalDistMoved()
 -- 			end
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "disabled",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.DISABLED],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DISABLED],
 -- 		box = {
 -- 			Drawing.Screen.Width + 5,
 -- 			5,
@@ -208,16 +208,16 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.selectedItem == Settings.Layout.Button.DISABLED
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.DISABLED
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.DISABLED
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.DISABLED
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "match yaw",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.MATCH_YAW],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MATCH_YAW],
 -- 		box = {
 -- 			Drawing.Screen.Width + 5,
 -- 			40,
@@ -228,16 +228,16 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.SelectedItem == "MatchYaw"
+-- 			return Broker.SelectedItem == "MatchYaw"
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.MATCH_YAW
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.MATCH_YAW
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "reverse angle",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.REVERSE_ANGLE],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.REVERSE_ANGLE],
 -- 		box = {
 -- 			Drawing.Screen.Width + 5,
 -- 			75,
@@ -248,16 +248,16 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.SelectedItem == "ReverseAngle"
+-- 			return Broker.SelectedItem == "ReverseAngle"
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.REVERSE_ANGLE
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.REVERSE_ANGLE
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "match angle",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.MATCH_ANGLE],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MATCH_ANGLE],
 -- 		box = {
 -- 			Drawing.Screen.Width + 5,
 -- 			110,
@@ -268,10 +268,10 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.selectedItem == Settings.Layout.Button.MATCH_ANGLE
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.MATCH_ANGLE
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.MATCH_ANGLE
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.MATCH_ANGLE
 -- 		end
 -- 	},
 -- 	{
@@ -285,55 +285,55 @@
 -- 			30
 -- 		},
 -- 		value = function()
--- 			return Settings.goalAngle
+-- 			return Broker.GoalAngle
 -- 		end,
 -- 		enabled = function()
--- 			return Settings.Layout.Button.selectedItem == Settings.Layout.Button.MATCH_ANGLE
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.MATCH_ANGLE
 -- 		end,
 -- 		editing = function()
--- 			return Settings.Layout.TextArea.selectedItem == Settings.Layout.TextArea.MATCH_ANGLE
+-- 			return Broker.Layout.TextArea.selectedItem == Broker.Layout.TextArea.MATCH_ANGLE
 -- 		end,
 -- 		onclick = function(self, char)
--- 			if (Settings.Layout.TextArea.selectedItem ~= Settings.Layout.TextArea.MATCH_ANGLE) then
--- 				Settings.Layout.TextArea.selectedItem = Settings.Layout.TextArea.MATCH_ANGLE
--- 				Settings.Layout.TextArea.selectedChar = 1 -- on first click set to leading digit
+-- 			if (Broker.Layout.TextArea.selectedItem ~= Broker.Layout.TextArea.MATCH_ANGLE) then
+-- 				Broker.Layout.TextArea.selectedItem = Broker.Layout.TextArea.MATCH_ANGLE
+-- 				Broker.Layout.TextArea.selectedChar = 1 -- on first click set to leading digit
 -- 			else
--- 				Settings.Layout.TextArea.selectedChar = char
+-- 				Broker.Layout.TextArea.selectedChar = char
 -- 			end
--- 			Settings.Layout.TextArea.blinkTimer = 0
--- 			Settings.Layout.TextArea.showUnderscore = true
+-- 			Broker.Layout.TextArea.blinkTimer = 0
+-- 			Broker.Layout.TextArea.showUnderscore = true
 -- 		end,
 -- 		onkeypress = function(self, key)
--- 			local oldkey = math.floor(Settings.goalAngle / math.pow(10, self.inputSize - Settings.Layout.TextArea.selectedChar)) % 10
--- 			Settings.goalAngle = Settings.goalAngle + (key - oldkey) * math.pow(10, self.inputSize - Settings.Layout.TextArea.selectedChar)
--- 			Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar + 1
--- 			if Settings.Layout.TextArea.selectedChar > self.inputSize then
--- 				Settings.Layout.TextArea.selectedItem = 0
+-- 			local oldkey = math.floor(Broker.GoalAngle / math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)) % 10
+-- 			Broker.GoalAngle = Broker.GoalAngle + (key - oldkey) * math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)
+-- 			Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 			if Broker.Layout.TextArea.selectedChar > self.inputSize then
+-- 				Broker.Layout.TextArea.selectedItem = 0
 -- 			end
 -- 		end,
 -- 		onarrowpress = function(self, key)
 -- 			if (key == "left") then
--- 				Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar - 1
--- 				if (Settings.Layout.TextArea.selectedChar == 0) then
--- 					Settings.Layout.TextArea.selectedChar = self.inputSize
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar - 1
+-- 				if (Broker.Layout.TextArea.selectedChar == 0) then
+-- 					Broker.Layout.TextArea.selectedChar = self.inputSize
 -- 				end
--- 				Settings.Layout.TextArea.showUnderscore = false
+-- 				Broker.Layout.TextArea.showUnderscore = false
 -- 			elseif (key == "right") then
--- 				Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar + 1
--- 				if (Settings.Layout.TextArea.selectedChar == self.inputSize + 1) then
--- 					Settings.Layout.TextArea.selectedChar = 1
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 				if (Broker.Layout.TextArea.selectedChar == self.inputSize + 1) then
+-- 					Broker.Layout.TextArea.selectedChar = 1
 -- 				end
--- 				Settings.Layout.TextArea.showUnderscore = false
+-- 				Broker.Layout.TextArea.showUnderscore = false
 -- 			elseif (key == "up") then
--- 				local oldkey = getDigit(Settings.goalAngle, self.inputSize)
--- 				Settings.goalAngle = updateDigit(Settings.goalAngle, self.inputSize, oldkey + 1)
--- 				Settings.Layout.TextArea.showUnderscore = true
+-- 				local oldkey = getDigit(Broker.GoalAngle, self.inputSize)
+-- 				Broker.GoalAngle = updateDigit(Broker.GoalAngle, self.inputSize, oldkey + 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
 -- 			elseif (key == "down") then
--- 				local oldkey = getDigit(Settings.goalAngle, self.inputSize)
--- 				Settings.goalAngle = updateDigit(Settings.goalAngle, self.inputSize, oldkey - 1)
--- 				Settings.Layout.TextArea.showUnderscore = true
+-- 				local oldkey = getDigit(Broker.GoalAngle, self.inputSize)
+-- 				Broker.GoalAngle = updateDigit(Broker.GoalAngle, self.inputSize, oldkey - 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
 -- 			end
--- 			Settings.Layout.TextArea.blinkTimer = -1
+-- 			Broker.Layout.TextArea.blinkTimer = -1
 -- 		end
 -- 	},
 -- 	{
@@ -347,66 +347,66 @@
 -- 			25
 -- 		},
 -- 		value = function()
--- 			return Settings.goalMag
+-- 			return Broker.GoalMagnitude
 -- 		end,
 -- 		enabled = function()
 -- 			return true
 -- 		end,
 -- 		editing = function()
--- 			return Settings.Layout.TextArea.selectedItem == Settings.Layout.TextArea.MAGNITUDE
+-- 			return Broker.Layout.TextArea.selectedItem == Broker.Layout.TextArea.MAGNITUDE
 -- 		end,
 -- 		onclick = function(self, char)
--- 			if (Settings.Layout.TextArea.selectedItem ~= Settings.Layout.TextArea.MAGNITUDE) then
--- 				Settings.Layout.TextArea.selectedItem = Settings.Layout.TextArea.MAGNITUDE
--- 				Settings.Layout.TextArea.selectedChar = 1
+-- 			if (Broker.Layout.TextArea.selectedItem ~= Broker.Layout.TextArea.MAGNITUDE) then
+-- 				Broker.Layout.TextArea.selectedItem = Broker.Layout.TextArea.MAGNITUDE
+-- 				Broker.Layout.TextArea.selectedChar = 1
 -- 			else
--- 				Settings.Layout.TextArea.selectedChar = char
+-- 				Broker.Layout.TextArea.selectedChar = char
 -- 			end
--- 			Settings.Layout.TextArea.blinkTimer = 0
--- 			Settings.Layout.TextArea.showUnderscore = true
+-- 			Broker.Layout.TextArea.blinkTimer = 0
+-- 			Broker.Layout.TextArea.showUnderscore = true
 -- 		end,
 -- 		onkeypress = function(self, key)
--- 			local goalMag = Settings.goalMag or 0
--- 			local oldkey = math.floor(goalMag / math.pow(10, self.inputSize - Settings.Layout.TextArea.selectedChar)) % 10
--- 			goalMag = goalMag + (key - oldkey) * math.pow(10, self.inputSize - Settings.Layout.TextArea.selectedChar)
--- 			Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar + 1
--- 			if Settings.Layout.TextArea.selectedChar > self.inputSize then
--- 				Settings.Layout.TextArea.selectedItem = 0
+-- 			local goalMag = Broker.GoalMagnitude or 0
+-- 			local oldkey = math.floor(goalMag / math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)) % 10
+-- 			goalMag = goalMag + (key - oldkey) * math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)
+-- 			Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 			if Broker.Layout.TextArea.selectedChar > self.inputSize then
+-- 				Broker.Layout.TextArea.selectedItem = 0
 -- 				if goalMag > 127 then
 -- 					goalMag = 127
 -- 				end
 -- 			end
--- 			Settings.goalMag = goalMag
+-- 			Broker.GoalMagnitude = goalMag
 -- 		end,
 -- 		onarrowpress = function(self, key)
 -- 			if (key == "left") then
--- 				Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar - 1
--- 				if (Settings.Layout.TextArea.selectedChar == 0) then
--- 					Settings.Layout.TextArea.selectedChar = self.inputSize
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar - 1
+-- 				if (Broker.Layout.TextArea.selectedChar == 0) then
+-- 					Broker.Layout.TextArea.selectedChar = self.inputSize
 -- 				end
--- 				Settings.Layout.TextArea.showUnderscore = false
+-- 				Broker.Layout.TextArea.showUnderscore = false
 -- 			elseif (key == "right") then
--- 				Settings.Layout.TextArea.selectedChar = Settings.Layout.TextArea.selectedChar + 1
--- 				if (Settings.Layout.TextArea.selectedChar == self.inputSize + 1) then
--- 					Settings.Layout.TextArea.selectedChar = 1
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 				if (Broker.Layout.TextArea.selectedChar == self.inputSize + 1) then
+-- 					Broker.Layout.TextArea.selectedChar = 1
 -- 				end
--- 				Settings.Layout.TextArea.showUnderscore = false
+-- 				Broker.Layout.TextArea.showUnderscore = false
 -- 			elseif (key == "up") then
--- 				local oldkey = getDigit(Settings.goalMag, self.inputSize)
--- 				Settings.goalMag = updateDigit(Settings.goalMag, self.inputSize, oldkey + 1)
--- 				Settings.Layout.TextArea.showUnderscore = true
+-- 				local oldkey = getDigit(Broker.GoalMagnitude, self.inputSize)
+-- 				Broker.GoalMagnitude = updateDigit(Broker.GoalMagnitude, self.inputSize, oldkey + 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
 -- 			elseif (key == "down") then
--- 				local oldkey = getDigit(Settings.goalMag, self.inputSize)
--- 				Settings.goalMag = updateDigit(Settings.goalMag, self.inputSize, oldkey - 1)
--- 				Settings.Layout.TextArea.showUnderscore = true
+-- 				local oldkey = getDigit(Broker.GoalMagnitude, self.inputSize)
+-- 				Broker.GoalMagnitude = updateDigit(Broker.GoalMagnitude, self.inputSize, oldkey - 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
 -- 			end
--- 			Settings.Layout.TextArea.blinkTimer = -1
+-- 			Broker.Layout.TextArea.blinkTimer = -1
 -- 		end
 --   },
 -- 	{
 -- 		name = "speedkick magnitude",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.MAG48],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MAG48],
 -- 		box = {
 -- 			Drawing.Screen.Width + 142,
 -- 			235,
@@ -420,13 +420,13 @@
 -- 			return false
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.goalMag = 48
+-- 			Broker.GoalMagnitude = 48
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "reset magnitude",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.RESET_MAG],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.RESET_MAG],
 -- 		box = {
 -- 			Drawing.Screen.Width + 142,
 -- 			261,
@@ -440,13 +440,13 @@
 -- 			return false
 -- 		end,
 -- 		onclick = function(self)
--- 			Settings.goalMag = 127
+-- 			Broker.GoalMagnitude = 127
 -- 		end
 -- 	},
 -- 	{
 -- 		name = "swim",
 -- 		type = ButtonType.button,
--- 		text = Settings.Layout.Button.items[Settings.Layout.Button.SWIM],
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.SWIM],
 -- 		box = {
 -- 			Drawing.Screen.Width + 130,
 -- 			83,
@@ -457,13 +457,13 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.swimming == true
+-- 			return Broker.Layout.Button.swimming == true
 -- 		end,
 -- 		onclick = function(self)
--- 			if (Settings.Layout.Button.swimming == true) then
--- 				Settings.Layout.Button.swimming = false
+-- 			if (Broker.Layout.Button.swimming == true) then
+-- 				Broker.Layout.Button.swimming = false
 -- 			else
--- 				Settings.Layout.Button.swimming = true
+-- 				Broker.Layout.Button.swimming = true
 -- 			end
 -- 		end
 -- 	}

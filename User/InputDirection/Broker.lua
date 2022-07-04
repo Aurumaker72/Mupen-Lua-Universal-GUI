@@ -1,7 +1,6 @@
--- VM equivalent
-Settings = {
-	goalAngle = 0,
-	goalMag = 127,
+Broker = {
+	GoalAngle = 0,
+	GoalMagnitude = 127,
 	ShowEffectiveAngles = false,
 	SelectedItem = "Disabled",
 	TargetStrain = false,

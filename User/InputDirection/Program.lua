@@ -9,10 +9,10 @@ function Program.initFrame()
 end
 
 function Program.main()
-	if Settings.SelectedItem == "Disabled" == false then
+	if Broker.SelectedItem == "Disabled" == false then
 		result = Engine.inputsForAngle()
-		if Settings.goalMag then
-			Engine.scaleInputsForMagnitude(result, Settings.goalMag)
+		if Broker.GoalMagnitude then
+			Engine.scaleInputsForMagnitude(result, Broker.GoalMagnitude)
 		end
 		Joypad.set('X', result.X)
 		Joypad.set('Y', result.Y)

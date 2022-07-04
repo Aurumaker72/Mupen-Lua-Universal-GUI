@@ -1,20 +1,47 @@
 TextBox = middleclass('TextBox', Control)
 
-function TextBox:initialize(containingScene, x, y, w, h, maxLength, isReadOnly, numericOnly, textChangedCallback)
+function TextBox:initialize(containingScene, x, y, w, h, maxLength, isReadOnly, isNumericOnly, textChangedCallback)
     Control.initialize(self, containingScene, x, y, w, h, nil, nil)
-    self.MaxLength = maxLength and maxLength or 10
+    self.MaxLength = maxLength and maxLength or 100
     self.TextChangedCallback = textChangedCallback
-    self.Text = ""
-    self.Active = false
     self.IsReadOnly = isReadOnly
-    self.NumericOnly = numericOnly
+    self.IsNumericOnly = isNumericOnly
+    self.Active = false
+    self.Text = ""
+    self.CaretPosition = 1
+    self.CaretTimer = 0
+    self:SetCaretPosition(self.MaxLength)
+
     self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     self.CurrentBackColor = self.TargetBackColor
     self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BORDER_COLOR
     self.CurrentBorderColor = self.TargetBorderColor
+    self.TargetCaretColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
+    self.CurrentCaretColor = self.TargetCaretColor
+end
+
+function TextBox:SetCaretPosition(targetPosition)
+    self.CaretPosition = Numeric.Clamp(targetPosition, 1, math.min(self.MaxLength, self.Text:len()))
 end
 
 function TextBox:Update()
+    self.CaretTimer = self.CaretTimer + 1
+
+    if self.Active then
+        if self.CaretTimer % 100 == 50 then
+            self.TargetCaretColor = self.IsReadOnly and
+                                        Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
+                                        Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
+        end
+        if self.CaretTimer % 100 == 10 then
+            self.TargetCaretColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
+        end
+    else
+        self.TargetCaretColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
+    end
+    self.CurrentCaretColor = Color.TemporalInterpolateRGBColor(
+        CurrentRenderer:HexadecimalColorToRGB(self.CurrentCaretColor),
+        CurrentRenderer:HexadecimalColorToRGB(self.TargetCaretColor))
 
     if (Mouse.IsPrimaryClicked()) then
         self.Active = Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height)
@@ -22,10 +49,11 @@ function TextBox:Update()
 
     if self.Active and self.IsReadOnly == false then
 
-        if self.NumericOnly then
+        if self.IsNumericOnly then
             for i = 0, 9, 1 do
                 if Keyboard.Input[tostring(i)] and not Keyboard.LastInput[tostring(i)] and self.CanTypeCharacter(self) then
-                    self.Text = self.Text .. tostring(i)
+                    self.Text = String.InsertAt(self.Text, tostring(i), self.CaretPosition)
+                    self:SetCaretPosition(self.CaretPosition + 1)
                     if self.TextChangedCallback then
                         self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.TextChangedCallback, self)
                     end
@@ -35,7 +63,8 @@ function TextBox:Update()
             for key, v in pairs(Keyboard.Input) do
                 if Keyboard.Input[key] and not Keyboard.LastInput[key] then
                     if key:len() == 1 and self.CanTypeCharacter(self) then
-                        self.Text = self.Text .. key
+                        self.Text = String.InsertAt(self.Text, tostring(key), self.CaretPosition)
+                        self:SetCaretPosition(self.CaretPosition + 1)
                         if self.TextChangedCallback then
                             self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.TextChangedCallback, self)
                         end
@@ -49,13 +78,23 @@ function TextBox:Update()
                 if Keyboard.KeyHeld("control") then
                     self.Text = ""
                 else
-                    self.Text = self.Text:sub(1, -2)
+                    self.Text = String.RemoveAt(self.Text, self.CaretPosition)
                 end
+                self:SetCaretPosition(self.CaretPosition - 1)
                 if self.TextChangedCallback then
                     self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.TextChangedCallback, self)
                 end
             end
         end
+
+        if Keyboard.KeyPressed("left") then
+            self:SetCaretPosition(self.CaretPosition - 1)
+        end
+
+        if Keyboard.KeyPressed("right") then
+            self:SetCaretPosition(self.CaretPosition + 1)
+        end
+
     end
 
     if self.Active then
@@ -65,9 +104,9 @@ function TextBox:Update()
         end
 
         if Keyboard.KeyHeld("control") and Keyboard.KeyPressed("V") then
-            local canTryPaste = false -- self.NumericOnly and (Numeric.IsNumeric(ClipboardManager.ClipboardBuffer)) or true
+            local canTryPaste = false
 
-            if self.NumericOnly then
+            if self.IsNumericOnly then
                 if Numeric.IsNumeric(ClipboardManager.ClipboardBuffer) then
                     canTryPaste = true
                 end
@@ -105,6 +144,7 @@ function TextBox:PersistentUpdate()
     self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
         CurrentRenderer:HexadecimalColorToRGB(self.TargetBorderColor))
+
 end
 
 function TextBox:CanTypeCharacter()
@@ -124,4 +164,8 @@ function TextBox:Draw()
     CurrentRenderer:DrawText(
         self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
             Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
+
+    CurrentRenderer:FillRectangle(self.CurrentCaretColor, self.X + (6.4 * self.CaretPosition) - 3,
+        self.Y + self.Height - 5, 6, 1)
+
 end

@@ -128,6 +128,7 @@ function Appearance.SetTheme(theme)
         return
     end
     Appearance.CurrentTheme = theme
+    --Appearance.Themes[CurrentTheme].FONT_SIZE = math.floor(Appearance.Themes[CurrentTheme].FONT_SIZE * ((Screen.Dimensions.ScalingX+Screen.Dimensions.ScalingY)/2))
 end
 
 function Appearance.Initialize()
