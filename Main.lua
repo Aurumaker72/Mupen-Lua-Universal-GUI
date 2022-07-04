@@ -22,6 +22,7 @@ FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 dofile(FOLDER_USER_CODE .. "InputDirection.lua")
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
+dofile(FOLDER_EMULATOR .. "WindowsMessageManager.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
 dofile(FOLDER_HELPER .. "Color.lua")
 dofile(FOLDER_HELPER .. "String.lua")
@@ -87,9 +88,15 @@ end
 function AtReset()
     Screen.Expand()
 end
+
+function AtWindowsMessage(hwnd, id, wparam, lparam)
+	WindowsMessageManager.Update(hwnd, id, wparam, lparam)
+end
+
 -- Register callbacks
 emu.atstop(AtStop)
 emu.atinterval(AtInterval)
 emu.atvi(AtVisualInterrupt)
 emu.atinput(UserCodeAtInputPoll)
 emu.atreset(AtReset)
+emu.atwindowmessage(AtWindowsMessage)

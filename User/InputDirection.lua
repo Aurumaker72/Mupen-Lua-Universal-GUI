@@ -147,14 +147,14 @@ function UserCodeOnInitialize()
             Broker.Swimming = o.IsChecked
         end),
         AngleTextBox = TextBox:new(mainScene, 138, 110, 85, 30, 5, false, true, function(o)
-            if not (o.Text == "" or o.Text:find("%D")) then
+            if o.Text and o.Text:len() == 0 == false and tonumber(o.Text) then
                 Broker.GoalAngle = tonumber(o.Text)
             end
         end),
         MagnitudeLabel = Label:new(mainScene, 147, 144, "Magnitude"),
         MagnitudeTextBox = TextBox:new(mainScene, 142, 163, 76, 23, 3, false, true, function(o)
-            if not (o.Text == "" or o.Text:find("%D")) then
-                InputDirection.SetGoalMag(tonumber(o.Text))
+            if o.Text and o.Text:len() == 0 == false and tonumber(o.Text) then
+                InputDirection.SetGoalMag(Numeric.Clamp(tonumber(o.Text), 0, 127))
             end
         end),
         Speedkick = Button:new(mainScene, nil, 142, 253 - 21 - 3, 76, 21, "Speedkick", function(o)
