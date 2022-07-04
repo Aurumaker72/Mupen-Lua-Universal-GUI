@@ -2,7 +2,10 @@
 
 ⚠️ **This framework is not ready for production, expect API changes**
 
-Lua framework for Mupen64 which allows flexible, highly customizable and straightforward creation of GUIs
+## Why?
+This framework helps you quickly create a GUI for your script with minimal hassle.
+
+It provides many built-in controls which help you fulfill your requirements and has patterns encouraging clean, legible code.
 
 ## Examples
 
