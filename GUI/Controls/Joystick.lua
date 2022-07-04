@@ -56,6 +56,8 @@ function Joystick:Draw()
 
     RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
+    
+
     CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
     CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
 
@@ -63,7 +65,7 @@ function Joystick:Draw()
         wgui.setbrush(self.CurrentSecondaryBackColor)
         local clampedMagnitude = Numeric.Clamp(self.Magnitude, 0, math.max(self.Width, self.Height))
         CurrentRenderer:DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR, 1, self.X + self.Width / 2 - clampedMagnitude / 2,
-            self.Y + self.Height / 2 - clampedMagnitude / 2, clampedMagnitude, clampedMagnitude)
+            self.Y + self.Height / 2 - clampedMagnitude / 2, clampedMagnitude + 1, clampedMagnitude + 1)
     end
 
     CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X, self.Y + self.Height / 2, self.X + self.Width,

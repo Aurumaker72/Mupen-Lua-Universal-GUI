@@ -22,12 +22,46 @@ function UserCodeAtInputPoll()
     Program.main()
     Joypad.send()
     Swimming.swim("A")
+
     Scenes.Main.Controls.Joystick.ValueX = Joypad.input.X
     Scenes.Main.Controls.Joystick.ValueY = -Joypad.input.Y
+
+    Scenes.Main.Controls.YawFacing.Text = "Yaw (Facing): " .. Engine.getEffectiveAngle(Memory.Mario.FacingYaw)
+    Scenes.Main.Controls.YawIntended.Text = "Yaw (Intended): " .. Engine.getEffectiveAngle(Memory.Mario.IntendedYaw)
+    Scenes.Main.Controls.OppositeFacing.Text = "Opposite (Intended): " .. (Engine.getEffectiveAngle(Memory.Mario.FacingYaw) + 32768) % 65536
+    Scenes.Main.Controls.OppositeIntended.Text = "Opposite (Intended): " .. (Engine.getEffectiveAngle(Memory.Mario.IntendedYaw) + 32768) % 65536
+
+    local speed = 0
+	if Memory.Mario.HSpeed ~= 0 then
+		speed = MoreMaths.DecodeDecToFloat(Memory.Mario.HSpeed)
+	end
+
+	Scenes.Main.Controls.HSpd.Text = "H Spd: " .. MoreMaths.Round(speed, 5)
+	Scenes.Main.Controls.SpdEfficiency.Text = "Spd Efficiency: " .. Engine.GetSpeedEfficiency() .. "%"
+
+    speed = 0
+	if Memory.Mario.VSpeed > 0 then
+		speed = MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.VSpeed), 6)
+	end
+	Scenes.Main.Controls.YSpd.Text = "Y Spd: " .. MoreMaths.Round(speed, 5)
+
+	Scenes.Main.Controls.HSlidingSpd.Text = "H Sliding Spd: " .. MoreMaths.Round(Engine.GetHSlidingSpeed(), 6)
+	Scenes.Main.Controls.X.Text = "Mario X: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.X), 2)
+	Scenes.Main.Controls.Y.Text = "Mario Y: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 2)
+	Scenes.Main.Controls.Z.Text = "Mario Z: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 2)
+	Scenes.Main.Controls.XZMovement.Text = "XZ Movement: " .. MoreMaths.Round(Engine.GetDistMoved(), 6)
+	Scenes.Main.Controls.Action.Text = "Action: " .. Engine.GetCurrentAction()
+    
+    local distmoved = Engine.GetTotalDistMoved()
+	if (Settings.DistanceMeasurement == false) then
+		distmoved = Settings.DistanceMeasurementSaved
+	end
+	Scenes.Main.Controls.MovedDist.Text = "Moved Dist: " .. distmoved
+
 end
+
 function InputDirection.SetStrainMode(mode)
     Settings.SelectedItem = mode
-    print(mode)
     Scenes.Main.Controls.StrainingDisable.IsChecked = mode == Scenes.Main.Controls.StrainingDisable.Text:gsub('%s+', '')
     Scenes.Main.Controls.StrainingMatchYaw.IsChecked = mode ==
                                                            Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', '')
@@ -38,17 +72,32 @@ function InputDirection.SetStrainMode(mode)
                                                                Scenes.Main.Controls.StrainingReverseAngle.Text:gsub(
             '%s+', '')
 end
+
 function InputDirection.SetGoalMag(goalMag)
     Settings.goalMag = goalMag
     Scenes.Main.Controls.Joystick.Magnitude = goalMag
     Scenes.Main.Controls.MagnitudeTextBox.Text = tostring(goalMag) -- CAREFUL! Type swap scary
 end
+
 function InputDirection.SetBias(left, right)
     Settings.Left = left
     Settings.Right = right
     Scenes.Main.Controls.Left.IsChecked = Settings.Left
     Scenes.Main.Controls.Right.IsChecked = Settings.Right
 end
+
+function InputDirection.SetTargetStrain(targetStrain, always)
+    Settings.Always = always
+    Settings.TargetStrain = targetStrain
+
+    if not Settings.TargetStrain then
+        Settings.Always = false
+    end
+
+    Scenes.Main.Controls.StrainTo99.IsChecked = Settings.TargetStrain
+    Scenes.Main.Controls.Always99.IsChecked = Settings.Always
+end
+
 function UserCodeOnInitialize()
 
     local mainScene = Scene:new(nil)
@@ -74,24 +123,11 @@ function UserCodeOnInitialize()
         end),
 
         Always99 = ToggleButton:new(mainScene, nil, 137, 5, 54, 22, "Always", false, function(o)
-            if (Settings.Always == true) then
-                Settings.Always = false
-            elseif (Settings.TargetStrain == true) then
-                Settings.Always = true
-            end
-            Scenes.Main.Controls.StrainTo99.IsChecked = Settings.TargetStrain
-            Scenes.Main.Controls.Always99.IsChecked = Settings.Always
+            InputDirection.SetTargetStrain(Scenes.Main.Controls.StrainTo99.IsChecked, o.IsChecked)
         end),
 
         StrainTo99 = ToggleButton:new(mainScene, nil, 195, 5, 29, 22, ".99", false, function(o)
-            if (Settings.TargetStrain == true) then
-                Settings.TargetStrain = false
-                Settings.Always = false
-            else
-                Settings.TargetStrain = true
-            end
-            Scenes.Main.Controls.StrainTo99.IsChecked = Settings.TargetStrain
-            Scenes.Main.Controls.Always99.IsChecked = Settings.Always
+            InputDirection.SetTargetStrain(o.IsChecked, Scenes.Main.Controls.Always99.IsChecked)
         end),
         Left = ToggleButton:new(mainScene, nil, 137, 31, 39, 22, "    Left", false, function(o)
             InputDirection.SetBias(o.IsChecked, Scenes.Main.Controls.Right.IsChecked)
@@ -121,19 +157,21 @@ function UserCodeOnInitialize()
         end),
         ResetMagnitude = Button:new(mainScene, "G", 142, 253, 76, 21, "Reset Mag.", function(o)
             InputDirection.SetGoalMag(127)
-        end)
-        -- ParameterDumpLabel1 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 1, "some value"),
-        -- ParameterDumpLabel2 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 2, "some value"),
-        -- ParameterDumpLabel3 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 3, "some value"),
-        -- ParameterDumpLabel4 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 4, "some value"),
-        -- ParameterDumpLabel5 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 5, "some value"),
-        -- ParameterDumpLabel6 = Label:new(mainScene, 5,
-        --    290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 5) * 6, "some value"),
+        end),
+        YawFacing =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 1,  ""),
+        YawIntended =       Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 2,  ""),
+        OppositeFacing =    Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 3,  ""),
+        OppositeIntended =  Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 4,  ""),
+        HSpd =              Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 5,  ""),
+        HSlidingSpd =       Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 6,  ""),
+        XZMovement =        Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 7,  ""),
+        SpdEfficiency =     Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 8,  ""),
+        YSpd =              Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 9,  ""),
+        X =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 10, ""),
+        Y =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 11, ""),
+        Z =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 12, ""),
+        Action =            Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 13, ""),
+        MovedDist =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 14, ""),
     })
 
     settingsScene:AddControls({
@@ -159,9 +197,9 @@ function UserCodeOnInitialize()
         Main = mainScene,
         Settings = settingsScene
     }, {
-        NavigationCarrouselButton = CarrouselButton:new(mainScene, 1, 290 +
-            (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 9,
-            Screen.ExpandedOffset / Screen.Dimensions.ScalingX, 20, {"Main", "Settings"}, true, function(o)
+        NavigationCarrouselButton = CarrouselButton:new(mainScene, 5, 290 +
+            (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
+            Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
                 SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
             end)
     }, GDIRenderer:new())

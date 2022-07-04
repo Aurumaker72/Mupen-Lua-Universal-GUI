@@ -7,6 +7,9 @@ MoreMaths = {
 }
 
 function MoreMaths.DecodeDecToFloat(input)
+    if not input then
+        print(debug.traceback())
+    end
 	local str = string.format("%x", input)
     local str1=""
     local a,z

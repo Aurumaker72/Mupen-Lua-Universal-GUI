@@ -228,7 +228,7 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.selectedItem == Settings.Layout.Button.MATCH_YAW
+-- 			return Settings.SelectedItem == "MatchYaw"
 -- 		end,
 -- 		onclick = function(self)
 -- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.MATCH_YAW
@@ -248,7 +248,7 @@
 -- 			return true
 -- 		end,
 -- 		pressed = function()
--- 			return Settings.Layout.Button.selectedItem == Settings.Layout.Button.REVERSE_ANGLE
+-- 			return Settings.SelectedItem == "ReverseAngle"
 -- 		end,
 -- 		onclick = function(self)
 -- 			Settings.Layout.Button.selectedItem = Settings.Layout.Button.REVERSE_ANGLE

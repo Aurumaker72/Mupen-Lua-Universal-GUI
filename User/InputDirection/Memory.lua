@@ -9,7 +9,7 @@ Memory = {
 	
 	PreviousPos = {
 		X = 0,
-		Z = 0
+		Z = 0,
 	}
 }
 
