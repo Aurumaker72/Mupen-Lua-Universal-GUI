@@ -106,7 +106,7 @@ end
 function UserCodeOnInitialize()
 
     local mainScene = Scene:new(nil)
-    local BrokerScene = Scene:new(nil)
+    local settingsScene = Scene:new(nil)
 
     mainScene:AddControls({
 
@@ -179,15 +179,15 @@ function UserCodeOnInitialize()
         MovedDist =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 14, ""),
     })
 
-    BrokerScene:AddControls({
-        RendererLabel = Label:new(BrokerScene, 5, 30, "Renderer"),
-        ThemeLabel = Label:new(BrokerScene, 5, 5, "Theme"),
+    settingsScene:AddControls({
+        RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
+        ThemeLabel = Label:new(settingsScene, 5, 5, "Theme"),
 
-        Fuck = ComboBox:new(BrokerScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
+        Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
 
-        RendererBackendComboBox = ComboBox:new(BrokerScene, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"}, function(o)
+        RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"}, function(o)
             -- when the GC pressure is high
             if o.Items[o.SelectedItemIndex] == "GDI" then
                 RendererManager.SetCurrentRenderer(GDIRenderer:new())
@@ -203,7 +203,7 @@ function UserCodeOnInitialize()
 
     SceneManager.Initialize({
         Main = mainScene,
-        Broker = BrokerScene
+        Settings = settingsScene
     }, {
         NavigationCarrouselButton = CarrouselButton:new(mainScene, 5, 290 +
             (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
