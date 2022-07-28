@@ -1,3 +1,5 @@
+-- A Broker/ViewModel is the middleman between the View layer (GUI) and Model layer (Backend)
+-- 
 Broker = {
 	GoalAngle = 0,
 	GoalMagnitude = 127,

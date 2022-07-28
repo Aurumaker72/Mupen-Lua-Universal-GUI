@@ -71,6 +71,7 @@ function InputDirection.SetStrainMode(mode)
     Scenes.Main.Controls.StrainingReverseAngle.IsChecked = mode ==
                                                                Scenes.Main.Controls.StrainingReverseAngle.Text:gsub(
             '%s+', '')
+    Scenes.Main.Controls.AngleTextBox.IsReadOnly = Scenes.Main.Controls.StrainingMatchAngle.IsChecked == false
 end
 
 function InputDirection.SetGoalAngle(goalAngle)

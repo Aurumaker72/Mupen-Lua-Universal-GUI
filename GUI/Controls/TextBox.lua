@@ -114,7 +114,7 @@ function TextBox:Update()
 
     end
 
-    if self.Active then
+    if self.Active and self.IsReadOnly == false then
 
         if Keyboard.KeyHeld("control") and Keyboard.KeyPressed("C") then
             ClipboardManager.Copy(tostring(self.Text))
@@ -179,7 +179,7 @@ function TextBox:Draw()
         self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
             Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
 
-    if self.Text:len() > 0 then
+    if self.Text:len() > 0 and self.IsReadOnly == false then
         CurrentRenderer:FillRectangle(self.CurrentCaretColor, self.CurrentCaretX, self.Y + self.Height - 5, 6, 1)
     end
 end
