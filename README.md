@@ -6,7 +6,7 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 ## Examples
 
-<img src="https://user-images.githubusercontent.com/48759429/172204289-d435637d-33e4-4d35-9d18-714766337f32.gif" width="250"/>
+<img src="https://user-images.githubusercontent.com/48759429/181444977-cd5cedc0-06f2-4910-b32d-f7a7351ee6dd.gif" width="250"/>
 
 *A ComboBox control which sets the theme*
 
