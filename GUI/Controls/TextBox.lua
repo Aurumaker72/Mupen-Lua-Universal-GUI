@@ -36,6 +36,7 @@ function TextBox:NotifyTextChanged()
 end
 
 function TextBox:Update()
+
     self.CaretTimer = self.CaretTimer + 1
 
     if self.Active then
@@ -50,6 +51,7 @@ function TextBox:Update()
     else
         self.TargetCaretColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     end
+
     self.CurrentCaretColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentCaretColor),
         CurrentRenderer:HexadecimalColorToRGB(self.TargetCaretColor))
@@ -177,6 +179,7 @@ function TextBox:Draw()
         self.IsReadOnly and Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
             Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR, self.Text, self.X + 2, self.Y + 2)
 
-    CurrentRenderer:FillRectangle(self.CurrentCaretColor, self.CurrentCaretX, self.Y + self.Height - 5, 6, 1)
-
+    if self.Text:len() > 0 then
+        CurrentRenderer:FillRectangle(self.CurrentCaretColor, self.CurrentCaretX, self.Y + self.Height - 5, 6, 1)
+    end
 end

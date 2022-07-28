@@ -1,16 +1,13 @@
-CarrouselButton = middleclass('CarrouselButton', Control)
+CarrouselButton = middleclass('CarrouselButton', Button)
 
 function CarrouselButton:initialize(containingScene, x, y, w, h, items, wrapAround, onSelectedItemChangedCallback)
     h = math.min(h, 20) -- limit height to 20
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+    Button.initialize(self, containingScene, nil, x, y, w, h, items[0], onSelectedItemChangedCallback, nil)
+    
     self.Items = items -- Must be of type "string" :)
     self.SelectedItemIndex = 1
 
     self.WrapAround = wrapAround
-
-    self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
-    self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
-    self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
 
     self.CurrentLeftChevronX = self.X + Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_MARGIN
     self.CurrentRightChevronX = self.X + self.Width -

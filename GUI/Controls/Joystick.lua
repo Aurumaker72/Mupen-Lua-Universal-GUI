@@ -55,13 +55,11 @@ end
 function Joystick:Draw()
 
     RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
-
     
-
     CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
     CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
 
-    if self.Magnitude and self.Magnitude == 0 == false then
+    if self.Magnitude and self.Magnitude == 0 == false and self.Magnitude < 127 then
         wgui.setbrush(self.CurrentSecondaryBackColor)
         local clampedMagnitude = Numeric.Clamp(self.Magnitude, 0, math.max(self.Width, self.Height))
         CurrentRenderer:DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR, 1, self.X + self.Width / 2 - clampedMagnitude / 2,
