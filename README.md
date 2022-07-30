@@ -1,6 +1,6 @@
 # Mupen-Lua Universal GUI
 
-⚠️ **This framework is not ready for production, expect API changes**
+⚠️ **This framework is not ready to fulfill high-reliability requirements, but is mature enough to be used in active production**
 
 Lua framework for Mupen64 which allows flexible, highly customizable and straightforward creation of GUIs
 
