@@ -80,6 +80,15 @@ CurrentScene.IsActive = true
   - Switch with one function call
   - Can define non-scene (persistent) controls for navigation OR scene-linked controls
 - Theming
+  you can define... 
+  - Colors
+  - Margins
+  - Sizes
+  - Alignment
+- Styling
+  you can define...
+  - High-level Drawing
+  - Decorations
 - Compatibility
   - Automatically scales controls depending on resolution
 
