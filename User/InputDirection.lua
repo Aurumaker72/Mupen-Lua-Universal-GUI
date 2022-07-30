@@ -214,12 +214,15 @@ function UserCodeOnInitialize()
                 end
             end),
 
-        StylerComboBox = ComboBox:new(settingsScene, 70, 55, 120, 20, {"Windows 10", "Flat"}, function(o)
+        StylerComboBox = ComboBox:new(settingsScene, 70, 55, 120, 20, {"Windows 10", "Flat", "3D"}, function(o)
             if o.Items[o.SelectedItemIndex] == "Windows 10" then
                 StylerManager.SetCurrentStyler(Windows10Styler:new())
             end
             if o.Items[o.SelectedItemIndex] == "Flat" then
                 StylerManager.SetCurrentStyler(FlatStyler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "3D" then
+                StylerManager.SetCurrentStyler(DimensionalStyler:new())
             end
         end)
     })
@@ -233,7 +236,7 @@ function UserCodeOnInitialize()
             Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
                 SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
             end)
-    }, GDIRenderer:new(), FlatStyler:new())
+    }, GDIRenderer:new(), Windows10Styler:new())
 
     CurrentScene = Scenes.Main
     CurrentScene.IsActive = true
