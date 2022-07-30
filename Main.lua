@@ -17,6 +17,7 @@ FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
 FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
 FOLDER_GUI_RENDERERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Renderers" .. "\\"
+FOLDER_GUI_STYLERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Stylers" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 dofile(FOLDER_USER_CODE .. "InputDirection.lua")
@@ -33,6 +34,10 @@ dofile(FOLDER_GUI_RENDERERS .. "Renderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIRenderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIPlusRenderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "BatchedGDIRenderer.lua")
+dofile(FOLDER_GUI_STYLERS .. "StylerManager.lua")
+dofile(FOLDER_GUI_STYLERS .. "Styler.lua")
+dofile(FOLDER_GUI_STYLERS .. "Windows10Styler.lua")
+dofile(FOLDER_GUI_STYLERS .. "FlatStyler.lua")
 dofile(FOLDER_GUI .. "Scene.lua")
 dofile(FOLDER_GUI .. "SceneManager.lua")
 dofile(FOLDER_GUI .. "ClipboardManager.lua")

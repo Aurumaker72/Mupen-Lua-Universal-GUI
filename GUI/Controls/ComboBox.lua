@@ -140,11 +140,9 @@ end
 function ComboBox:ModalDraw()
     if self.CurrentDropDownHeight > 0 then
 
-        CurrentRenderer:DrawRectangle(self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-            self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height -
-                Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-            self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1, self.CurrentDropDownHeight +
-                self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
+        CurrentStyler:DrawBorder(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width,
+            self.CurrentDropDownHeight + self.ItemHeight / 2 + self.ItemHeight)
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
@@ -169,7 +167,8 @@ end
 
 function ComboBox:Draw()
 
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self.CurrentBackColor, self.CurrentBorderColor,
+        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.RightChevronText, self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.CurrentRightChevronY)

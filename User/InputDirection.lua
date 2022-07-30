@@ -28,35 +28,38 @@ function UserCodeAtInputPoll()
 
     Scenes.Main.Controls.YawFacing.Text = "Yaw (Facing): " .. Engine.getEffectiveAngle(Memory.Mario.FacingYaw)
     Scenes.Main.Controls.YawIntended.Text = "Yaw (Intended): " .. Engine.getEffectiveAngle(Memory.Mario.IntendedYaw)
-    Scenes.Main.Controls.OppositeFacing.Text = "Opposite (Intended): " .. (Engine.getEffectiveAngle(Memory.Mario.FacingYaw) + 32768) % 65536
-    Scenes.Main.Controls.OppositeIntended.Text = "Opposite (Intended): " .. (Engine.getEffectiveAngle(Memory.Mario.IntendedYaw) + 32768) % 65536
+    Scenes.Main.Controls.OppositeFacing.Text = "Opposite (Intended): " ..
+                                                   (Engine.getEffectiveAngle(Memory.Mario.FacingYaw) + 32768) % 65536
+    Scenes.Main.Controls.OppositeIntended.Text = "Opposite (Intended): " ..
+                                                     (Engine.getEffectiveAngle(Memory.Mario.IntendedYaw) + 32768) %
+                                                     65536
 
     local speed = 0
-	if Memory.Mario.HSpeed ~= 0 then
-		speed = MoreMaths.DecodeDecToFloat(Memory.Mario.HSpeed)
-	end
+    if Memory.Mario.HSpeed ~= 0 then
+        speed = MoreMaths.DecodeDecToFloat(Memory.Mario.HSpeed)
+    end
 
-	Scenes.Main.Controls.HSpd.Text = "H Spd: " .. MoreMaths.Round(speed, 5)
-	Scenes.Main.Controls.SpdEfficiency.Text = "Spd Efficiency: " .. Engine.GetSpeedEfficiency() .. "%"
+    Scenes.Main.Controls.HSpd.Text = "H Spd: " .. MoreMaths.Round(speed, 5)
+    Scenes.Main.Controls.SpdEfficiency.Text = "Spd Efficiency: " .. Engine.GetSpeedEfficiency() .. "%"
 
     speed = 0
-	if Memory.Mario.VSpeed > 0 then
-		speed = MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.VSpeed), 6)
-	end
-	Scenes.Main.Controls.YSpd.Text = "Y Spd: " .. MoreMaths.Round(speed, 5)
+    if Memory.Mario.VSpeed > 0 then
+        speed = MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.VSpeed), 6)
+    end
+    Scenes.Main.Controls.YSpd.Text = "Y Spd: " .. MoreMaths.Round(speed, 5)
 
-	Scenes.Main.Controls.HSlidingSpd.Text = "H Sliding Spd: " .. MoreMaths.Round(Engine.GetHSlidingSpeed(), 6)
-	Scenes.Main.Controls.X.Text = "Mario X: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.X), 2)
-	Scenes.Main.Controls.Y.Text = "Mario Y: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 2)
-	Scenes.Main.Controls.Z.Text = "Mario Z: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 2)
-	Scenes.Main.Controls.XZMovement.Text = "XZ Movement: " .. MoreMaths.Round(Engine.GetDistMoved(), 6)
-	Scenes.Main.Controls.Action.Text = "Action: " .. Engine.GetCurrentAction()
-    
+    Scenes.Main.Controls.HSlidingSpd.Text = "H Sliding Spd: " .. MoreMaths.Round(Engine.GetHSlidingSpeed(), 6)
+    Scenes.Main.Controls.X.Text = "Mario X: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.X), 2)
+    Scenes.Main.Controls.Y.Text = "Mario Y: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 2)
+    Scenes.Main.Controls.Z.Text = "Mario Z: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 2)
+    Scenes.Main.Controls.XZMovement.Text = "XZ Movement: " .. MoreMaths.Round(Engine.GetDistMoved(), 6)
+    Scenes.Main.Controls.Action.Text = "Action: " .. Engine.GetCurrentAction()
+
     local distmoved = Engine.GetTotalDistMoved()
-	if (Broker.DistanceMeasurement == false) then
-		distmoved = Broker.DistanceMeasurementSaved
-	end
-	Scenes.Main.Controls.MovedDist.Text = "Moved Dist: " .. distmoved
+    if (Broker.DistanceMeasurement == false) then
+        distmoved = Broker.DistanceMeasurementSaved
+    end
+    Scenes.Main.Controls.MovedDist.Text = "Moved Dist: " .. distmoved
 
 end
 
@@ -164,40 +167,59 @@ function UserCodeOnInitialize()
         ResetMagnitude = Button:new(mainScene, "G", 142, 253, 76, 21, "Reset Mag.", function(o)
             InputDirection.SetGoalMag(127)
         end),
-        YawFacing =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 1,  ""),
-        YawIntended =       Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 2,  ""),
-        OppositeFacing =    Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 3,  ""),
-        OppositeIntended =  Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 4,  ""),
-        HSpd =              Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 5,  ""),
-        HSlidingSpd =       Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 6,  ""),
-        XZMovement =        Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 7,  ""),
-        SpdEfficiency =     Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 8,  ""),
-        YSpd =              Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 9,  ""),
-        X =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 10, ""),
-        Y =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 11, ""),
-        Z =                 Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 12, ""),
-        Action =            Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 13, ""),
-        MovedDist =         Label:new(mainScene, 5, 265-15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 14, ""),
+        YawFacing = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 1,
+            ""),
+        YawIntended = Label:new(mainScene, 5,
+            265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 2, ""),
+        OppositeFacing = Label:new(mainScene, 5,
+            265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 3, ""),
+        OppositeIntended = Label:new(mainScene, 5,
+            265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 4, ""),
+        HSpd = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 5, ""),
+        HSlidingSpd = Label:new(mainScene, 5,
+            265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 6, ""),
+        XZMovement = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 7,
+            ""),
+        SpdEfficiency = Label:new(mainScene, 5,
+            265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 8, ""),
+        YSpd = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 9, ""),
+        X = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 10, ""),
+        Y = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 11, ""),
+        Z = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 12, ""),
+        Action = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 13, ""),
+        MovedDist = Label:new(mainScene, 5, 265 - 15 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE) + 15 * 14,
+            "")
     })
 
     settingsScene:AddControls({
-        RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
         ThemeLabel = Label:new(settingsScene, 5, 5, "Theme"),
+        RendererLabel = Label:new(settingsScene, 5, 30, "Renderer"),
+        StylerLabel = Label:new(settingsScene, 5, 55, "Styler"),
 
         Fuck = ComboBox:new(settingsScene, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
 
-        RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"}, function(o)
-            -- when the GC pressure is high
-            if o.Items[o.SelectedItemIndex] == "GDI" then
-                RendererManager.SetCurrentRenderer(GDIRenderer:new())
+        RendererBackendComboBox = ComboBox:new(settingsScene, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"},
+            function(o)
+                -- when the GC pressure is high
+                if o.Items[o.SelectedItemIndex] == "GDI" then
+                    RendererManager.SetCurrentRenderer(GDIRenderer:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "GDI+" then
+                    RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "Batched GDI" then
+                    RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
+                end
+            end),
+
+        StylerComboBox = ComboBox:new(settingsScene, 70, 55, 120, 20, {"Windows 10", "Flat"}, function(o)
+            if o.Items[o.SelectedItemIndex] == "Windows 10" then
+                StylerManager.SetCurrentStyler(Windows10Styler:new())
             end
-            if o.Items[o.SelectedItemIndex] == "GDI+" then
-                RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
-            end
-            if o.Items[o.SelectedItemIndex] == "Batched GDI" then
-                RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
+            if o.Items[o.SelectedItemIndex] == "Flat" then
+                StylerManager.SetCurrentStyler(FlatStyler:new())
             end
         end)
     })
@@ -211,7 +233,7 @@ function UserCodeOnInitialize()
             Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
                 SceneManager.ChangeScene(o.Items[o.SelectedItemIndex])
             end)
-    }, GDIRenderer:new())
+    }, GDIRenderer:new(), FlatStyler:new())
 
     CurrentScene = Scenes.Main
     CurrentScene.IsActive = true

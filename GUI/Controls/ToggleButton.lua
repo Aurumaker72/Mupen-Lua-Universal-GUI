@@ -44,7 +44,7 @@ function ToggleButton:PersistentUpdate()
 end
 
 function ToggleButton:Draw()
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor,
+    CurrentStyler:DrawButton(self.CurrentBackColor, self.CurrentBorderColor,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     if (self.Text) then

@@ -1,15 +1,17 @@
 Scenes = {}
 CurrentScene = nil
 CurrentRenderer = nil
+CurrentStyler = nil
 SceneManager = {}
 -- Controls which are not associated with a scene and permanently run their logic
 -- Use cases: tab control
 PersistentControls = {}
 
-function SceneManager.Initialize(scenes, persistentControls, renderer)
+function SceneManager.Initialize(scenes, persistentControls, renderer, styler)
     Scenes = scenes
     PersistentControls = persistentControls
     RendererManager.SetCurrentRenderer(renderer)
+    StylerManager.SetCurrentStyler(styler)
 end
 
 function SceneManager.ChangeScene(scene)

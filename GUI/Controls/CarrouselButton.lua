@@ -76,7 +76,7 @@ end
 
 function CarrouselButton:Draw()
 
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, "<", self.CurrentLeftChevronX, self.Y + 1)
     CurrentRenderer:DrawText(self.CurrentForeColor, ">", self.CurrentRightChevronX, self.Y + 1)
