@@ -25,6 +25,9 @@ The user mustn't modify any code outside of the User directory and must interact
 ✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
 
+#### Rendering process and relations
+<img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
+
 ## Usage
 
 
@@ -99,3 +102,5 @@ CurrentScene.IsActive = true
 | Keyboard interaction | ✔️      | ✔️            | ✔️                                       | ❌      | ❌                              | ✔️        | ✔️               |
 | Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
 | Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
+
+
