@@ -1,4 +1,7 @@
-# Mupen-Lua Universal GUI
+# Mupen-Lua Universal GUI <img src="https://user-images.githubusercontent.com/48759429/182023742-7e2eebad-ccd2-4be8-8c81-6b4a14bf1164.png" height="128" align="right"/>
+
+
+
 
 ⚠️ **This framework is not ready to fulfill high-reliability requirements, but is mature enough to be used in active production**
 
