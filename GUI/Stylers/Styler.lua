@@ -13,9 +13,13 @@ end
 function Styler:DrawBorder(control, borderColor, borderSize, x, y, w, h)
 end
 
+function Styler:DrawGenericAccentShape(control, backColor, x, y, w, h)
+end
+
+
 function Styler:ControlShouldBeDeep(control)
     if control:isInstanceOf(TextBox) then
         return false
     end
-    return control.IsChecked or (control.ShouldBePushed and control:ShouldBePushed() or false) or control.IsOpened or control.IsActive
+    return control.IsChecked or (control.ShouldBePushed and control:ShouldBePushed() or false) or control.IsOpened or control.IsActive or control.IsCapturingMouse
 end

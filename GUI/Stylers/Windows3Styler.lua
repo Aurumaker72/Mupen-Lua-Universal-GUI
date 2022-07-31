@@ -47,3 +47,12 @@ function Windows3Styler:DrawBorder(control, borderColor, borderSize, x, y, w, h)
     end
     
 end
+
+function Windows3Styler:DrawGenericAccentShape(control, backColor, x, y, w, h)
+    CurrentRenderer:FillRectangle(backColor, x, y, w, h)
+
+    CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(-COLOR_SHIFT_AMOUNT,
+    CurrentRenderer:HexadecimalColorToRGB(backColor))), x, y, w - INSET_SIZE * 2, h)
+    CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(COLOR_SHIFT_AMOUNT,
+    CurrentRenderer:HexadecimalColorToRGB(backColor))), x + w - INSET_SIZE, y, w - INSET_SIZE * 2, h)
+end

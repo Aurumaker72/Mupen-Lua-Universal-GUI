@@ -75,11 +75,11 @@ function Slider:Draw()
         self.CurrentHeadColor = Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR
     end
 
-    CurrentRenderer:FillRectangle(self.CurrentHeadColor, (self.Minimum == self.Maximum and self.X or
-        Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width)) -
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
-        self.Y + Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT -
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
+    CurrentStyler:DrawGenericAccentShape(self, self.CurrentHeadColor, (self.Minimum == self.Maximum and self.X or
+    Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width)) -
+    Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
+    self.Y + Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
+    Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
+    Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT -
+        Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
 end
