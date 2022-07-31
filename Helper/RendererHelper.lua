@@ -1,6 +1,9 @@
 RendererHelper = {}
 
-function RendererHelper.DrawBorderedRectangle(backColor, borderColor, borderSize, x, y, w, h)
-    CurrentRenderer:FillRectangle(borderColor, x - borderSize, y - borderSize, w + borderSize * 2, h + borderSize * 2)
-    CurrentRenderer:FillRectangle(backColor, x, y, w, h)
+function RendererHelper.DarkenRGBColor(darken, rgb)
+    return {
+        Numeric.Clamp(rgb[1] - darken, 0, 255),
+        Numeric.Clamp(rgb[2] - darken, 0, 255),
+        Numeric.Clamp(rgb[3] - darken, 0, 255),
+    }
 end

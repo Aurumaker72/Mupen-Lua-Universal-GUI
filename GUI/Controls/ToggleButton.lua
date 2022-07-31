@@ -1,8 +1,8 @@
 ToggleButton = middleclass('ToggleButton', Button)
 
-function ToggleButton:initialize(containingScene, clickKey, x, y, w, h, text, isChecked, primaryMouseClickCallback,
+function ToggleButton:initialize(containingScene, index, clickKey, x, y, w, h, text, isChecked, primaryMouseClickCallback,
     secondaryMouseClickCallback)
-    Button.initialize(self, containingScene, clickKey, x, y, w, h, text, primaryMouseClickCallback,
+    Button.initialize(self, containingScene, index, clickKey, x, y, w, h, text, primaryMouseClickCallback,
         secondaryMouseClickCallback)
     self.IsChecked = isChecked
 end
@@ -10,11 +10,11 @@ end
 function ToggleButton:Update()
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyHeld(self.ClickKey) then
         self.IsChecked = not self.IsChecked
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.PrimaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.PrimaryMouseClickCallback, self)
     end
 
     if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.SecondaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
     end
 end
 
@@ -44,7 +44,8 @@ function ToggleButton:PersistentUpdate()
 end
 
 function ToggleButton:Draw()
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor,
+        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     if (self.Text) then
         CurrentRenderer:DrawText(self.IsChecked and

@@ -33,3 +33,7 @@ function Numeric.WrappingClamp(value, min, max) -- there has got to be branchles
     end
     return value
 end
+
+function Numeric.IsNumeric(str)
+    return not str:match("%W")
+end

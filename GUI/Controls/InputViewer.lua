@@ -1,9 +1,7 @@
-Button = middleclass('Button', Control)
+InputViewer = middleclass('InputViewer', Control)
 
-function Button:initialize(containingScene, index, clickKey, x, y, w, h, text, primaryMouseClickCallback, secondaryMouseClickCallback)
+function InputViewer:initialize(containingScene, index, x, y, w, h)
     Control.initialize(self, containingScene, index, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
-    self.Text = text
-    self.ClickKey = clickKey
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
@@ -13,7 +11,8 @@ function Button:PersistentUpdate()
 
     self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
-        CurrentRenderer:HexadecimalColorToRGB(self:ShouldBePushed() and
+        CurrentRenderer:HexadecimalColorToRGB(((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
+                                                  Mouse.IsPrimaryDown()) or Keyboard.KeyHeld(self.ClickKey)) and
                                                   Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or
                                                   (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
                                                       Appearance.Themes[Appearance.CurrentTheme]
@@ -40,10 +39,6 @@ function Button:Update()
     if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
     end
-end
-
-function Button:ShouldBePushed()
-    return (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or Keyboard.KeyHeld(self.ClickKey) 
 end
 
 function Button:Draw()

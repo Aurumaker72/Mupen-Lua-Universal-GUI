@@ -1,0 +1,471 @@
+-- ButtonType = {
+-- 	button = 0,
+-- 		-- text : button text
+-- 		-- box : total size of the button
+-- 	textArea = 1
+-- }
+
+-- local pow = math.pow
+
+-- local function getDigit(value, length, digit)
+-- 	if digit == nil then digit = Broker.Layout.TextArea.selectedChar end
+-- 	return (value // pow(10, length - digit)) % 10
+-- end
+
+-- local function updateDigit(value, length, digit_value, digit)
+-- 	if digit == nil then digit = Broker.Layout.TextArea.selectedChar end
+-- 	local old_digit_value = getDigit(value, length, digit)
+-- 	local new_value = value + (digit_value - old_digit_value) * pow(10, length - digit)
+-- 	local max = pow(10, length)
+-- 	return (new_value + max) % max
+-- end
+
+-- Buttons = {
+-- 	{
+-- 		name = "ignore y",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.IGNORE_Y],
+-- 		box = {
+-- 			Drawing.Screen.Width + 130,
+-- 			490,
+-- 			75,
+-- 			20
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.dist_button.ignore_y == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.dist_button.ignore_y == true) then
+-- 				Broker.Layout.Button.dist_button.ignore_y = false
+-- 			else
+-- 				Broker.Layout.Button.dist_button.ignore_y = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = ".99",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.POINT_99],
+-- 		box = {
+-- 			Drawing.Screen.Width + 185,
+-- 			5,
+-- 			32,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.strain_button.target_strain == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.strain_button.target_strain == true) then
+-- 				Broker.Layout.Button.strain_button.target_strain = false
+-- 				Broker.Layout.Button.strain_button.always = false
+-- 			else
+-- 				Broker.Layout.Button.strain_button.target_strain = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "always .99",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.ALWAYS_99],
+-- 		box = {
+-- 			Drawing.Screen.Width + 129,
+-- 			5,
+-- 			56,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.strain_button.always == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.strain_button.always == true) then
+-- 				Broker.Layout.Button.strain_button.always = false
+-- 			elseif (Broker.Layout.Button.strain_button.target_strain == true) then
+-- 				Broker.Layout.Button.strain_button.always = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = ".99 left",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.LEFT_99],
+-- 		box = {
+-- 			Drawing.Screen.Width + 130,
+-- 			31,
+-- 			40,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.strain_button.left == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.strain_button.left == true and Broker.Layout.Button.strain_button.right == true) then
+-- 				Broker.Layout.Button.strain_button.left = false
+-- 			else
+-- 				Broker.Layout.Button.strain_button.left = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = ".99 right",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.RIGHT_99],
+-- 		box = {
+-- 			Drawing.Screen.Width + 170,
+-- 			31,
+-- 			47,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.strain_button.right == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.strain_button.right == true and Broker.Layout.Button.strain_button.left == true) then
+-- 				Broker.Layout.Button.strain_button.right = false
+-- 			else
+-- 				Broker.Layout.Button.strain_button.right = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "dyaw",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DYAW],
+-- 		box = {
+-- 			Drawing.Screen.Width + 130,
+-- 			57,
+-- 			87,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.strain_button.dyaw == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.strain_button.dyaw == true) then
+-- 				Broker.Layout.Button.strain_button.dyaw = false
+-- 			else
+-- 				Broker.Layout.Button.strain_button.dyaw = true
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "dist moved",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DIST_MOVED],
+-- 		box = {
+-- 			Drawing.Screen.Width + 5,
+-- 			490,
+-- 			120,
+-- 			20
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.dist_button.enabled == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.dist_button.enabled == false) then
+-- 				Broker.Layout.Button.dist_button.enabled = true
+-- 				Broker.Layout.Button.dist_button.axis.x = MoreMaths.DecodeDecToFloat(Memory.Mario.X)
+-- 				Broker.Layout.Button.dist_button.axis.y = MoreMaths.DecodeDecToFloat(Memory.Mario.Y)
+-- 				Broker.Layout.Button.dist_button.axis.z = MoreMaths.DecodeDecToFloat(Memory.Mario.Z)
+-- 			else
+-- 				Broker.Layout.Button.dist_button.enabled = false
+-- 				Broker.Layout.Button.dist_button.dist_moved_save = Engine.GetTotalDistMoved()
+-- 			end
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "disabled",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.DISABLED],
+-- 		box = {
+-- 			Drawing.Screen.Width + 5,
+-- 			5,
+-- 			120,
+-- 			30
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.DISABLED
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.DISABLED
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "match yaw",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MATCH_YAW],
+-- 		box = {
+-- 			Drawing.Screen.Width + 5,
+-- 			40,
+-- 			120,
+-- 			30
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.SelectedItem == "MatchYaw"
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.MATCH_YAW
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "reverse angle",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.REVERSE_ANGLE],
+-- 		box = {
+-- 			Drawing.Screen.Width + 5,
+-- 			75,
+-- 			120,
+-- 			30
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.SelectedItem == "ReverseAngle"
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.REVERSE_ANGLE
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "match angle",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MATCH_ANGLE],
+-- 		box = {
+-- 			Drawing.Screen.Width + 5,
+-- 			110,
+-- 			120,
+-- 			30
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.MATCH_ANGLE
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.Layout.Button.selectedItem = Broker.Layout.Button.MATCH_ANGLE
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "match angle value",
+-- 		type = ButtonType.textArea,
+-- 		inputSize = 5,
+-- 		box = {
+-- 			Drawing.Screen.Width + 131,
+-- 			110,
+-- 			85,
+-- 			30
+-- 		},
+-- 		value = function()
+-- 			return Broker.GoalAngle
+-- 		end,
+-- 		enabled = function()
+-- 			return Broker.Layout.Button.selectedItem == Broker.Layout.Button.MATCH_ANGLE
+-- 		end,
+-- 		editing = function()
+-- 			return Broker.Layout.TextArea.selectedItem == Broker.Layout.TextArea.MATCH_ANGLE
+-- 		end,
+-- 		onclick = function(self, char)
+-- 			if (Broker.Layout.TextArea.selectedItem ~= Broker.Layout.TextArea.MATCH_ANGLE) then
+-- 				Broker.Layout.TextArea.selectedItem = Broker.Layout.TextArea.MATCH_ANGLE
+-- 				Broker.Layout.TextArea.selectedChar = 1 -- on first click set to leading digit
+-- 			else
+-- 				Broker.Layout.TextArea.selectedChar = char
+-- 			end
+-- 			Broker.Layout.TextArea.blinkTimer = 0
+-- 			Broker.Layout.TextArea.showUnderscore = true
+-- 		end,
+-- 		onkeypress = function(self, key)
+-- 			local oldkey = math.floor(Broker.GoalAngle / math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)) % 10
+-- 			Broker.GoalAngle = Broker.GoalAngle + (key - oldkey) * math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)
+-- 			Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 			if Broker.Layout.TextArea.selectedChar > self.inputSize then
+-- 				Broker.Layout.TextArea.selectedItem = 0
+-- 			end
+-- 		end,
+-- 		onarrowpress = function(self, key)
+-- 			if (key == "left") then
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar - 1
+-- 				if (Broker.Layout.TextArea.selectedChar == 0) then
+-- 					Broker.Layout.TextArea.selectedChar = self.inputSize
+-- 				end
+-- 				Broker.Layout.TextArea.showUnderscore = false
+-- 			elseif (key == "right") then
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 				if (Broker.Layout.TextArea.selectedChar == self.inputSize + 1) then
+-- 					Broker.Layout.TextArea.selectedChar = 1
+-- 				end
+-- 				Broker.Layout.TextArea.showUnderscore = false
+-- 			elseif (key == "up") then
+-- 				local oldkey = getDigit(Broker.GoalAngle, self.inputSize)
+-- 				Broker.GoalAngle = updateDigit(Broker.GoalAngle, self.inputSize, oldkey + 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
+-- 			elseif (key == "down") then
+-- 				local oldkey = getDigit(Broker.GoalAngle, self.inputSize)
+-- 				Broker.GoalAngle = updateDigit(Broker.GoalAngle, self.inputSize, oldkey - 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
+-- 			end
+-- 			Broker.Layout.TextArea.blinkTimer = -1
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "magnitude value",
+-- 		type = ButtonType.textArea,
+-- 		inputSize = 3,
+-- 		box = {
+-- 			Drawing.Screen.Width + 154,
+-- 			165,
+-- 			50,
+-- 			25
+-- 		},
+-- 		value = function()
+-- 			return Broker.GoalMagnitude
+-- 		end,
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		editing = function()
+-- 			return Broker.Layout.TextArea.selectedItem == Broker.Layout.TextArea.MAGNITUDE
+-- 		end,
+-- 		onclick = function(self, char)
+-- 			if (Broker.Layout.TextArea.selectedItem ~= Broker.Layout.TextArea.MAGNITUDE) then
+-- 				Broker.Layout.TextArea.selectedItem = Broker.Layout.TextArea.MAGNITUDE
+-- 				Broker.Layout.TextArea.selectedChar = 1
+-- 			else
+-- 				Broker.Layout.TextArea.selectedChar = char
+-- 			end
+-- 			Broker.Layout.TextArea.blinkTimer = 0
+-- 			Broker.Layout.TextArea.showUnderscore = true
+-- 		end,
+-- 		onkeypress = function(self, key)
+-- 			local goalMag = Broker.GoalMagnitude or 0
+-- 			local oldkey = math.floor(goalMag / math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)) % 10
+-- 			goalMag = goalMag + (key - oldkey) * math.pow(10, self.inputSize - Broker.Layout.TextArea.selectedChar)
+-- 			Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 			if Broker.Layout.TextArea.selectedChar > self.inputSize then
+-- 				Broker.Layout.TextArea.selectedItem = 0
+-- 				if goalMag > 127 then
+-- 					goalMag = 127
+-- 				end
+-- 			end
+-- 			Broker.GoalMagnitude = goalMag
+-- 		end,
+-- 		onarrowpress = function(self, key)
+-- 			if (key == "left") then
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar - 1
+-- 				if (Broker.Layout.TextArea.selectedChar == 0) then
+-- 					Broker.Layout.TextArea.selectedChar = self.inputSize
+-- 				end
+-- 				Broker.Layout.TextArea.showUnderscore = false
+-- 			elseif (key == "right") then
+-- 				Broker.Layout.TextArea.selectedChar = Broker.Layout.TextArea.selectedChar + 1
+-- 				if (Broker.Layout.TextArea.selectedChar == self.inputSize + 1) then
+-- 					Broker.Layout.TextArea.selectedChar = 1
+-- 				end
+-- 				Broker.Layout.TextArea.showUnderscore = false
+-- 			elseif (key == "up") then
+-- 				local oldkey = getDigit(Broker.GoalMagnitude, self.inputSize)
+-- 				Broker.GoalMagnitude = updateDigit(Broker.GoalMagnitude, self.inputSize, oldkey + 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
+-- 			elseif (key == "down") then
+-- 				local oldkey = getDigit(Broker.GoalMagnitude, self.inputSize)
+-- 				Broker.GoalMagnitude = updateDigit(Broker.GoalMagnitude, self.inputSize, oldkey - 1)
+-- 				Broker.Layout.TextArea.showUnderscore = true
+-- 			end
+-- 			Broker.Layout.TextArea.blinkTimer = -1
+-- 		end
+--   },
+-- 	{
+-- 		name = "speedkick magnitude",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.MAG48],
+-- 		box = {
+-- 			Drawing.Screen.Width + 142,
+-- 			235,
+-- 			75,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return false
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.GoalMagnitude = 48
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "reset magnitude",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.RESET_MAG],
+-- 		box = {
+-- 			Drawing.Screen.Width + 142,
+-- 			261,
+-- 			75,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return false
+-- 		end,
+-- 		onclick = function(self)
+-- 			Broker.GoalMagnitude = 127
+-- 		end
+-- 	},
+-- 	{
+-- 		name = "swim",
+-- 		type = ButtonType.button,
+-- 		text = Broker.Layout.Button.items[Broker.Layout.Button.SWIM],
+-- 		box = {
+-- 			Drawing.Screen.Width + 130,
+-- 			83,
+-- 			87,
+-- 			22
+-- 		},
+-- 		enabled = function()
+-- 			return true
+-- 		end,
+-- 		pressed = function()
+-- 			return Broker.Layout.Button.swimming == true
+-- 		end,
+-- 		onclick = function(self)
+-- 			if (Broker.Layout.Button.swimming == true) then
+-- 				Broker.Layout.Button.swimming = false
+-- 			else
+-- 				Broker.Layout.Button.swimming = true
+-- 			end
+-- 		end
+-- 	}
+-- }
+

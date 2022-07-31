@@ -22,3 +22,6 @@ end
 
 function Renderer:RGBToHexadecimalColor(rgb)
 end
+
+function Renderer:FinalizeFrame()
+end

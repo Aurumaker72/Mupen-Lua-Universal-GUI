@@ -16,22 +16,35 @@ FOLDER_EMULATOR = AbsolutePathToCurrentFolder() .. "Emulator" .. "\\"
 FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
 FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
+FOLDER_GUI_CONTROLS_LAYOUT = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\" .. "Layout" .. "\\"
 FOLDER_GUI_RENDERERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Renderers" .. "\\"
+FOLDER_GUI_STYLERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Stylers" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 dofile(FOLDER_USER_CODE .. "InputDirection.lua")
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
+dofile(FOLDER_EMULATOR .. "WindowsMessageManager.lua")
 dofile(FOLDER_HELPER .. "Numeric.lua")
 dofile(FOLDER_HELPER .. "Color.lua")
+dofile(FOLDER_HELPER .. "String.lua")
 dofile(FOLDER_HELPER .. "Table.lua")
 dofile(FOLDER_HELPER .. "RendererHelper.lua")
 dofile(FOLDER_GUI_RENDERERS .. "RendererManager.lua")
 dofile(FOLDER_GUI_RENDERERS .. "Renderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIRenderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIPlusRenderer.lua")
+dofile(FOLDER_GUI_RENDERERS .. "BatchedGDIRenderer.lua")
+dofile(FOLDER_GUI_STYLERS .. "StylerManager.lua")
+dofile(FOLDER_GUI_STYLERS .. "Styler.lua")
+dofile(FOLDER_GUI_STYLERS .. "Windows10Styler.lua")
+dofile(FOLDER_GUI_STYLERS .. "FlatStyler.lua")
+dofile(FOLDER_GUI_STYLERS .. "DimensionalStyler.lua")
+dofile(FOLDER_GUI_STYLERS .. "PlasticStyler.lua")
+dofile(FOLDER_GUI_STYLERS .. "Windows3Styler.lua")
 dofile(FOLDER_GUI .. "Scene.lua")
 dofile(FOLDER_GUI .. "SceneManager.lua")
+dofile(FOLDER_GUI .. "ClipboardManager.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Control.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Button.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ToggleButton.lua")
@@ -41,6 +54,7 @@ dofile(FOLDER_GUI_CONTROLS .. "Label.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Joystick.lua")
 dofile(FOLDER_GUI_CONTROLS .. "CarrouselButton.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ComboBox.lua")
+dofile(FOLDER_GUI_CONTROLS_LAYOUT .. "StackPanel.lua")
 dofile(FOLDER_PROVIDER .. "Mouse.lua")
 dofile(FOLDER_PROVIDER .. "Keyboard.lua")
 dofile(FOLDER_PROVIDER .. "Appearance.lua")
@@ -84,9 +98,15 @@ end
 function AtReset()
     Screen.Expand()
 end
+
+function AtWindowsMessage(hwnd, id, wparam, lparam)
+	WindowsMessageManager.Update(hwnd, id, wparam, lparam)
+end
+
 -- Register callbacks
 emu.atstop(AtStop)
 emu.atinterval(AtInterval)
 emu.atvi(AtVisualInterrupt)
 emu.atinput(UserCodeAtInputPoll)
 emu.atreset(AtReset)
+emu.atwindowmessage(AtWindowsMessage)

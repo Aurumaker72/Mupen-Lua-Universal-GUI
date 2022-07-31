@@ -1,50 +1,66 @@
 Scenes = {}
+PersistentScene = nil
 CurrentScene = nil
 CurrentRenderer = nil
+CurrentStyler = nil
 SceneManager = {}
--- Controls which are not associated with a scene and permanently run their logic
--- Use cases: tab control
-PersistentControls = {}
 
-function SceneManager.Initialize(scenes, persistentControls, renderer)
+function SceneManager.Initialize(scenes, persistentScene, renderer, styler)
     Scenes = scenes
-    PersistentControls = persistentControls
+    if not persistentScene then
+        persistentScene = Scene:new()
+    end
+    PersistentScene = persistentScene
+    PersistentScene:SetActive(true)
+    PersistentScene.HasBackColor = false
     RendererManager.SetCurrentRenderer(renderer)
+    StylerManager.SetCurrentStyler(styler)
 end
 
 function SceneManager.ChangeScene(scene)
-    CurrentScene.IsActive = false
-    CurrentScene = Scenes[scene]
-    CurrentScene.IsActive = true
+    if CurrentScene then
+        CurrentScene:SetActive(false)
+    end
+    CurrentScene = scene
+    CurrentScene:SetActive(true)
+    -- perform layout pass
+    -- TODO: optimize to only do it once per scene
+    
 end
 
 function SceneManager.Update()
 
     for k, scene in pairs(Scenes) do
-        scene:Update(scene)
+        scene:Update()
     end
 
-    for key, control in pairs(PersistentControls) do
-        control:PersistentUpdate()
-        control:Update()
-    end
+    PersistentScene:Update()
+    SceneManager.ExecuteQueuedCallbacksForScene(PersistentScene)
 
     -- update outside of scene context to avoid context switch and thus invalid state
     for k, scene in pairs(Scenes) do
-        for i = 1, #scene.QueuedCallbacks, 1 do
-            scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
-            scene.QueuedCallbacks[i] = nil
-            scene.QueuedCallbackParameters[i] = nil
-        end
+        SceneManager.ExecuteQueuedCallbacksForScene(scene)
     end
     
 end
 
+function SceneManager.ExecuteQueuedCallbacksForScene(scene)
+    if #scene.QueuedCallbackParameters == #scene.QueuedCallbacks == false then
+        scene.QueuedCallbacks = {}
+        scene.QueuedCallbackParameters = {}
+    end
+    for i = 1, #scene.QueuedCallbacks, 1 do
+        scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
+        scene.QueuedCallbacks[i] = nil
+        scene.QueuedCallbackParameters[i] = nil
+    end
+end
+
 function SceneManager.Draw()
 
-    CurrentScene:Draw(CurrentScene)
+    CurrentScene:Draw()
+    PersistentScene:Draw()
 
-    for key, control in pairs(PersistentControls) do
-        control:Draw()
-    end
+    CurrentRenderer:FinalizeFrame()
+    
 end

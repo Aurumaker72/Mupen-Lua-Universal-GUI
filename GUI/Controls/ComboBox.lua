@@ -1,12 +1,9 @@
 ComboBox = middleclass('ComboBox', Control)
 
-function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemChangedCallback)
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+function ComboBox:initialize(containingScene, index, x, y, w, h, items, onSelectedItemChangedCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
 
     self.Items = items -- Must be of type "string" :)
-    -- self.ItemCurrentBackColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
-    -- self.ItemCurrentBorderColors = Table.Create(#self.Items,
-    --    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR)
 
     self.CurrentItemBackColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     self.CurrentItemSelectedBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
@@ -59,7 +56,7 @@ function ComboBox:PersistentUpdate()
 end
 
 function ComboBox:IsAnotherComboBoxOpenInScene()
-    -- refactor to O(1) using dict cache
+    -- TODO: refactor to O(1) using dict cache
     for key, control in pairs(self.ContainingScene.Controls) do
         if control:isInstanceOf(ComboBox) and control.IsOpened and control == self == false then
             return true
@@ -83,7 +80,6 @@ function ComboBox:Update()
 
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.SetOpen(self, not self.IsOpened)
-        -- self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
     end
 
     if self.CurrentDropDownHeight > self.TargetDropDownHeight / 4 and self.IsOpened then
@@ -134,17 +130,15 @@ end
 
 function ComboBox:SetSelectedIndex(index)
     self.SelectedItemIndex = Numeric.WrappingClamp(index, 1, #self.Items)
-    self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
+    self.ContainingScene:AddQueuedCallback( self.OnSelectedItemChangedCallback, self)
 end
 
 function ComboBox:ModalDraw()
     if self.CurrentDropDownHeight > 0 then
 
-        CurrentRenderer:DrawRectangle(self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-            self.X - Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.Y + self.Height -
-                Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE,
-            self.Width + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1, self.CurrentDropDownHeight +
-                self.ItemHeight / 2 + Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE + 1)
+        CurrentStyler:DrawBorder(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width,
+            self.CurrentDropDownHeight + self.ItemHeight / 2 + self.ItemHeight)
 
         local baseY = self.Y - self.ItemHeight * #self.Items + self.ItemHeight / 2 + self.CurrentDropDownHeight
 
@@ -154,7 +148,7 @@ function ComboBox:ModalDraw()
 
             if thisY > self.Y + self.Height - self.ItemHeight then
 
-                CurrentRenderer:FillRectangle(self.SelectedItemIndex == i and self.CurrentItemSelectedBackColor or
+                CurrentRenderer:FillRectangle((self.SelectedItemIndex == i or Mouse.IsInside(self.X, thisY, self.Width, self.ItemHeight)) and self.CurrentItemSelectedBackColor or
                                                   self.CurrentItemBackColor, self.X, thisY, self.Width, self.ItemHeight)
 
                 CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[i], self.X + 3, thisY + 2)
@@ -169,7 +163,8 @@ end
 
 function ComboBox:Draw()
 
-    RendererHelper.DrawBorderedRectangle(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor,
+        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.RightChevronText, self.X + self.Width -
         Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4, self.CurrentRightChevronY)
