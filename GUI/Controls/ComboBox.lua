@@ -148,7 +148,7 @@ function ComboBox:ModalDraw()
 
             if thisY > self.Y + self.Height - self.ItemHeight then
 
-                CurrentRenderer:FillRectangle(self.SelectedItemIndex == i and self.CurrentItemSelectedBackColor or
+                CurrentRenderer:FillRectangle((self.SelectedItemIndex == i or Mouse.IsInside(self.X, thisY, self.Width, self.ItemHeight)) and self.CurrentItemSelectedBackColor or
                                                   self.CurrentItemBackColor, self.X, thisY, self.Width, self.ItemHeight)
 
                 CurrentRenderer:DrawText(self.CurrentForeColor, self.Items[i], self.X + 3, thisY + 2)
