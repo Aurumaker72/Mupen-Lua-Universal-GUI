@@ -222,9 +222,12 @@ function UserCodeOnInitialize()
                     RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
                 end
             end),
-        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20, {"Windows 10", "Flat", "3D", "Plastic"}, function(o)
+        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20, {"Windows 10", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
             if o.Items[o.SelectedItemIndex] == "Windows 10" then
                 StylerManager.SetCurrentStyler(Windows10Styler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "Windows 3" then
+                StylerManager.SetCurrentStyler(Windows3Styler:new())
             end
             if o.Items[o.SelectedItemIndex] == "Flat" then
                 StylerManager.SetCurrentStyler(FlatStyler:new())
