@@ -1,8 +1,9 @@
 Scene = middleclass('Scene')
 
-function Scene:initialize(controls)
-    self.Controls = controls
+function Scene:initialize()
+    self.Controls = {}
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR
+    self.CurrentControlIndex = 1
     self.IsActive = false
     self.HasBackColor = true
     self.QueuedCallbacks = {}
@@ -15,11 +16,22 @@ function Scene:GetControls()
 end
 
 function Scene:SetControl(key, control)
+    if not self.Controls[key] then
+        self.CurrentControlIndex = self.CurrentControlIndex + 1
+    end
     self.Controls[key] = control
 end
 
 function Scene:AddControls(controls)
-    self.Controls = controls
+    for key, control in pairs(controls) do
+
+        self.CurrentControlIndex = self.CurrentControlIndex + 1
+        --control.Index = self.CurrentControlIndex
+        -- TODO: implement automatic index tracker
+        
+        self.Controls[key] = control
+
+    end
 end
 
 function Scene:AddQueuedCallback(callback, parameter)

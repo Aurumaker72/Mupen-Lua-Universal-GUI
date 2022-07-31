@@ -5,9 +5,9 @@ CurrentRenderer = nil
 CurrentStyler = nil
 SceneManager = {}
 
-function SceneManager.Initialize(scenes, persistentControls, renderer, styler)
+function SceneManager.Initialize(scenes, persistentScene, renderer, styler)
     Scenes = scenes
-    PersistentScene = Scene:new(persistentControls)
+    PersistentScene = persistentScene
     PersistentScene:SetActive(true)
     PersistentScene.HasBackColor = false
     RendererManager.SetCurrentRenderer(renderer)
@@ -32,22 +32,25 @@ function SceneManager.Update()
     end
 
     PersistentScene:Update()
+    SceneManager.ExecuteQueuedCallbacksForScene(PersistentScene)
 
     -- update outside of scene context to avoid context switch and thus invalid state
     for k, scene in pairs(Scenes) do
-        if #scene.QueuedCallbackParameters == #scene.QueuedCallbacks == false then
-            scene.QueuedCallbacks = {}
-            scene.QueuedCallbackParameters = {}
-        end
-        for i = 1, #scene.QueuedCallbacks, 1 do
-            scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
-            scene.QueuedCallbacks[i] = nil
-            scene.QueuedCallbackParameters[i] = nil
-        end
-        
-        
+        SceneManager.ExecuteQueuedCallbacksForScene(scene)
     end
     
+end
+
+function SceneManager.ExecuteQueuedCallbacksForScene(scene)
+    if #scene.QueuedCallbackParameters == #scene.QueuedCallbacks == false then
+        scene.QueuedCallbacks = {}
+        scene.QueuedCallbackParameters = {}
+    end
+    for i = 1, #scene.QueuedCallbacks, 1 do
+        scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
+        scene.QueuedCallbacks[i] = nil
+        scene.QueuedCallbackParameters[i] = nil
+    end
 end
 
 function SceneManager.Draw()
