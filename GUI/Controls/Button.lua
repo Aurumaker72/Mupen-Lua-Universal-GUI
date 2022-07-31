@@ -43,7 +43,7 @@ function Button:Update()
 end
 
 function Button:ShouldBePushed()
-    return (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or Keyboard.KeyPressed(self.ClickKey) 
+    return (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or Keyboard.KeyHeld(self.ClickKey) 
 end
 
 function Button:Draw()
