@@ -1,6 +1,6 @@
 # Mupen-Lua Universal GUI <img src="https://user-images.githubusercontent.com/48759429/182023742-7e2eebad-ccd2-4be8-8c81-6b4a14bf1164.png" height="128" align="right"/>
 
-<img src="https://img.shields.io/badge/Status-Work%20In%20Progress-yellow"/> <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluaUniversalGUI"/>
+<img src="https://img.shields.io/badge/Status-Work%20In%20Progress-yellow"/> <img src="https://img.shields.io/badge/Production-Not%20ready-red"/> <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluaUniversalGUI"/> 
 
 This framework helps you create a GUI for your lua script.
 
