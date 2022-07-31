@@ -1,6 +1,6 @@
 # Mupen-Lua Universal GUI
 
-⚠️ **This framework is not ready for production, expect API changes**
+⚠️ **This framework is not ready to fulfill high-reliability requirements, but is mature enough to be used in active production**
 
 Lua framework for Mupen64 which allows flexible, highly customizable and straightforward creation of GUIs
 
@@ -24,6 +24,9 @@ The user writes code inside the `User` directory. This code includes implementat
 The user mustn't modify any code outside of the User directory and must interact with the framework over predefined functions, not mutating data manually (e.g.:
 ✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
+
+#### Rendering process and relations
+<img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
 
 ## Usage
 
@@ -80,6 +83,15 @@ CurrentScene.IsActive = true
   - Switch with one function call
   - Can define non-scene (persistent) controls for navigation OR scene-linked controls
 - Theming
+  you can define... 
+  - Colors
+  - Margins
+  - Sizes
+  - Alignment
+- Styling
+  you can define...
+  - High-level Drawing
+  - Decorations
 - Compatibility
   - Automatically scales controls depending on resolution
 
@@ -90,3 +102,5 @@ CurrentScene.IsActive = true
 | Keyboard interaction | ✔️      | ✔️            | ✔️                                       | ❌      | ❌                              | ✔️        | ✔️               |
 | Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
 | Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
+
+
