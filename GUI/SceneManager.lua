@@ -7,6 +7,9 @@ SceneManager = {}
 
 function SceneManager.Initialize(scenes, persistentScene, renderer, styler)
     Scenes = scenes
+    if not persistentScene then
+        persistentScene = Scene:new()
+    end
     PersistentScene = persistentScene
     PersistentScene:SetActive(true)
     PersistentScene.HasBackColor = false

@@ -256,7 +256,7 @@ function UserCodeOnInitialize()
     SceneManager.Initialize({
         Main = mainScene,   
         Settings = settingsScene
-    }, persistentScene, GDIRenderer:new(), Windows10Styler:new())
+    }, nil, GDIRenderer:new(), Windows10Styler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
 
