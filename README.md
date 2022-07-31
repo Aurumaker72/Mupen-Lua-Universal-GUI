@@ -53,9 +53,7 @@ SceneManager.Initialize(
         Main = mainScene,
     },
     
-    { -- Dictionary of controls which are persistent (scene independent)
-    
-    },
+    persistentScene, -- A scene which is always active and doesn't suppress other scenes (Optional)
     
     GDIRenderer:new(), -- Instance of a rendering backend
     Windows10Styler:new() -- Instance of a styler
