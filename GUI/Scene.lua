@@ -22,6 +22,10 @@ function Scene:AddControls(controls)
 end
 
 function Scene:AddQueuedCallback(callback, parameter)
+    if not callback or not parameter then
+        print("Skipping callback")
+        return
+    end
     self.QueuedCallbacks[#self.QueuedCallbacks + 1] = callback
     self.QueuedCallbackParameters[#self.QueuedCallbackParameters + 1] = parameter
 end
