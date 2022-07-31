@@ -163,7 +163,7 @@ end
 
 function ComboBox:Draw()
 
-    CurrentStyler:DrawButton(self.CurrentBackColor, self.CurrentBorderColor,
+    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.RightChevronText, self.X + self.Width -

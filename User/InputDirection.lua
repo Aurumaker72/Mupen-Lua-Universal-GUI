@@ -198,7 +198,6 @@ function UserCodeOnInitialize()
                 Action = Label:new(mainScene, 29, nil, nil, ""),
                 MovedDist = Label:new(mainScene, 30, nil, nil, "")
             })
-
     })
 
     settingsScene:AddControls({

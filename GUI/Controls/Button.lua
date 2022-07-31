@@ -45,7 +45,7 @@ end
 
 function Button:Draw()
 
-    CurrentStyler:DrawButton(self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor, Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
     
     if (self.Text) then
         CurrentRenderer:DrawText(self.CurrentForeColor, self.Text, self.X + self.Width / 2 -
