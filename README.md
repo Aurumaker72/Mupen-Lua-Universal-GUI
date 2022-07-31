@@ -1,15 +1,15 @@
 # Mupen-Lua Universal GUI <img src="https://user-images.githubusercontent.com/48759429/182023742-7e2eebad-ccd2-4be8-8c81-6b4a14bf1164.png" height="128" align="right"/>
 
+<img src="https://img.shields.io/badge/Status-Work%20In%20Progress-yellow"/> <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluaUniversalGUI"/>
 
+This framework helps you create a GUI for your lua script.
 
-
-⚠️ **This framework is not ready to fulfill high-reliability requirements, but is mature enough to be used in active production**
-
-Lua framework for Mupen64 which allows flexible, highly customizable and straightforward creation of GUIs
+It provides many built-in controls, themes and styles which help you fulfill your requirements and has patterns encouraging clean, legible code.
 
 ## Examples
 
 <img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="400"/>
+
 *Example of built-in themes*
 
 <img src="https://user-images.githubusercontent.com/48759429/181444977-cd5cedc0-06f2-4910-b32d-f7a7351ee6dd.gif" width="250"/>
@@ -47,6 +47,7 @@ mainScene:AddControls({
 
 YourButton = Button:new(
      mainScene, -- The scene containing the button
+     1, -- The button's index in the scene. For each control, increase it by 1 heading downwards
      nil, -- The keyboard key associated with the button (nil disables keyboard interaction)
      20, -- X 
      20, -- Y
@@ -72,13 +73,12 @@ SceneManager.Initialize(
     
     },
     
-    GDIRenderer:new() -- Instance of a rendering backend
+    GDIRenderer:new(), -- Instance of a rendering backend
+    Windows10Styler:new() -- Instance of a styler
 )
 
--- Set the `CurrentScene` to the key of your main scene
-CurrentScene = Scenes.Main
--- now activate it. it should begin operating normally after this
-CurrentScene.IsActive = true
+SceneManager.ChangeScene(Scenes.Main) -- Switch to main scene and thereby signal start to SceneManager. You're done!
+
 ```
 
 ## Features
