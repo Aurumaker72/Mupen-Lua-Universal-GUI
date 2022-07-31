@@ -136,7 +136,7 @@ end
 function ComboBox:ModalDraw()
     if self.CurrentDropDownHeight > 0 then
 
-        CurrentStyler:DrawBorder(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+        CurrentStyler:DrawBorder(self, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
             Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width,
             self.CurrentDropDownHeight + self.ItemHeight / 2 + self.ItemHeight)
 
@@ -163,7 +163,7 @@ end
 
 function ComboBox:Draw()
 
-    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor,
+    CurrentStyler:DrawRaisedFrame(self, self.CurrentBackColor, self.CurrentBorderColor,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:DrawText(self.CurrentForeColor, self.RightChevronText, self.X + self.Width -

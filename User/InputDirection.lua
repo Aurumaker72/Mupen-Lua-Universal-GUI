@@ -245,7 +245,10 @@ function UserCodeOnInitialize()
             -- LabelC = Label:new(settingsScene, nil, nil, "Ah ah"),
             ButtonA = Button:new(settingsScene, 8, nil, nil, nil, 80, 20, "Button", nil, nil),
             ButtonB = Button:new(settingsScene, 9, nil, nil, nil, 80, 20, "Button", nil, nil),
-            ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil)
+            ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil),
+            SliderA = Slider:new(settingsScene, 11, nil, nil, 80, 20, 0, 0, 100, false, false, function(o)
+                
+            end)
         })
     })
     persistentScene:AddControls({
