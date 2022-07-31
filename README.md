@@ -14,6 +14,10 @@ Lua framework for Mupen64 which allows flexible, highly customizable and straigh
 
 *Example user program*
 
+<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="400"/>
+
+*Example of built-in themes*
+
 ## Arhitecture
 This framework is split into two major code sections:
 - Framework (Internal)
