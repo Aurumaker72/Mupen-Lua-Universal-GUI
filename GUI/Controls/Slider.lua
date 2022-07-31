@@ -65,7 +65,7 @@ end
 
 function Slider:Draw()
 
-    CurrentStyler:DrawButton(self, self.CurrentTrackColor,
+    CurrentStyler:DrawRaisedFrame(self, self.CurrentTrackColor,
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y + self.Height / 2 -
             Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,

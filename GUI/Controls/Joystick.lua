@@ -56,7 +56,7 @@ end
 
 function Joystick:Draw()
 
-    CurrentStyler:DrawButton(self, self.CurrentBackColor, self.CurrentBorderColor,
+    CurrentStyler:DrawRaisedFrame(self, self.CurrentBackColor, self.CurrentBorderColor,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)

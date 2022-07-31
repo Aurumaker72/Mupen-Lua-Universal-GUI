@@ -6,7 +6,7 @@ local DEPTH_DIVISOR = 1
 function DimensionalStyler:initialize()
 end
 
-function DimensionalStyler:DrawButton(control, backColor, borderColor, borderSize, x, y, w, h)
+function DimensionalStyler:DrawRaisedFrame(control, backColor, borderColor, borderSize, x, y, w, h)
     local darkened = CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(100,
         CurrentRenderer:HexadecimalColorToRGB(backColor)))
     if not control.IsChecked then
@@ -22,11 +22,11 @@ function DimensionalStyler:DrawButton(control, backColor, borderColor, borderSiz
     end
 
     if not control.IsChecked then
-        self:DrawBorder(darkened, borderSize, x, y, w, h)
+        self:DrawBorder(control, darkened, borderSize, x, y, w, h)
     end
 end
 
-function DimensionalStyler:DrawBorder(borderColor, borderSize, x, y, w, h)
+function DimensionalStyler:DrawBorder(control, borderColor, borderSize, x, y, w, h)
 
     CurrentRenderer:DrawLine(borderColor, borderSize, x, y, x - DEPTH, y - DEPTH)
     CurrentRenderer:DrawLine(borderColor, borderSize, x - DEPTH, y - DEPTH, x + w - DEPTH / 2, y - DEPTH)

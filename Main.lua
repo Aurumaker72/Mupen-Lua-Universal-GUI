@@ -88,6 +88,13 @@ function AtVisualInterrupt()
 end
 
 function AtInterval()
+
+    if emu.iswindowinforeground then
+        if not emu.iswindowinforeground() then
+            return
+        end
+    end
+
     Mouse.Update()
     Keyboard.Update()
 

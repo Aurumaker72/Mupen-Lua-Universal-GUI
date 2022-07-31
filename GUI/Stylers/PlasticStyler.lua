@@ -5,11 +5,8 @@ local COLOR_SHIFT_AMOUNT = 20
 function PlasticStyler:initialize()
 end
 
-function PlasticStyler:ControlShouldBeDeep(control)
-    return control.IsChecked or (control.ShouldBePushed and control:ShouldBePushed() or false) or control.IsOpened or control.IsActive
-end
 
-function PlasticStyler:DrawButton(control, backColor, borderColor, borderSize, x, y, w, h)
+function PlasticStyler:DrawRaisedFrame(control, backColor, borderColor, borderSize, x, y, w, h)
 
     local lightenedBorderColor = CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(-COLOR_SHIFT_AMOUNT,
     CurrentRenderer:HexadecimalColorToRGB(borderColor)))
@@ -17,10 +14,10 @@ function PlasticStyler:DrawButton(control, backColor, borderColor, borderSize, x
     CurrentRenderer:HexadecimalColorToRGB(borderColor)))
 
     if not self:ControlShouldBeDeep(control) then
-        self:DrawBorder(borderColor, borderSize, x, y, w - borderSize, h - borderSize)
+        self:DrawBorder(control, borderColor, borderSize, x, y, w - borderSize, h - borderSize)
     end
     
-    self:DrawBorder(borderColor, borderSize, x + borderSize, y + borderSize, w, h)
+    self:DrawBorder(control, borderColor, borderSize, x + borderSize, y + borderSize, w, h)
 
     if self:ControlShouldBeDeep(control) then
         x = x + borderSize
@@ -33,6 +30,6 @@ function PlasticStyler:DrawButton(control, backColor, borderColor, borderSize, x
     CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(COLOR_SHIFT_AMOUNT,
     CurrentRenderer:HexadecimalColorToRGB(backColor))), x, y + h / 2, w, h / 2)
 end
-function PlasticStyler:DrawBorder(borderColor, borderSize, x, y, w, h)
+function PlasticStyler:DrawBorder(control, borderColor, borderSize, x, y, w, h)
     CurrentRenderer:FillRectangle(borderColor, x - borderSize, y - borderSize, w + borderSize * 2, h + borderSize * 2)
 end
