@@ -16,21 +16,6 @@ It provides many built-in controls, themes and styles which help you fulfill you
 
 *A ComboBox control which sets the theme*
 
-
-## 📐 Arhitecture
-This framework is split into two major code sections:
-- Framework (Internal)
-- User (External)
-
-The user writes code inside the `User` directory. This code includes implementation of their domain logic and definition of scenes.
-
-The user mustn't modify any code outside of the User directory and must interact with the framework over predefined functions, not mutating data manually (e.g.:
-✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
-❌ ```CurrentRenderer = GDIRenderer:new()```)
-
-#### Rendering process and relations
-<img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
-
 ## 💨 Quickstart
 
 #### Adding a new scene
@@ -104,5 +89,19 @@ SceneManager.ChangeScene(Scenes.Main) -- Switch to main scene and thereby signal
 | Keyboard interaction | ✔️      | ✔️            | ✔️                                       | ❌      | ❌                              | ✔️        | ✔️               |
 | Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
 | Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
+
+## 📐 Arhitecture
+This framework is split into two major code sections:
+- Framework (Internal)
+- User (External)
+
+The user writes code inside the `User` directory. This code includes implementation of their domain logic and definition of scenes.
+
+The user mustn't modify any code outside of the User directory and must interact with the framework over predefined functions, not mutating data manually (e.g.:
+✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
+❌ ```CurrentRenderer = GDIRenderer:new()```)
+
+#### Rendering process and relations
+<img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
 
 
