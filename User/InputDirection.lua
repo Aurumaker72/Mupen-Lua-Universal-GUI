@@ -222,7 +222,7 @@ function UserCodeOnInitialize()
                     RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
                 end
             end),
-        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20, {"Windows 10", "Flat", "3D"}, function(o)
+        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20, {"Windows 10", "Flat", "3D", "Plastic"}, function(o)
             if o.Items[o.SelectedItemIndex] == "Windows 10" then
                 StylerManager.SetCurrentStyler(Windows10Styler:new())
             end
@@ -231,6 +231,9 @@ function UserCodeOnInitialize()
             end
             if o.Items[o.SelectedItemIndex] == "3D" then
                 StylerManager.SetCurrentStyler(DimensionalStyler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "Plastic" then
+                StylerManager.SetCurrentStyler(PlasticStyler:new())
             end
         end),
         TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, true, {
@@ -256,7 +259,7 @@ function UserCodeOnInitialize()
     SceneManager.Initialize({
         Main = mainScene,   
         Settings = settingsScene
-    }, persistentScene, GDIRenderer:new(), Windows10Styler:new())
+    }, persistentScene, GDIRenderer:new(), PlasticStyler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
 

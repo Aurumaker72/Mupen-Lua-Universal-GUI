@@ -13,8 +13,7 @@ function Button:PersistentUpdate()
 
     self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
         CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
-        CurrentRenderer:HexadecimalColorToRGB(((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
-                                                  Mouse.IsPrimaryDown()) or Keyboard.KeyHeld(self.ClickKey)) and
+        CurrentRenderer:HexadecimalColorToRGB(self:ShouldBePushed() and
                                                   Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or
                                                   (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
                                                       Appearance.Themes[Appearance.CurrentTheme]
@@ -41,6 +40,10 @@ function Button:Update()
     if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
     end
+end
+
+function Button:ShouldBePushed()
+    return (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or Keyboard.KeyPressed(self.ClickKey) 
 end
 
 function Button:Draw()

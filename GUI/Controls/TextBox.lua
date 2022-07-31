@@ -6,7 +6,7 @@ function TextBox:initialize(containingScene, index, x, y, w, h, maxLength, isRea
     self.TextChangedCallback = textChangedCallback
     self.IsReadOnly = isReadOnly
     self.IsNumericOnly = isNumericOnly
-    self.Active = false
+    self.IsActive = false
     self.Text = ""
     self.CaretPosition = 1
     self.CaretTimer = 0
@@ -39,7 +39,7 @@ function TextBox:Update()
 
     self.CaretTimer = self.CaretTimer + 1
 
-    if self.Active then
+    if self.IsActive then
         if self.CaretTimer % 100 == 50 then
             self.TargetCaretColor = self.IsReadOnly and
                                         Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_READONLY_FORE_COLOR or
@@ -59,10 +59,10 @@ function TextBox:Update()
         self:ComputeIntendedCaretPosition())
 
     if (Mouse.IsPrimaryClicked()) then
-        self.Active = Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height)
+        self.IsActive = Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height)
     end
 
-    if self.Active and self.IsReadOnly == false then
+    if self.IsActive and self.IsReadOnly == false then
 
         if self.IsNumericOnly then
             for i = 0, 9, 1 do
@@ -114,7 +114,7 @@ function TextBox:Update()
 
     end
 
-    if self.Active and self.IsReadOnly == false then
+    if self.IsActive and self.IsReadOnly == false then
 
         if Keyboard.KeyHeld("control") and Keyboard.KeyPressed("C") then
             ClipboardManager.Copy(tostring(self.Text))
@@ -153,7 +153,7 @@ function TextBox:PersistentUpdate()
     if Mouse.IsInside(self.X, self.Y, self.Width, self.Height) then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_HOVERED_BORDER_COLOR
     end
-    if self.Active then
+    if self.IsActive then
         self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_ACTIVE_BORDER_COLOR
     end
     self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
