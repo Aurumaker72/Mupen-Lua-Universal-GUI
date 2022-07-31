@@ -6,7 +6,7 @@ This framework helps you create a GUI for your lua script.
 
 It provides many built-in controls, themes and styles which help you fulfill your requirements and has patterns encouraging clean, legible code.
 
-## Examples
+## ℹ️ Examples
 
 <img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="400"/>
 
@@ -17,7 +17,7 @@ It provides many built-in controls, themes and styles which help you fulfill you
 *A ComboBox control which sets the theme*
 
 
-## Arhitecture
+## 📐 Arhitecture
 This framework is split into two major code sections:
 - Framework (Internal)
 - User (External)
@@ -31,8 +31,7 @@ The user mustn't modify any code outside of the User directory and must interact
 #### Rendering process and relations
 <img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
 
-## Usage
-
+## 💨 Quickstart
 
 #### Adding a new scene
 Create a new scene using the `Scene` constructor and pass in `nil`
@@ -81,7 +80,7 @@ SceneManager.ChangeScene(Scenes.Main) -- Switch to main scene and thereby signal
 
 ```
 
-## Features
+## ✨ Features
 - Scenes (Tabs)
   - Switch with one function call
   - Can define non-scene (persistent) controls for navigation OR scene-linked controls
