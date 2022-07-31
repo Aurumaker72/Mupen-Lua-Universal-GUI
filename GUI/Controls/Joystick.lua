@@ -1,7 +1,7 @@
 Joystick = middleclass('Joystick', Control)
 
-function Joystick:initialize(containingScene, x, y, w, h, readOnly, valueChangedCallback)
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+function Joystick:initialize(containingScene, index, x, y, w, h, readOnly, valueChangedCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
     self.ValueChangedCallback = valueChangedCallback
     self.ValueX = 0
     self.ValueY = 0
@@ -27,7 +27,7 @@ function Joystick:Update()
                 self.ValueY =
                     Numeric.Remap(Numeric.Clamp(self.Y - Mouse.Y, -self.Height, 0), 0, -self.Height, -127, 128)
 
-                self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.ValueChangedCallback, self)
+                self.ContainingScene:AddQueuedCallback( self.ValueChangedCallback, self)
 
             end
         end

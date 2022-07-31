@@ -1,7 +1,7 @@
 InputViewer = middleclass('InputViewer', Control)
 
-function InputViewer:initialize(containingScene, x, y, w, h)
-    Control.initialize(self, containingScene, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
+function InputViewer:initialize(containingScene, index, x, y, w, h)
+    Control.initialize(self, containingScene, index, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
     self.CurrentBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
     self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR
@@ -33,11 +33,11 @@ end
 function Button:Update()
 
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyPressed(self.ClickKey) then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.PrimaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.PrimaryMouseClickCallback, self)
     end
 
     if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.SecondaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
     end
 end
 

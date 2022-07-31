@@ -16,6 +16,7 @@ FOLDER_EMULATOR = AbsolutePathToCurrentFolder() .. "Emulator" .. "\\"
 FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
 FOLDER_GUI = AbsolutePathToCurrentFolder() .. "GUI" .. "\\"
 FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\"
+FOLDER_GUI_CONTROLS_LAYOUT = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\" .. "Layout" .. "\\"
 FOLDER_GUI_RENDERERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Renderers" .. "\\"
 FOLDER_GUI_STYLERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Stylers" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
@@ -51,6 +52,7 @@ dofile(FOLDER_GUI_CONTROLS .. "Label.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Joystick.lua")
 dofile(FOLDER_GUI_CONTROLS .. "CarrouselButton.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ComboBox.lua")
+dofile(FOLDER_GUI_CONTROLS_LAYOUT .. "StackPanel.lua")
 dofile(FOLDER_PROVIDER .. "Mouse.lua")
 dofile(FOLDER_PROVIDER .. "Keyboard.lua")
 dofile(FOLDER_PROVIDER .. "Appearance.lua")

@@ -15,9 +15,14 @@ function SceneManager.Initialize(scenes, persistentControls, renderer, styler)
 end
 
 function SceneManager.ChangeScene(scene)
-    CurrentScene.IsActive = false
-    CurrentScene = Scenes[scene]
-    CurrentScene.IsActive = true
+    if CurrentScene then
+        CurrentScene:SetActive(false)
+    end
+    CurrentScene = scene
+    CurrentScene:SetActive(true)
+    -- perform layout pass
+    -- TODO: optimize to only do it once per scene
+    
 end
 
 function SceneManager.Update()
@@ -33,11 +38,17 @@ function SceneManager.Update()
 
     -- update outside of scene context to avoid context switch and thus invalid state
     for k, scene in pairs(Scenes) do
+        if #scene.QueuedCallbackParameters == #scene.QueuedCallbacks == false then
+            scene.QueuedCallbacks = {}
+            scene.QueuedCallbackParameters = {}
+        end
         for i = 1, #scene.QueuedCallbacks, 1 do
             scene.QueuedCallbacks[i](scene.QueuedCallbackParameters[i])
             scene.QueuedCallbacks[i] = nil
             scene.QueuedCallbackParameters[i] = nil
         end
+        
+        
     end
     
 end

@@ -1,8 +1,7 @@
 Button = middleclass('Button', Control)
 
-function Button:initialize(containingScene, clickKey, x, y, w, h, text, primaryMouseClickCallback,
-    secondaryMouseClickCallback)
-    Control.initialize(self, containingScene, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
+function Button:initialize(containingScene, index, clickKey, x, y, w, h, text, primaryMouseClickCallback, secondaryMouseClickCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
     self.Text = text
     self.ClickKey = clickKey
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR
@@ -36,11 +35,11 @@ end
 function Button:Update()
 
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyPressed(self.ClickKey) then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.PrimaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.PrimaryMouseClickCallback, self)
     end
 
     if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.SecondaryMouseClickCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
     end
 end
 

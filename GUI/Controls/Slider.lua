@@ -1,7 +1,7 @@
 Slider = middleclass('Slider', Control)
 
-function Slider:initialize(containingScene, x, y, w, h, value, min, max, staggered, isReadOnly, valueChangedCallback)
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+function Slider:initialize(containingScene, index, x, y, w, h, value, min, max, staggered, isReadOnly, valueChangedCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
     self.Minimum = min
     self.Maximum = max
     self.Value = Numeric.Clamp(value, min, max)
@@ -52,7 +52,7 @@ function Slider:Update()
                 self.Maximum)
             self.Value = self.IsStaggered and math.floor(val) or val
 
-            self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.ValueChangedCallback, self)
+            self.ContainingScene:AddQueuedCallback( self.ValueChangedCallback, self)
 
         end
     end

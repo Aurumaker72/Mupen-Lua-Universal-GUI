@@ -1,7 +1,7 @@
 TextBox = middleclass('TextBox', Control)
 
-function TextBox:initialize(containingScene, x, y, w, h, maxLength, isReadOnly, isNumericOnly, textChangedCallback)
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+function TextBox:initialize(containingScene, index, x, y, w, h, maxLength, isReadOnly, isNumericOnly, textChangedCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
     self.MaxLength = maxLength and maxLength or 100
     self.TextChangedCallback = textChangedCallback
     self.IsReadOnly = isReadOnly
@@ -31,7 +31,7 @@ end
 
 function TextBox:NotifyTextChanged()
     if self.TextChangedCallback then
-        self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.TextChangedCallback, self)
+        self.ContainingScene:AddQueuedCallback( self.TextChangedCallback, self)
     end
 end
 

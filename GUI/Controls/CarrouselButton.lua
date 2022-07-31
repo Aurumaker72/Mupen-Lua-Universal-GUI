@@ -1,8 +1,8 @@
 CarrouselButton = middleclass('CarrouselButton', Button)
 
-function CarrouselButton:initialize(containingScene, x, y, w, h, items, wrapAround, onSelectedItemChangedCallback)
+function CarrouselButton:initialize(containingScene, index, x, y, w, h, items, wrapAround, onSelectedItemChangedCallback)
     h = math.min(h, 20) -- limit height to 20
-    Button.initialize(self, containingScene, nil, x, y, w, h, items[0], onSelectedItemChangedCallback, nil)
+    Button.initialize(self, containingScene, index, nil, x, y, w, h, items[0], onSelectedItemChangedCallback, nil)
     
     self.Items = items -- Must be of type "string" :)
     self.SelectedItemIndex = 1
@@ -60,7 +60,7 @@ function CarrouselButton:Update()
             else
                 self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
             end
-            self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
+            self.ContainingScene:AddQueuedCallback( self.OnSelectedItemChangedCallback, self)
         end
         if Mouse.IsPrimaryClickedInside(self.X + self.Width / 2, self.Y, self.Width / 2, self.Height) or
             Keyboard.KeyPressed("right") then
@@ -69,7 +69,7 @@ function CarrouselButton:Update()
             else
                 self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
             end
-            self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
+            self.ContainingScene:AddQueuedCallback( self.OnSelectedItemChangedCallback, self)
         end
     end
 end

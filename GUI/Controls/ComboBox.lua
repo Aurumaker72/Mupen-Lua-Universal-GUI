@@ -1,12 +1,9 @@
 ComboBox = middleclass('ComboBox', Control)
 
-function ComboBox:initialize(containingScene, x, y, w, h, items, onSelectedItemChangedCallback)
-    Control.initialize(self, containingScene, x, y, w, h, nil, nil)
+function ComboBox:initialize(containingScene, index, x, y, w, h, items, onSelectedItemChangedCallback)
+    Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
 
     self.Items = items -- Must be of type "string" :)
-    -- self.ItemCurrentBackColors = Table.Create(#self.Items, Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
-    -- self.ItemCurrentBorderColors = Table.Create(#self.Items,
-    --    Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR)
 
     self.CurrentItemBackColor = Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR
     self.CurrentItemSelectedBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
@@ -59,7 +56,7 @@ function ComboBox:PersistentUpdate()
 end
 
 function ComboBox:IsAnotherComboBoxOpenInScene()
-    -- refactor to O(1) using dict cache
+    -- TODO: refactor to O(1) using dict cache
     for key, control in pairs(self.ContainingScene.Controls) do
         if control:isInstanceOf(ComboBox) and control.IsOpened and control == self == false then
             return true
@@ -83,7 +80,6 @@ function ComboBox:Update()
 
     if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) then
         self.SetOpen(self, not self.IsOpened)
-        -- self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
     end
 
     if self.CurrentDropDownHeight > self.TargetDropDownHeight / 4 and self.IsOpened then
@@ -134,7 +130,7 @@ end
 
 function ComboBox:SetSelectedIndex(index)
     self.SelectedItemIndex = Numeric.WrappingClamp(index, 1, #self.Items)
-    self.ContainingScene.AddQueuedCallback(self.ContainingScene, self.OnSelectedItemChangedCallback, self)
+    self.ContainingScene:AddQueuedCallback( self.OnSelectedItemChangedCallback, self)
 end
 
 function ComboBox:ModalDraw()
