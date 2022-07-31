@@ -1,15 +1,15 @@
 Scenes = {}
+PersistentScene = nil
 CurrentScene = nil
 CurrentRenderer = nil
 CurrentStyler = nil
 SceneManager = {}
--- Controls which are not associated with a scene and permanently run their logic
--- Use cases: tab control
-PersistentControls = {}
 
 function SceneManager.Initialize(scenes, persistentControls, renderer, styler)
     Scenes = scenes
-    PersistentControls = persistentControls
+    PersistentScene = Scene:new(persistentControls)
+    PersistentScene:SetActive(true)
+    PersistentScene.HasBackColor = false
     RendererManager.SetCurrentRenderer(renderer)
     StylerManager.SetCurrentStyler(styler)
 end
@@ -28,13 +28,10 @@ end
 function SceneManager.Update()
 
     for k, scene in pairs(Scenes) do
-        scene:Update(scene)
+        scene:Update()
     end
 
-    for key, control in pairs(PersistentControls) do
-        control:PersistentUpdate()
-        control:Update()
-    end
+    PersistentScene:Update()
 
     -- update outside of scene context to avoid context switch and thus invalid state
     for k, scene in pairs(Scenes) do
@@ -55,11 +52,8 @@ end
 
 function SceneManager.Draw()
 
-    CurrentScene:Draw(CurrentScene)
-
-    for key, control in pairs(PersistentControls) do
-        control:Draw()
-    end
+    CurrentScene:Draw()
+    PersistentScene:Draw()
 
     CurrentRenderer:FinalizeFrame()
     

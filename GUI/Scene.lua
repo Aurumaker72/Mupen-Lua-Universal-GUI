@@ -4,6 +4,7 @@ function Scene:initialize(controls)
     self.Controls = controls
     self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR
     self.IsActive = false
+    self.HasBackColor = true
     self.QueuedCallbacks = {}
     self.QueuedCallbackParameters = {}
 
@@ -45,9 +46,12 @@ end
 
 function Scene:Update()
 
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
-        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
-        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+    if self.HasBackColor then
+
+        self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
+            CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
+            CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+    end
 
     for key, control in pairs(self.Controls) do
         if self.IsActive then
@@ -59,10 +63,10 @@ function Scene:Update()
 end
 
 function Scene:Draw()
-
+    if self.HasBackColor then
     CurrentRenderer:FillRectangle(self.CurrentBackColor, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
         (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
-
+    end
     if self.IsActive then
         for key, control in pairs(self.Controls) do
             control:Draw()

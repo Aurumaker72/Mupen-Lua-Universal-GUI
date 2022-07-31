@@ -247,11 +247,14 @@ function UserCodeOnInitialize()
         Main = mainScene,
         Settings = settingsScene
     }, {
-        NavigationCarrouselButton = CarrouselButton:new(mainScene, 1, 5, 290 +
-            (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
-            Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
+        NavigationCarrouselButton = CarrouselButton:new(mainScene, 1, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10, Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
                 SceneManager.ChangeScene(Scenes[o.Items[o.SelectedItemIndex]])
-            end)
+            end),
+            TestStackPanel = StackPanel:new(mainScene, 2, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 12, 10, false, {
+                ButtonA = Button:new(settingsScene, 3, nil, nil, nil, 66, 20, "Test", nil, nil),
+                ButtonB = Button:new(settingsScene, 4, nil, nil, nil, 66, 20, "Test", nil, nil),
+                ButtonC = Button:new(settingsScene, 5, nil, nil, nil, 66, 20, "Test", nil, nil)
+            })
     }, GDIRenderer:new(), Windows10Styler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
