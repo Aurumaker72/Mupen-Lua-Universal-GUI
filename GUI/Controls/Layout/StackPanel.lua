@@ -4,8 +4,8 @@ StackPanel = middleclass('StackPanel', Control)
 function StackPanel:initialize(containingScene, index, x, y, spacing, isHorizontal, children)
     Control.initialize(self, containingScene, index, x, y, 0, 0, nil, nil)
     self.IsLayoutControl = true
-    self.Spacing = spacing
     self.IsHorizontal = isHorizontal
+    self.Spacing = self.IsHorizontal and (spacing * Screen.Dimensions.ScalingX) or (spacing * Screen.Dimensions.ScalingY)
     self.Children = children
 end
 
@@ -33,10 +33,10 @@ function StackPanel:Relayout()
     --  - mixing controls of different types is catastrophic    
     --  - REWORK ENTIRE APP TO USE ID-BASED 1D TABLES, NOT HASHTABLES
     
-    local lowestIndex = 99999999
+    local lowestIndex = -1
     for key, control in pairs(self.Children) do
 
-        if control.Index < lowestIndex then
+        if control.Index < lowestIndex or lowestIndex == -1 then
             lowestIndex = control.Index
         end
     end
