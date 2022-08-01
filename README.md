@@ -8,7 +8,7 @@ It provides many built-in controls, themes and styles which help you fulfill you
 
 ## ℹ️ Examples
 
-<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036331-ca348923-dc75-4a7a-a2d1-97a82b80bf0a.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036366-515ebd01-fa88-4b18-a254-fb1366eb2955.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036403-9f318d6f-7707-42ab-97b5-8ac4f6d54908.png" height="300"/>
+<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036331-ca348923-dc75-4a7a-a2d1-97a82b80bf0a.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036366-515ebd01-fa88-4b18-a254-fb1366eb2955.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036403-9f318d6f-7707-42ab-97b5-8ac4f6d54908.png" height="300"/> 
 
 *Example of built-in themes*
 
