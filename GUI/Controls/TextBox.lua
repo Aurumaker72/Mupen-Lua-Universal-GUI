@@ -35,6 +35,11 @@ function TextBox:NotifyTextChanged()
     end
 end
 
+function TextBox:GetTextAfterIncrementingNumberAtIndex(increment, index)
+    local str = tostring(Numeric.Clamp(tonumber(String.GetCharAt(self.Text, self.CaretPosition)) + increment, 0, 9))
+    return String.SetAt(self.Text, str, self.CaretPosition)
+end
+
 function TextBox:Update()
 
     self.CaretTimer = self.CaretTimer + 1
@@ -73,11 +78,11 @@ function TextBox:Update()
                 end
             end
             if Keyboard.KeyPressed("up") then
-                self.Text = tostring(tonumber(self.Text) + 1 * (Keyboard.KeyHeld("control") and 5 or 1))
+                self.Text = self:GetTextAfterIncrementingNumberAtIndex((1 * (Keyboard.KeyHeld("control") and 5 or 1)), self.CaretPosition)
                 self:NotifyTextChanged()
             end
             if Keyboard.KeyPressed("down") then
-                self.Text = tostring(tonumber(self.Text) - 1 * (Keyboard.KeyHeld("control") and 5 or 1))
+                self.Text = self:GetTextAfterIncrementingNumberAtIndex((-1 * (Keyboard.KeyHeld("control") and 5 or 1)), self.CaretPosition)
                 self:NotifyTextChanged()
             end
         else
