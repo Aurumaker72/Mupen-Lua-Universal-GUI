@@ -6,6 +6,7 @@ function Scene:initialize()
     self.CurrentControlIndex = 1
     self.IsActive = false
     self.HasBackColor = true
+    self.QueuedLayoutPass = false
     self.QueuedCallbacks = {}
     self.QueuedCallbackParameters = {}
 
@@ -26,9 +27,9 @@ function Scene:AddControls(controls)
     for key, control in pairs(controls) do
 
         self.CurrentControlIndex = self.CurrentControlIndex + 1
-        --control.Index = self.CurrentControlIndex
+        -- control.Index = self.CurrentControlIndex
         -- TODO: implement automatic index tracker
-        
+
         self.Controls[key] = control
 
     end
@@ -45,15 +46,11 @@ end
 
 function Scene:SetActive(isActive)
     self.IsActive = isActive
-    self:PerformLayoutPass()
+    self:QueueLayoutPass()
 end
 
-function Scene:PerformLayoutPass()
-    for k, v in pairs(self.Controls) do
-        if v.Relayout then
-            v:Relayout()
-        end
-    end
+function Scene:QueueLayoutPass()
+self.QueuedLayoutPass = true
 end
 
 function Scene:Update()
@@ -72,12 +69,22 @@ function Scene:Update()
         control:PersistentUpdate()
     end
 
+    -- have to do this at end of update pass, just as internal callback calling, to avoid illegal state
+    if self.QueuedLayoutPass then
+        for k, v in pairs(self.Controls) do
+            if v.Relayout then
+                v:Relayout()
+            end
+        end
+        self.QueuedLayoutPass = false
+    end
+
 end
 
 function Scene:Draw()
     if self.HasBackColor then
-    CurrentRenderer:FillRectangle(self.CurrentBackColor, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
-        (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
+        CurrentRenderer:FillRectangle(self.CurrentBackColor, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
+            (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
     end
     if self.IsActive then
         for key, control in pairs(self.Controls) do

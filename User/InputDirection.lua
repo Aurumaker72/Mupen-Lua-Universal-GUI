@@ -121,6 +121,7 @@ end
 function UserCodeOnInitialize()
 
     local mainScene = Scene:new()
+    local encodingScene = Scene:new()
     local settingsScene = Scene:new()
     local persistentScene = Scene:new()
 
@@ -183,7 +184,7 @@ function UserCodeOnInitialize()
         end),
 
         LabelsStackPanel = StackPanel:new(mainScene, 16, 5,
-            265 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE), 5, true, {
+            265 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE), 5, {
                 YawFacing = Label:new(mainScene, 17, nil, nil, ""),
                 YawIntended = Label:new(mainScene, 18, nil, nil, ""),
                 OppositeFacing = Label:new(mainScene, 19, nil, nil, ""),
@@ -198,8 +199,35 @@ function UserCodeOnInitialize()
                 Z = Label:new(mainScene, 28, nil, nil, ""),
                 Action = Label:new(mainScene, 29, nil, nil, ""),
                 MovedDist = Label:new(mainScene, 30, nil, nil, "")
-            })
+            }, false)
     })
+
+    encodingScene:AddControls({
+
+        Joystick = Joystick:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
+            10, 128, 128, true, function(o)
+
+            end),
+        XLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
+            128 + 10, "X 128"),
+        YLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4,
+            128 + 10, "Y 128"),
+        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 - 5,
+            128 + 30, 64, 20, 0, -128, 127, false, true, nil),
+        YSlider = Slider:new(encodingScene, nil,
+            (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 64 + 5, 128 + 30, 64, 20, 0, -127, 128,
+            false, true, nil),
+        PrimaryStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60, 128 / 3 / 2, {
+            AButton = ToggleButton:new(encodingScene, 1, nil, nil, nil, 32, 32, "A", false),
+            BButton = ToggleButton:new(encodingScene, 2, nil, nil, nil, 32, 32, "B", false),
+            ZButton = ToggleButton:new(encodingScene, 3, nil, nil, nil, 32, 32, "Z", false)
+        }, true),
+        TriggerStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60 + 32 + 10, 10, {
+            LButton = ToggleButton:new(encodingScene, 4, nil, nil, nil, 128/2, 32, "L", false),
+            RButton = ToggleButton:new(encodingScene, 5, nil, nil, nil, 128/2, 32, "R", false),
+        }, true),
+    })
+
     settingsScene:AddControls({
         ThemeLabel = Label:new(settingsScene, 1, 5, 5, "Theme"),
         RendererLabel = Label:new(settingsScene, 2, 5, 30, "Renderer"),
@@ -222,24 +250,25 @@ function UserCodeOnInitialize()
                     RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
                 end
             end),
-        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20, {"Windows 10", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
-            if o.Items[o.SelectedItemIndex] == "Windows 10" then
-                StylerManager.SetCurrentStyler(Windows10Styler:new())
-            end
-            if o.Items[o.SelectedItemIndex] == "Windows 3" then
-                StylerManager.SetCurrentStyler(Windows3Styler:new())
-            end
-            if o.Items[o.SelectedItemIndex] == "Flat" then
-                StylerManager.SetCurrentStyler(FlatStyler:new())
-            end
-            if o.Items[o.SelectedItemIndex] == "3D" then
-                StylerManager.SetCurrentStyler(DimensionalStyler:new())
-            end
-            if o.Items[o.SelectedItemIndex] == "Plastic" then
-                StylerManager.SetCurrentStyler(PlasticStyler:new())
-            end
-        end),
-        TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, true, {
+        StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20,
+            {"Windows 10", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
+                if o.Items[o.SelectedItemIndex] == "Windows 10" then
+                    StylerManager.SetCurrentStyler(Windows10Styler:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "Windows 3" then
+                    StylerManager.SetCurrentStyler(Windows3Styler:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "Flat" then
+                    StylerManager.SetCurrentStyler(FlatStyler:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "3D" then
+                    StylerManager.SetCurrentStyler(DimensionalStyler:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "Plastic" then
+                    StylerManager.SetCurrentStyler(PlasticStyler:new())
+                end
+            end),
+        TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, {
             -- LabelA = Label:new(settingsScene, nil, nil, "Dame tu"),
             -- LabelB = Label:new(settingsScene, nil, nil, "Cosita"),
             -- LabelC = Label:new(settingsScene, nil, nil, "Ah ah"),
@@ -247,23 +276,28 @@ function UserCodeOnInitialize()
             ButtonB = Button:new(settingsScene, 9, nil, nil, nil, 80, 20, "Button", nil, nil),
             ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil),
             SliderA = Slider:new(settingsScene, 11, nil, nil, 80, 20, 0, 0, 100, false, false, function(o)
-                
+
             end)
-        })
+        }, false)
     })
     persistentScene:AddControls({
-        NavigationCarrouselButton = CarrouselButton:new(persistentScene, 1, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10, Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Settings"}, true, function(o)
-            SceneManager.ChangeScene(Scenes[o.Items[o.SelectedItemIndex]])
-        end),
-        TestStackPanel = StackPanel:new(persistentScene, 2, 5, 290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 12, 10, false, {
-            ButtonA = Button:new(settingsScene, 3, nil, nil, nil, 66, 20, "Test", nil, nil),
-            ButtonB = Button:new(settingsScene, 4, nil, nil, nil, 66, 20, "Test", nil, nil),
-            ButtonC = Button:new(settingsScene, 5, nil, nil, nil, 66, 20, "Test", nil, nil)
-        })
+        NavigationCarrouselButton = CarrouselButton:new(persistentScene, 1, 5, 290 +
+            (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
+            Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Encoding", "Settings"}, true,
+            function(o)
+                SceneManager.ChangeScene(Scenes[o.Items[o.SelectedItemIndex]])
+            end),
+        TestStackPanel = StackPanel:new(persistentScene, 2, 5,
+            290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 12, 10, {
+                ButtonA = Button:new(settingsScene, 3, nil, nil, nil, 66, 20, "Test", nil, nil),
+                ButtonB = Button:new(settingsScene, 4, nil, nil, nil, 66, 20, "Test", nil, nil),
+                ButtonC = Button:new(settingsScene, 5, nil, nil, nil, 66, 20, "Test", nil, nil)
+            }, true)
     })
 
     SceneManager.Initialize({
-        Main = mainScene,   
+        Main = mainScene,
+        Encoding = encodingScene,
         Settings = settingsScene
     }, persistentScene, GDIRenderer:new(), Windows10Styler:new())
 

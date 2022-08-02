@@ -111,7 +111,7 @@ Appearance = {
 
 
 VERTICAL_SAFE_ZONE = 30
-HORIZONTAL_SAFE_ZONE = 3
+HORIZONTAL_SAFE_ZONE = 5
 
 
 function Appearance.GetThemeNames()
