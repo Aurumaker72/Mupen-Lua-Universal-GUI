@@ -24,7 +24,7 @@ function LayoutControl:GetYForControl(control, i)
 end
 
 function LayoutControl:SetChild(key, control)
-    self.ContainingScene:SetControl(key, control)
+    self.ContainingScene:AddQueuedCallback( function() self.ContainingScene:SetControl(key, control) end, 0)
 end
 
 function LayoutControl:Relayout()
