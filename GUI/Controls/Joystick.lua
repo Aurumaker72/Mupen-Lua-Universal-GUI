@@ -59,32 +59,32 @@ function Joystick:Draw()
     CurrentStyler:DrawRaisedFrame(self, self.CurrentBackColor, self.CurrentBorderColor,
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
-    CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width, self.Height)
-    CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width, self.Height)
+    CurrentRenderer:FillEllipse(self.CurrentSecondaryBackColor, self.X, self.Y, self.Width - 1, self.Height - 1)
+    CurrentRenderer:DrawEllipse(self.CurrentBorderColor, 1, self.X, self.Y, self.Width - 1, self.Height - 1)
 
     if self.Magnitude and self.Magnitude == 0 == false and self.Magnitude < 127 then
         wgui.setbrush(self.CurrentSecondaryBackColor)
         local clampedMagnitude = Numeric.Clamp(self.Magnitude, 0, math.max(self.Width, self.Height))
         CurrentRenderer:DrawEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR, 1,
             self.X + self.Width / 2 - clampedMagnitude / 2, self.Y + self.Height / 2 - clampedMagnitude / 2,
-            clampedMagnitude + 1, clampedMagnitude + 1)
+            clampedMagnitude, clampedMagnitude)
     end
 
-    CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X, self.Y + self.Height / 2, self.X + self.Width,
-        self.Y + self.Height / 2)
+    CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X, self.Y + self.Height / 2 - 1, self.X + self.Width - 1,
+        self.Y + self.Height / 2 - 1)
 
-    CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X + self.Width / 2, self.Y, self.X + self.Width / 2,
-        self.Y + self.Height)
+    CurrentRenderer:DrawLine(self.CurrentBorderColor, 1, self.X + self.Width / 2 - 1, self.Y,
+        self.X + self.Width / 2 - 1, self.Y + self.Height - 2)
 
     local cX = Numeric.Remap(self.ValueX, -128, 127, self.X, self.X + self.Width)
     local cY = Numeric.Remap(self.ValueY, -127, 128, self.Y, self.Y + self.Height)
 
-    CurrentRenderer:DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 2, self.X + self.Width / 2,
-        self.Y + self.Height / 2, cX, cY)
+    CurrentRenderer:DrawLine(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_LINE_COLOR, 3,
+        self.X + self.Width / 2 - 1, self.Y + self.Height / 2 - 1, cX - 1, cY)
 
     CurrentRenderer:FillEllipse(Appearance.Themes[Appearance.CurrentTheme].JOYSTICK_TIP_COLOR,
-        cX - self.CurrentJoystickTipSize / 2, cY - self.CurrentJoystickTipSize / 2 + 1, self.CurrentJoystickTipSize,
-        self.CurrentJoystickTipSize)
-
+        cX - self.CurrentJoystickTipSize / 2, cY - self.CurrentJoystickTipSize / 2 + 1, self.CurrentJoystickTipSize - 1,
+        self.CurrentJoystickTipSize - 1) -- idk what the fuck is going on here
+    -- ellipse draw routine in gdi side is exhibiting small pixel precision issues
 end
 
