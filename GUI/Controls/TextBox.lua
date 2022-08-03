@@ -71,7 +71,9 @@ function TextBox:Update()
 
         if self.IsNumericOnly then
             for i = 0, 9, 1 do
-                if Keyboard.Input[tostring(i)] and not Keyboard.LastInput[tostring(i)] and self.CanTypeCharacter(self) then
+                numstring = tostring(i)
+                numpadnumstring = "numpad" .. numstring
+                if ((Keyboard.Input[numstring] and not Keyboard.LastInput[numstring]) or ((Keyboard.Input[numpadnumstring] and not Keyboard.LastInput[numpadnumstring]))) and self.CanTypeCharacter(self) then
                     self.Text = String.InsertAt(self.Text, tostring(i), self.CaretPosition)
                     self:SetCaretPosition(self.CaretPosition + 1)
                     self:NotifyTextChanged()
