@@ -1,5 +1,7 @@
 -- i put this shit together in 15 minutes before eating
-InputDirection = {}
+InputDirection = {
+    IsInitialized = false
+}
 
 FOLDER_INPUTDIRECTION = FOLDER_USER_CODE .. "InputDirection" .. "\\"
 
@@ -21,57 +23,81 @@ function UserCodeAtInputPoll()
     Joypad.send()
     Swimming.swim("A")
 
-    Scenes.Main.Controls.Joystick.ValueX = Joypad.input.X
-    Scenes.Main.Controls.Joystick.ValueY = -Joypad.input.Y
+    if InputDirection.IsInitialized then
 
-    Scenes.Main.Controls.LabelsStackPanel.Children.YawFacing.Text = "Yaw (Facing): " ..
-                                                                        Engine.getEffectiveAngle(Memory.Mario.FacingYaw)
-    Scenes.Main.Controls.LabelsStackPanel.Children.YawIntended.Text = "Yaw (Intended): " ..
-                                                                          Engine.getEffectiveAngle(
-            Memory.Mario.IntendedYaw)
-    Scenes.Main.Controls.LabelsStackPanel.Children.OppositeFacing.Text = "Opposite (Intended): " ..
-                                                                             (Engine.getEffectiveAngle(
-            Memory.Mario.FacingYaw) + 32768) % 65536
-    Scenes.Main.Controls.LabelsStackPanel.Children.OppositeIntended.Text = "Opposite (Intended): " ..
-                                                                               (Engine.getEffectiveAngle(
-            Memory.Mario.IntendedYaw) + 32768) % 65536
+        
+        Scenes.Main.Controls.Joystick.ValueX = Joypad.input.X
+        Scenes.Main.Controls.Joystick.ValueY = -Joypad.input.Y
 
-    local speed = 0
-    if Memory.Mario.HSpeed ~= 0 then
-        speed = MoreMaths.DecodeDecToFloat(Memory.Mario.HSpeed)
+        Scenes.Encoding.Controls.Joystick.ValueX = Joypad.input.X
+        Scenes.Encoding.Controls.Joystick.ValueY = -Joypad.input.Y
+
+        Scenes.Encoding.Controls.XSlider.Value = Joypad.input.X
+        Scenes.Encoding.Controls.YSlider.Value = -Joypad.input.Y
+
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.AButton.IsChecked = Joypad.input.A
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.BButton.IsChecked = Joypad.input.B
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.ZButton.IsChecked = Joypad.input.Z
+        Scenes.Encoding.Controls.TriggerStackPanel.Children.LButton.IsChecked = Joypad.input.L
+        Scenes.Encoding.Controls.TriggerStackPanel.Children.RButton.IsChecked = Joypad.input.R
+
+        Scenes.Encoding.Controls.XLabel.Text = "X " .. Joypad.input.X
+        Scenes.Encoding.Controls.YLabel.Text = "Y " .. -Joypad.input.Y
+        Scenes.Encoding.Controls.MLabel.Text = "M " .. math.floor(math.sqrt((0 - Joypad.input.X) ^ 2 + ((0 - -Joypad.input.Y) ^ 2)))
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.YawFacing.Text = "Yaw (Facing): " ..
+                                                                            Engine.getEffectiveAngle(
+                Memory.Mario.FacingYaw)
+        Scenes.Main.Controls.LabelsStackPanel.Children.YawIntended.Text = "Yaw (Intended): " ..
+                                                                              Engine.getEffectiveAngle(
+                Memory.Mario.IntendedYaw)
+        Scenes.Main.Controls.LabelsStackPanel.Children.OppositeFacing.Text = "Opposite (Intended): " ..
+                                                                                 (Engine.getEffectiveAngle(
+                Memory.Mario.FacingYaw) + 32768) % 65536
+        Scenes.Main.Controls.LabelsStackPanel.Children.OppositeIntended.Text = "Opposite (Intended): " ..
+                                                                                   (Engine.getEffectiveAngle(
+                Memory.Mario.IntendedYaw) + 32768) % 65536
+
+        local speed = 0
+        if Memory.Mario.HSpeed ~= 0 then
+            speed = MoreMaths.DecodeDecToFloat(Memory.Mario.HSpeed)
+        end
+
+        local hSpdStr = "H Spd: " .. math.floor(speed, 2)
+        local ySpdStr = "Y Spd: " .. math.floor(MoreMaths.DecodeDecToFloat(Memory.Mario.VSpeed), 2)
+        local spdEfficiencyStr = "Spd Efficiency: " .. Engine.GetSpeedEfficiency() .. "%"
+        local hSlidingSpeedStr = "H Sliding Spd: " .. MoreMaths.Round(Engine.GetHSlidingSpeed(), 6)
+        local xStr = "X: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.X), 4)
+        local yStr = "Y: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 4)
+        local zStr = "Z: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 4)
+        local xzMovementStr = "XZ Movement: " .. MoreMaths.Round(Engine.GetDistMoved(), 6)
+        local actionStr = "Action: " .. (Engine.GetCurrentAction():gsub("^%l", string.upper)) 
+        local movedDistStr = "Moved Dist: " 
+        if (Broker.DistanceMeasurement == false) then
+            movedDistStr = movedDistStr .. Broker.DistanceMeasurementSaved
+        else
+            movedDistStr = movedDistStr .. Engine.GetTotalDistMoved() 
+        end
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.HSpd.Text = hSpdStr
+        Scenes.Encoding.Controls.InformationStackPanel.Children.HSpd.Text = hSpdStr
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.YSpd.Text = ySpdStr
+        Scenes.Encoding.Controls.InformationStackPanel.Children.YSpd.Text = ySpdStr
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.SpdEfficiency.Text = spdEfficiencyStr
+        Scenes.Main.Controls.LabelsStackPanel.Children.HSlidingSpd.Text = hSlidingSpeedStr
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.Action.Text = actionStr
+        Scenes.Encoding.Controls.InformationStackPanel.Children.Action.Text = actionStr
+
+
+        Scenes.Main.Controls.LabelsStackPanel.Children.X.Text = xStr
+        Scenes.Main.Controls.LabelsStackPanel.Children.Y.Text = yStr
+        Scenes.Main.Controls.LabelsStackPanel.Children.Z.Text = zStr
+        Scenes.Main.Controls.LabelsStackPanel.Children.XZMovement.Text = xzMovementStr
+        Scenes.Main.Controls.LabelsStackPanel.Children.MovedDist.Text = movedDistStr
     end
-
-    Scenes.Main.Controls.LabelsStackPanel.Children.HSpd.Text = "H Spd: " .. MoreMaths.Round(speed, 5)
-    Scenes.Main.Controls.LabelsStackPanel.Children.SpdEfficiency.Text = "Spd Efficiency: " ..
-                                                                            Engine.GetSpeedEfficiency() .. "%"
-
-    speed = 0
-    if Memory.Mario.VSpeed > 0 then
-        speed = MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.VSpeed), 6)
-    end
-
-    Scenes.Main.Controls.LabelsStackPanel.Children.YSpd.Text = "Y Spd: " .. MoreMaths.Round(speed, 5)
-    Scenes.Main.Controls.LabelsStackPanel.Children.HSlidingSpd.Text = "H Sliding Spd: " ..
-                                                                          MoreMaths.Round(Engine.GetHSlidingSpeed(), 6)
-    Scenes.Main.Controls.LabelsStackPanel.Children.X.Text = "Mario X: " ..
-                                                                MoreMaths.Round(
-            MoreMaths.DecodeDecToFloat(Memory.Mario.X), 2)
-    Scenes.Main.Controls.LabelsStackPanel.Children.Y.Text = "Mario Y: " ..
-                                                                MoreMaths.Round(
-            MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 2)
-    Scenes.Main.Controls.LabelsStackPanel.Children.Z.Text = "Mario Z: " ..
-                                                                MoreMaths.Round(
-            MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 2)
-    Scenes.Main.Controls.LabelsStackPanel.Children.XZMovement.Text = "XZ Movement: " ..
-                                                                         MoreMaths.Round(Engine.GetDistMoved(), 6)
-    Scenes.Main.Controls.LabelsStackPanel.Children.Action.Text = "Action: " .. Engine.GetCurrentAction()
-
-    local distmoved = Engine.GetTotalDistMoved()
-    if (Broker.DistanceMeasurement == false) then
-        distmoved = Broker.DistanceMeasurementSaved
-    end
-    Scenes.Main.Controls.LabelsStackPanel.Children.MovedDist.Text = "Moved Dist: " .. distmoved
-
 end
 
 function InputDirection.SetStrainMode(mode)
@@ -209,23 +235,30 @@ function UserCodeOnInitialize()
 
             end),
         XLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
-            128 + 10, "X 128"),
+            128 + 10, "X ?"),
         YLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4,
-            128 + 10, "Y 128"),
+            128 + 10, "Y ?"),
+        MLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4 - 64/2 - 16,
+        128 + 10, "M ?"),
         XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 - 5,
-            128 + 30, 64, 20, 0, -128, 127, false, true, nil),
+            128 + 30, 64, 20, 0, -128, 127, false, false, nil),
         YSlider = Slider:new(encodingScene, nil,
             (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 64 + 5, 128 + 30, 64, 20, 0, -127, 128,
-            false, true, nil),
+            false, false, nil),
         PrimaryStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60, 128 / 3 / 2, {
             AButton = ToggleButton:new(encodingScene, 1, nil, nil, nil, 32, 32, "A", false),
             BButton = ToggleButton:new(encodingScene, 2, nil, nil, nil, 32, 32, "B", false),
             ZButton = ToggleButton:new(encodingScene, 3, nil, nil, nil, 32, 32, "Z", false)
         }, true),
         TriggerStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60 + 32 + 10, 10, {
-            LButton = ToggleButton:new(encodingScene, 4, nil, nil, nil, 128/2, 32, "L", false),
-            RButton = ToggleButton:new(encodingScene, 5, nil, nil, nil, 128/2, 32, "R", false),
+            LButton = ToggleButton:new(encodingScene, 1, nil, nil, nil, 128 / 2, 32, "L", false),
+            RButton = ToggleButton:new(encodingScene, 2, nil, nil, nil, 128 / 2, 32, "R", false)
         }, true),
+        InformationStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60 + 32 + 50, 10, {
+            Action = Label:new(encodingScene, 1, nil, nil, ""),
+            HSpd = Label:new(encodingScene, 2, nil, nil, ""),
+            YSpd = Label:new(encodingScene, 3, nil, nil, ""),
+        }, false)
     })
 
     settingsScene:AddControls({
@@ -302,6 +335,8 @@ function UserCodeOnInitialize()
     }, persistentScene, GDIRenderer:new(), Windows10Styler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
+
+    InputDirection.IsInitialized = true
 
     InputDirection.SetStrainMode("Disabled")
     InputDirection.SetGoalAngle(0)
