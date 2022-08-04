@@ -1,4 +1,4 @@
-BatchedGDIRenderer = middleclass('BatchedGDIRenderer', GDIRenderer)
+BatchedGDIRenderer = middleclass('BatchedGDIRenderer', StandardRenderer)
 
 local TYPE_RECTANGLE = 0
 local TYPE_ELLIPSE = 1

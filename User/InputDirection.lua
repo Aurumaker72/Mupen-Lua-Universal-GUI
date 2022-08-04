@@ -270,16 +270,16 @@ function UserCodeOnInitialize()
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
 
-        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"GDI", "GDI+", "Batched GDI"},
+        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"Standard", "Pure GDI+", "Batched"},
             function(o)
                 -- when the GC pressure is high
-                if o.Items[o.SelectedItemIndex] == "GDI" then
-                    RendererManager.SetCurrentRenderer(GDIRenderer:new())
+                if o.Items[o.SelectedItemIndex] == "Standard" then
+                    RendererManager.SetCurrentRenderer(StandardRenderer:new())
                 end
-                if o.Items[o.SelectedItemIndex] == "GDI+" then
+                if o.Items[o.SelectedItemIndex] == "Pure GDI+" then
                     RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
                 end
-                if o.Items[o.SelectedItemIndex] == "Batched GDI" then
+                if o.Items[o.SelectedItemIndex] == "Batched" then
                     RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
                 end
             end),
@@ -332,7 +332,7 @@ function UserCodeOnInitialize()
         Main = mainScene,
         Encoding = encodingScene,
         Settings = settingsScene
-    }, persistentScene, GDIRenderer:new(), Windows10Styler:new())
+    }, persistentScene, StandardRenderer:new(), Windows10Styler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
 
