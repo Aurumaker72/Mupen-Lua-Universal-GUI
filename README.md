@@ -100,6 +100,7 @@ The user mustn't modify any code outside of the User directory and must interact
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
 
 #### Rendering process and relations
-<img src="https://user-images.githubusercontent.com/48759429/181934425-5747c7bd-8eb5-4975-bc91-e939d6dd1ceb.png" width="250"/>
+<img src="https://user-images.githubusercontent.com/48759429/182868104-523538f1-82e7-4eeb-9f0b-79fb206389d0.png" width="250"/>
+
 
 
