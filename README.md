@@ -88,7 +88,7 @@ SceneManager.ChangeScene(Scenes.Main) -- Switch to main scene and thereby signal
 | Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
 | Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
 
-## 📐 Arhitecture
+## 📐 Architecture
 This framework is split into two major code sections:
 - Framework (Internal)
 - User (External)
