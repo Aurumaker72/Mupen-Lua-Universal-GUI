@@ -91,8 +91,8 @@ end
 
 function AtInterval()
 
-    if emu.iswindowinforeground then
-        if not emu.iswindowinforeground() then
+    if emu.ismainwindowinforeground then
+        if not emu.ismainwindowinforeground() then
             return
         end
     end

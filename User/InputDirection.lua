@@ -235,15 +235,15 @@ function UserCodeOnInitialize()
 
             end),
         XLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
-            128 + 10, "X ?"),
+            128 + 30, "X ?"),
         YLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4,
-            128 + 10, "Y ?"),
+            128 + 30, "Y ?"),
         MLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4 - 64/2 - 16,
-        128 + 10, "M ?"),
-        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 - 5,
-            128 + 30, 64, 20, 0, -128, 127, false, false, nil),
+        128 + 30, "M ?"),
+        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
+            128 + 10 + 5, 128, 20, 0, -128, 127, true, false, nil),
         YSlider = Slider:new(encodingScene, nil,
-            (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 64 + 5, 128 + 30, 64, 20, 0, -127, 128,
+            (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 128 + 5, 10, 20, 128, 0, 128, -127,
             false, false, nil),
         PrimaryStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60, 128 / 3 / 2, {
             AButton = ToggleButton:new(encodingScene, 1, nil, nil, nil, 32, 32, "A", false),
@@ -308,8 +308,8 @@ function UserCodeOnInitialize()
             ButtonA = Button:new(settingsScene, 8, nil, nil, nil, 80, 20, "Button", nil, nil),
             ButtonB = Button:new(settingsScene, 9, nil, nil, nil, 80, 20, "Button", nil, nil),
             ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil),
-            SliderA = Slider:new(settingsScene, 11, nil, nil, 80, 20, 0, 0, 100, false, false, function(o)
-
+            SliderA = Slider:new(settingsScene, 11, nil, nil, 20, 80, 0, 0, 100, false, false, function(o)
+                print(o.Value)
             end)
         }, false)
     })
