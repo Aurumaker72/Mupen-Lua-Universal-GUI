@@ -37,7 +37,7 @@ function Control:Update()
 end
 function Control:Draw()
 end
-function Control:ModalDraw()
+function Control:LateDraw()
 end
 function Control:PointToSelf(x, y)
 

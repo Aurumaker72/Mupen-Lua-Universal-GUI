@@ -274,6 +274,12 @@ function UserCodeOnInitialize()
         end),
         FuckTextBox = TextBox:new(settingsScene, 11, 138, 110, 85, 30, nil, false, false, function(o)
         end),
+        FuckTestA = Button:new(settingsScene, 14, nil, 132, 229, 76, 21, "Text A", function(o)
+            print(o.Text)
+        end),
+        FuckTestB = Button:new(settingsScene, 14, nil, 140, 239, 76, 21, "Text B", function(o)
+            print(o.Text)
+        end),
         RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"Standard", "Pure GDI+"},
             function(o)
                 -- when the GC pressure is high
