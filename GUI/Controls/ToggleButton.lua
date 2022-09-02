@@ -7,44 +7,43 @@ function ToggleButton:initialize(containingScene, index, clickKey, x, y, w, h, t
     self.IsChecked = isChecked
 end
 
-function ToggleButton:Update()
-    if Mouse.IsPrimaryClickedInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyHeld(self.ClickKey) then
-        self.IsChecked = not self.IsChecked
-        self.ContainingScene:AddQueuedCallback( self.PrimaryMouseClickCallback, self)
-    end
+function ToggleButton:SetIsChecked(isChecked)
+    self.IsChecked = isChecked
 
-    if Mouse.IsSecondaryClickedInside(self.X, self.Y, self.Width, self.Height) then
-        self.ContainingScene:AddQueuedCallback( self.SecondaryMouseClickCallback, self)
+    if self.IsChecked then
+        self.BackColor:LockOverride(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
+        self.BorderColor:LockOverride(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+    else
+        self.BackColor:UnlockOverride()
+        self.BorderColor:UnlockOverride()
+        if not self.ContainingScene.IsActive then
+            self.BackColor:SetColorImmediately(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+            self.BorderColor:SetColorImmediately(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+        end
     end
 end
 
-function ToggleButton:PersistentUpdate()
-    self.TargetBorderColor =
-        (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) or Keyboard.KeyHeld(self.ClickKey)) and
-            Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR or
-            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR
-    self.TargetBackColor = ((Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or
-                               Keyboard.KeyHeld(self.ClickKey)) and
-                               Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR or
-                               (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and
-                                   Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR or
-                                   Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR)
 
-    if (self.IsChecked) then
-        self.TargetBorderColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR
-        self.TargetBackColor = Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR
-    end
-
-    self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
-        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
-        CurrentRenderer:HexadecimalColorToRGB(self.TargetBackColor))
-    self.CurrentBorderColor = Color.TemporalInterpolateRGBColor(
-        CurrentRenderer:HexadecimalColorToRGB(self.CurrentBorderColor),
-        CurrentRenderer:HexadecimalColorToRGB(self.TargetBorderColor))
+function ToggleButton:OnThemeChanged(e)
+    self:HandleGenericThemeChange(e)
+    
+    -- workaround for togglebuttons having diarrhea FFS, same thing is done for TextBoxes
+    self:SetIsChecked(self.IsChecked)
 end
+
+function ToggleButton:OnMouseDown(e)
+    
+    self:SetIsChecked(not self.IsChecked)
+    
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+
+    self.ContainingScene:AddQueuedCallback(self.PrimaryMouseClickCallback, self)
+end
+
 
 function ToggleButton:Draw()
-    CurrentStyler:DrawRaisedFrame(self, self.CurrentBackColor, self.CurrentBorderColor,
+    CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor), CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
 
     if (self.Text) then

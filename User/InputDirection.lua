@@ -35,11 +35,11 @@ function UserCodeAtInputPoll()
         Scenes.Encoding.Controls.XSlider.Value = Joypad.input.X
         Scenes.Encoding.Controls.YSlider.Value = -Joypad.input.Y
 
-        Scenes.Encoding.Controls.PrimaryStackPanel.Children.AButton.IsChecked = Joypad.input.A
-        Scenes.Encoding.Controls.PrimaryStackPanel.Children.BButton.IsChecked = Joypad.input.B
-        Scenes.Encoding.Controls.PrimaryStackPanel.Children.ZButton.IsChecked = Joypad.input.Z
-        Scenes.Encoding.Controls.TriggerStackPanel.Children.LButton.IsChecked = Joypad.input.L
-        Scenes.Encoding.Controls.TriggerStackPanel.Children.RButton.IsChecked = Joypad.input.R
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.AButton:SetIsChecked(Joypad.input.A)
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.BButton:SetIsChecked(Joypad.input.B)
+        Scenes.Encoding.Controls.PrimaryStackPanel.Children.ZButton:SetIsChecked(Joypad.input.Z)
+        Scenes.Encoding.Controls.TriggerStackPanel.Children.LButton:SetIsChecked(Joypad.input.L)
+        Scenes.Encoding.Controls.TriggerStackPanel.Children.RButton:SetIsChecked(Joypad.input.R)
 
         Scenes.Encoding.Controls.XLabel.Text = "X " .. Joypad.input.X
         Scenes.Encoding.Controls.YLabel.Text = "Y " .. -Joypad.input.Y
@@ -102,16 +102,16 @@ end
 
 function InputDirection.SetStrainMode(mode)
     Broker.SelectedItem = mode
-    Scenes.Main.Controls.StrainingDisable.IsChecked = mode == Scenes.Main.Controls.StrainingDisable.Text:gsub('%s+', '')
-    Scenes.Main.Controls.StrainingMatchYaw.IsChecked = mode ==
-                                                           Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', '')
-    Scenes.Main.Controls.StrainingMatchAngle.IsChecked = mode ==
+    Scenes.Main.Controls.StrainingDisable:SetIsChecked(mode == Scenes.Main.Controls.StrainingDisable.Text:gsub('%s+', ''))
+    Scenes.Main.Controls.StrainingMatchYaw:SetIsChecked(mode ==
+                                                           Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', ''))
+    Scenes.Main.Controls.StrainingMatchAngle:SetIsChecked( mode ==
                                                              Scenes.Main.Controls.StrainingMatchAngle.Text:gsub('%s+',
-            '')
-    Scenes.Main.Controls.StrainingReverseAngle.IsChecked = mode ==
+            ''))
+    Scenes.Main.Controls.StrainingReverseAngle:SetIsChecked( mode ==
                                                                Scenes.Main.Controls.StrainingReverseAngle.Text:gsub(
-            '%s+', '')
-    Scenes.Main.Controls.AngleTextBox.IsReadOnly = Scenes.Main.Controls.StrainingMatchAngle.IsChecked == false
+            '%s+', ''))
+    Scenes.Main.Controls.AngleTextBox:SetReadOnly(Scenes.Main.Controls.StrainingMatchAngle.IsChecked == false)
 end
 
 function InputDirection.SetGoalAngle(goalAngle)
@@ -128,8 +128,8 @@ end
 function InputDirection.SetBias(left, right)
     Broker.Left = left
     Broker.Right = right
-    Scenes.Main.Controls.Left.IsChecked = Broker.Left
-    Scenes.Main.Controls.Right.IsChecked = Broker.Right
+    Scenes.Main.Controls.Left:SetIsChecked( Broker.Left)
+    Scenes.Main.Controls.Right:SetIsChecked( Broker.Right)
 end
 
 function InputDirection.SetTargetStrain(targetStrain, always)
@@ -140,16 +140,19 @@ function InputDirection.SetTargetStrain(targetStrain, always)
         Broker.Always = false
     end
 
-    Scenes.Main.Controls.StrainTo99.IsChecked = Broker.TargetStrain
-    Scenes.Main.Controls.Always99.IsChecked = Broker.Always
+    Scenes.Main.Controls.StrainTo99:SetIsChecked(Broker.TargetStrain)
+    Scenes.Main.Controls.Always99:SetIsChecked( Broker.Always)
 end
 
 function UserCodeOnInitialize()
-
+    
+    RendererManager.SetCurrentRenderer(StandardRenderer:new())
+    
     local mainScene = Scene:new()
     local encodingScene = Scene:new()
     local settingsScene = Scene:new()
     local persistentScene = Scene:new()
+
 
     mainScene:AddControls({
 
@@ -168,7 +171,7 @@ function UserCodeOnInitialize()
             function(o)
                 InputDirection.SetStrainMode(o.Text:gsub('%s+', ''))
             end),
-        Joystick = Joystick:new(mainScene, 4, 5, 145, 128, 128, true, function(o)
+        Joystick = Joystick:new(mainScene, 4, 5, 145, 128, 128, false, function(o)
 
         end),
 
@@ -251,13 +254,13 @@ function UserCodeOnInitialize()
             ZButton = ToggleButton:new(encodingScene, 3, nil, nil, nil, 32, 32, "Z", false)
         }, true),
         TriggerStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60 + 32 + 10, 10, {
-            LButton = ToggleButton:new(encodingScene, 1, nil, nil, nil, 128 / 2, 32, "L", false),
-            RButton = ToggleButton:new(encodingScene, 2, nil, nil, nil, 128 / 2, 32, "R", false)
+            LButton = ToggleButton:new(encodingScene, 4, nil, nil, nil, 128 / 2, 32, "L", false),
+            RButton = ToggleButton:new(encodingScene, 5, nil, nil, nil, 128 / 2, 32, "R", false)
         }, true),
         InformationStackPanel = StackPanel:new(encodingScene, nil, 45, 128 + 60 + 32 + 50, 10, {
-            Action = Label:new(encodingScene, 1, nil, nil, ""),
-            HSpd = Label:new(encodingScene, 2, nil, nil, ""),
-            YSpd = Label:new(encodingScene, 3, nil, nil, ""),
+            Action = Label:new(encodingScene, 6, nil, nil, ""),
+            HSpd = Label:new(encodingScene, 7, nil, nil, ""),
+            YSpd = Label:new(encodingScene, 8, nil, nil, ""),
         }, false)
     })
 
@@ -269,8 +272,9 @@ function UserCodeOnInitialize()
         Fuck = ComboBox:new(settingsScene, 4, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
-
-        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"Standard", "Pure GDI+", "Batched"},
+        FuckTextBox = TextBox:new(settingsScene, 11, 138, 110, 85, 30, nil, false, false, function(o)
+        end),
+        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"Standard", "Pure GDI+"},
             function(o)
                 -- when the GC pressure is high
                 if o.Items[o.SelectedItemIndex] == "Standard" then
@@ -278,9 +282,6 @@ function UserCodeOnInitialize()
                 end
                 if o.Items[o.SelectedItemIndex] == "Pure GDI+" then
                     RendererManager.SetCurrentRenderer(GDIPlusRenderer:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "Batched" then
-                    RendererManager.SetCurrentRenderer(BatchedGDIRenderer:new())
                 end
             end),
         StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20,
@@ -301,17 +302,19 @@ function UserCodeOnInitialize()
                     StylerManager.SetCurrentStyler(PlasticStyler:new())
                 end
             end),
-        TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, {
-            -- LabelA = Label:new(settingsScene, nil, nil, "Dame tu"),
-            -- LabelB = Label:new(settingsScene, nil, nil, "Cosita"),
-            -- LabelC = Label:new(settingsScene, nil, nil, "Ah ah"),
-            ButtonA = Button:new(settingsScene, 8, nil, nil, nil, 80, 20, "Button", nil, nil),
-            ButtonB = Button:new(settingsScene, 9, nil, nil, nil, 80, 20, "Button", nil, nil),
-            ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil),
-            SliderA = Slider:new(settingsScene, 11, nil, nil, 20, 80, 0, 0, 100, false, false, function(o)
-                print(o.Value)
-            end)
-        }, false)
+        -- TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, {
+        --     -- LabelA = Label:new(settingsScene, nil, nil, "Dame tu"),
+        --     -- LabelB = Label:new(settingsScene, nil, nil, "Cosita"),
+        --     -- LabelC = Label:new(settingsScene, nil, nil, "Ah ah"),
+        --     ButtonA = Button:new(settingsScene, 8, nil, nil, nil, 80, 20, "Button", nil, nil),
+        --     ButtonB = Button:new(settingsScene, 9, nil, nil, nil, 80, 20, "Button", nil, nil),
+        --     ButtonC = Button:new(settingsScene, 10, nil, nil, nil, 80, 20, "Button", nil, nil),
+        --     SliderA = Slider:new(settingsScene, 11, nil, nil, 20, 80, 0, 0, 100, false, false, function(o)
+        --         print(o.Value)
+        --     end)
+        -- }, false),
+        -- OverlappingButtonA = Button:new(settingsScene, nil, nil, 90, 120, 80, 20, "First", nil, nil),
+        -- OverlappingButtonB = Button:new(settingsScene, nil, nil, 110, 130, 80, 20, "Second", nil, nil),
     })
     persistentScene:AddControls({
         NavigationCarrouselButton = CarrouselButton:new(persistentScene, 1, 5, 290 +
@@ -320,19 +323,19 @@ function UserCodeOnInitialize()
             function(o)
                 SceneManager.ChangeScene(Scenes[o.Items[o.SelectedItemIndex]])
             end),
-        TestStackPanel = StackPanel:new(persistentScene, 2, 5,
-            290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 12, 10, {
-                ButtonA = Button:new(settingsScene, 3, nil, nil, nil, 66, 20, "Test", nil, nil),
-                ButtonB = Button:new(settingsScene, 4, nil, nil, nil, 66, 20, "Test", nil, nil),
-                ButtonC = Button:new(settingsScene, 5, nil, nil, nil, 66, 20, "Test", nil, nil)
-            }, true)
+        -- TestStackPanel = StackPanel:new(persistentScene, 2, 5,
+        --     290 + (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 12, 10, {
+        --         ButtonA = Button:new(settingsScene, 3, nil, nil, nil, 66, 20, "Test", nil, nil),
+        --         ButtonB = Button:new(settingsScene, 4, nil, nil, nil, 66, 20, "Test", nil, nil),
+        --         ButtonC = Button:new(settingsScene, 5, nil, nil, nil, 66, 20, "Test", nil, nil)
+        --     }, true)
     })
 
     SceneManager.Initialize({
         Main = mainScene,
         Encoding = encodingScene,
         Settings = settingsScene
-    }, persistentScene, StandardRenderer:new(), Windows10Styler:new())
+    }, persistentScene, Windows10Styler:new())
 
     SceneManager.ChangeScene(Scenes.Main)
 

@@ -3,7 +3,8 @@ Label = middleclass('Label', Control)
 function Label:initialize(containingScene, index, x, y, text)
     Control.initialize(self, containingScene, index, x, y, 1, 1, nil, nil)
     self.Text = text
-    self.CurrentForeColor = Appearance.Themes[Appearance.CurrentTheme].LABEL_FORE_COLOR
+    self.ForeColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].LABEL_FORE_COLOR))
 end
 
 function Label:Update()
@@ -11,15 +12,25 @@ end
 
 function Label:Draw()
     if self.Text then
-        CurrentRenderer:DrawText(self.CurrentForeColor, self.Text, self.X, self.Y)
+        CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.Text, self.X,
+            self.Y)
     else
         print("Label has no text")
     end
 end
 
 function Label:PersistentUpdate()
-    self.CurrentForeColor = Color.TemporalInterpolateRGBColor(CurrentRenderer:HexadecimalColorToRGB(self.CurrentForeColor),
-        CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
+    self.ForeColor:Update()
+end
+
+function Label:OnThemeChanged(e)
+    if self.ContainingScene.IsActive then
+        self.ForeColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].LABEL_FORE_COLOR))
+    else
+        self.ForeColor:SetColorImmediately(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].LABEL_FORE_COLOR))
+    end
 end
 
 function Label:GetLayoutWidth()

@@ -19,6 +19,8 @@ FOLDER_GUI_CONTROLS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Control
 FOLDER_GUI_CONTROLS_LAYOUT = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Controls" .. "\\" .. "Layout" .. "\\"
 FOLDER_GUI_RENDERERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Renderers" .. "\\"
 FOLDER_GUI_STYLERS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Stylers" .. "\\"
+FOLDER_GUI_EVENTS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .. "\\"
+FOLDER_GUI_EVENTS_MANAGER = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .. "\\" .. "Manager" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 dofile(FOLDER_USER_CODE .. "InputDirection.lua")
@@ -34,7 +36,6 @@ dofile(FOLDER_GUI_RENDERERS .. "RendererManager.lua")
 dofile(FOLDER_GUI_RENDERERS .. "Renderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "StandardRenderer.lua")
 dofile(FOLDER_GUI_RENDERERS .. "GDIPlusRenderer.lua")
-dofile(FOLDER_GUI_RENDERERS .. "BatchedGDIRenderer.lua")
 dofile(FOLDER_GUI_STYLERS .. "StylerManager.lua")
 dofile(FOLDER_GUI_STYLERS .. "Styler.lua")
 dofile(FOLDER_GUI_STYLERS .. "Windows10Styler.lua")
@@ -45,6 +46,8 @@ dofile(FOLDER_GUI_STYLERS .. "Windows3Styler.lua")
 dofile(FOLDER_GUI .. "Scene.lua")
 dofile(FOLDER_GUI .. "SceneManager.lua")
 dofile(FOLDER_GUI .. "ClipboardManager.lua")
+dofile(FOLDER_GUI .. "AnimatedColor.lua")
+dofile(FOLDER_GUI .. "AnimatedNumber.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Control.lua")
 dofile(FOLDER_GUI_CONTROLS .. "Button.lua")
 dofile(FOLDER_GUI_CONTROLS .. "ToggleButton.lua")
@@ -57,6 +60,10 @@ dofile(FOLDER_GUI_CONTROLS .. "ComboBox.lua")
 dofile(FOLDER_GUI_CONTROLS_LAYOUT .. "LayoutControl.lua")
 dofile(FOLDER_GUI_CONTROLS_LAYOUT .. "StackPanel.lua")
 dofile(FOLDER_GUI_CONTROLS_LAYOUT .. "Grid.lua")
+dofile(FOLDER_GUI_EVENTS .. "KeyboardEvents.lua")
+dofile(FOLDER_GUI_EVENTS .. "MouseEvents.lua")
+dofile(FOLDER_GUI_EVENTS .. "VisualEvents.lua")
+dofile(FOLDER_GUI_EVENTS_MANAGER .. "EventManager.lua")
 dofile(FOLDER_PROVIDER .. "Mouse.lua")
 dofile(FOLDER_PROVIDER .. "Keyboard.lua")
 dofile(FOLDER_PROVIDER .. "Appearance.lua")
@@ -102,6 +109,8 @@ function AtInterval()
 
     SceneManager.Update()
 
+    
+    
 end
 
 function AtReset()

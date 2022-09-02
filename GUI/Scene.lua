@@ -2,7 +2,7 @@ Scene = middleclass('Scene')
 
 function Scene:initialize()
     self.Controls = {}
-    self.CurrentBackColor = Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR
+    self.BackColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
     self.CurrentControlIndex = 1
     self.IsActive = false
     self.HasBackColor = true
@@ -50,17 +50,16 @@ function Scene:SetActive(isActive)
 end
 
 function Scene:QueueLayoutPass()
-self.QueuedLayoutPass = true
+    self.QueuedLayoutPass = true
 end
 
 function Scene:Update()
 
     if self.HasBackColor then
-
-        self.CurrentBackColor = Color.TemporalInterpolateRGBColor(
-            CurrentRenderer:HexadecimalColorToRGB(self.CurrentBackColor),
-            CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
     end
+
+    self.BackColor:Update()
 
     for key, control in pairs(self.Controls) do
         if self.IsActive then
@@ -69,7 +68,9 @@ function Scene:Update()
         control:PersistentUpdate()
     end
 
-    -- have to do this at end of update pass, just as internal callback calling, to avoid illegal state
+end
+
+function Scene:Relayout()
     if self.QueuedLayoutPass then
         for k, v in pairs(self.Controls) do
             if v.Relayout then
@@ -78,12 +79,11 @@ function Scene:Update()
         end
         self.QueuedLayoutPass = false
     end
-
 end
 
 function Scene:Draw()
     if self.HasBackColor then
-        CurrentRenderer:FillRectangle(self.CurrentBackColor, Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
+        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor), Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
             (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
     end
     if self.IsActive then
@@ -91,7 +91,7 @@ function Scene:Draw()
             control:Draw()
         end
         for key, control in pairs(self.Controls) do
-            control:ModalDraw()
+            control:LateDraw()
         end
     end
 

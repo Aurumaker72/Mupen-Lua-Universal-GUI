@@ -12,9 +12,9 @@ function ClipboardManager.Copy(str)
     end
 end
 
-function ClipboardManager.Paste(placeholder)
+function ClipboardManager.Paste(fallbackValue)
     if ClipboardManager.IsValidString(ClipboardManager.ClipboardBuffer) then
-        placeholder = ClipboardManager.ClipboardBuffer
+        fallbackValue = ClipboardManager.ClipboardBuffer
     end
-    return placeholder
+    return fallbackValue
 end

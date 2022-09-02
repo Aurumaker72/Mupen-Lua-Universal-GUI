@@ -21,6 +21,7 @@ end
 function String.InsertAt(str, str2, index)
     return str:sub(1, index) .. str2 .. str:sub(index + str2:len(), str:len())
 end
+
 function String.SetAt(str, str2, index)
     return str:sub(1, index - 1) .. str2 .. str:sub(index + str2:len(), str:len())
 end

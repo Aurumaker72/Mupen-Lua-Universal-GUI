@@ -16,6 +16,7 @@ function Control:initialize(containingScene, index, x, y, w, h, primaryMouseClic
         self.Height = h * Screen.Dimensions.ScalingY
     end
     self.IsCapturingMouse = false
+    self.IsCapturingKeyboard = false
     self.PrimaryMouseClickCallback = primaryMouseClickCallback
     self.SecondaryMouseClickCallback = secondaryMouseClickCallback
     self.Ticks = 0
@@ -46,4 +47,32 @@ function Control:GetLayoutWidth()
 end
 function Control:GetLayoutHeight()
     return self.Height
+end
+
+function Control:GetBounds()
+    return {
+        X = self.X,
+        Y = self.Y,
+        Width = self.Width,
+        Height = self.Height
+    }
+end
+
+function Control:OnKeyDown(e)
+end
+
+function Control:OnKeyUp(e)
+end
+
+function Control:OnMouseDown(e)
+end
+function Control:OnMouseUp(e)
+end
+function Control:OnMouseMove(e)
+end
+function Control:OnMouseEnter(e)
+end
+function Control:OnMouseLeave(e)
+end
+function Control:OnThemeChanged(e)
 end

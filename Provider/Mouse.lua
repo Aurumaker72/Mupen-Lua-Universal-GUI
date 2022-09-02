@@ -5,9 +5,16 @@ Mouse = {
     ScrollDelta = 0,
     IsPrimaryButtonDown = false,
     IsSecondaryButtonDown = false,
-    _mouseTable = {},
+    _mouseTable = {
+        xmouse = 0,
+        ymouse = 0,
+    },
     _previousMouseTable = {}
 }
+
+MOUSE_BUTTON_NONE = -1
+MOUSE_BUTTON_LEFT = 0
+MOUSE_BUTTON_RIGHT = 1
 
 function Mouse.Update()
     Mouse.ScrollingDirection = 0
@@ -26,14 +33,32 @@ function Mouse.IsInside(x, y, w, h)
     return Mouse.X > x and Mouse.X < x + w and Mouse.Y > y and Mouse.Y < y + h
 end
 
+function Mouse.IsLastInside(x, y, w, h)
+    return Mouse._previousMouseTable.xmouse > x and Mouse._previousMouseTable.xmouse < x + w and Mouse._previousMouseTable.ymouse > y and Mouse._previousMouseTable.ymouse < y + h
+end
+
+function Mouse.HasMoved()
+    return (Mouse.X == Mouse._previousMouseTable.xmouse == false) or (Mouse.Y == Mouse._previousMouseTable.ymouse == false)
+end
+
 function Mouse.IsPrimaryDown()
     -- TODO: left-handed mode support
     return Mouse._mouseTable["leftclick"] and true or false
 end
 
+function Mouse.WasPrimaryDown()
+    -- TODO: left-handed mode support
+    return Mouse._previousMouseTable["leftclick"] and true or false
+end
+
 function Mouse.IsSecondaryDown()
     -- TODO: left-handed mode support
     return Mouse._mouseTable["rightclick"] and true or false
+end
+
+function Mouse.WasSecondaryDown()
+    -- TODO: left-handed mode support
+    return Mouse._previousMouseTable["rightclick"] and true or false
 end
 
 function Mouse.IsPrimaryClicked()

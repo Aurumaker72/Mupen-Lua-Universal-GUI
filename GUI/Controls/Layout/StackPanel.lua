@@ -6,6 +6,22 @@ function StackPanel:initialize(containingScene, index, x, y, spacing, children, 
     self.IsHorizontal = isHorizontal
 end
 
+function LayoutControl:GetXForControl(control, i)
+    if self.IsHorizontal then
+        return self.X + ((i * control:GetLayoutWidth()) + i * self.Spacing)
+    else
+        return self.X
+    end
+end
+
+function LayoutControl:GetYForControl(control, i)
+    if self.IsHorizontal then
+        return self.Y
+    else
+        return self.Y + ((i * control:GetLayoutHeight()) + i * self.Spacing)
+    end
+end
+
 function StackPanel:Relayout()
 
     -- TODO:
@@ -26,7 +42,7 @@ function StackPanel:Relayout()
         control.X = self:GetXForControl(control, control.Index - lowestIndex)
         control.Y = self:GetYForControl(control, control.Index - lowestIndex)
 
-        self:SetChild(key, control)
     end
 
+    self:SendChildrenToScene()
 end

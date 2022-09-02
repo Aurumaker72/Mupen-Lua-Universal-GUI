@@ -1,5 +1,6 @@
 
 Appearance = {
+    HasChanged = false,
     Themes = {
         Classic = {
             WINDOW_BACK_COLOR = "#F0F0F0",
@@ -31,7 +32,7 @@ Appearance = {
             SLIDER_TRACK_WIDTH = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             CARROUSEL_BUTTON_CHEVRON_HEIGHT = 21,
-            CARROUSEL_BUTTON_CHEVRON_MARGIN = 10,
+            CARROUSEL_BUTTON_CHEVRON_MARGIN = 30,
             FONT_SIZE = 10,
             FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
@@ -41,6 +42,7 @@ Appearance = {
             BUTTON_BORDER_COLOR = "#B0B0B0",
             BUTTON_BACK_COLOR = "#292929",
             BUTTON_FORE_COLOR = "#FFFFFF",
+            BUTTON_HOVERED_BACK_COLOR = "#636363",
             BUTTON_HOVERED_BORDER_COLOR = "#0078D7",
             BUTTON_PUSHED_BACK_COLOR = "#4A4A4A",
             TEXTBOX_BACK_COLOR = "#111111",
@@ -65,7 +67,7 @@ Appearance = {
             SLIDER_TRACK_WIDTH = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             CARROUSEL_BUTTON_CHEVRON_HEIGHT = 21,
-            CARROUSEL_BUTTON_CHEVRON_MARGIN = 10,
+            CARROUSEL_BUTTON_CHEVRON_MARGIN = 30,
             FONT_SIZE = 10,
             FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
@@ -75,6 +77,7 @@ Appearance = {
             BUTTON_BORDER_COLOR = "#292929",
             BUTTON_BACK_COLOR = "#292929",
             BUTTON_FORE_COLOR = "#FFFFFF",
+            BUTTON_HOVERED_BACK_COLOR = "#636363",
             BUTTON_HOVERED_BORDER_COLOR = "#0078D7",
             BUTTON_PUSHED_BACK_COLOR = "#4A4A4A",
             TEXTBOX_BACK_COLOR = "#111111",
@@ -99,7 +102,7 @@ Appearance = {
             SLIDER_TRACK_WIDTH = 2,
             CARROUSEL_BUTTON_CHEVRON_WIDTH = 21,
             CARROUSEL_BUTTON_CHEVRON_HEIGHT = 21,
-            CARROUSEL_BUTTON_CHEVRON_MARGIN = 10,
+            CARROUSEL_BUTTON_CHEVRON_MARGIN = 30,
             FONT_SIZE = 10,
             FONT_NAME = "Segoe UI",
             BORDER_SIZE = 1,
@@ -131,6 +134,7 @@ function Appearance.SetTheme(theme)
         return
     end
     Appearance.CurrentTheme = theme
+    Appearance.HasChanged = true
     --Appearance.Themes[CurrentTheme].FONT_SIZE = math.floor(Appearance.Themes[CurrentTheme].FONT_SIZE * ((Screen.Dimensions.ScalingX+Screen.Dimensions.ScalingY)/2))
 end
 
@@ -151,4 +155,9 @@ function Appearance.Initialize()
     Appearance.SetTheme("Classic")
 end
 
+function Appearance.FinalizeFrame()
+    if Appearance.HasChanged then
+        Appearance.HasChanged = false -- branch for no reason idk
+    end
+end
 
