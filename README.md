@@ -1,7 +1,6 @@
-
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://user-images.githubusercontent.com/48759429/188270279-1acfed34-09ed-4743-af63-8391ebbcf458.png" alt="Logo" width="120" height="120">
+    <img src="https://user-images.githubusercontent.com/48759429/188270723-d22df4f5-b714-4d10-abad-7af76091aedb.png" alt="Logo" width="140" height="140">
   </a>
 
   <h3 align="center">Mupen Lua Universal GUI</h3>
