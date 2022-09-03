@@ -98,12 +98,6 @@ end
 
 function AtInterval()
 
-    if emu.ismainwindowinforeground then
-        if not emu.ismainwindowinforeground() then
-            return
-        end
-    end
-
     Mouse.Update()
     Keyboard.Update()
 

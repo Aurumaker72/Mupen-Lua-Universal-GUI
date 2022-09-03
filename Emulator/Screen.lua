@@ -1,6 +1,7 @@
 Screen = {
     IsExpanded = false,
     ExpandedOffset = nil,
+    ExpandedWidth = nil,
     DesignerWidth = 800,
     DesignerHeight = 600,
     Dimensions = {
@@ -12,6 +13,11 @@ Screen = {
         ScalingY = 1
     }
 }
+
+function Screen.SetExpandedWidth(expandedWidth)
+    Screen.ExpandedWidth = expandedWidth
+    Screen.ExpandedOffset = Screen.ExpandedWidth * Screen.Dimensions.ScalingX
+end
 
 function Screen.Dimensions.Update()
     d = wgui.info()
@@ -28,7 +34,7 @@ function Screen.Dimensions.Update()
         if Screen.Dimensions.Height < Screen.DesignerHeight then
             Screen.Dimensions.ScalingY = Screen.Dimensions.Height / Screen.DesignerHeight
         end
-        Screen.ExpandedOffset = 228 * Screen.Dimensions.ScalingX
+        Screen.SetExpandedWidth(228)
 
     end
 end

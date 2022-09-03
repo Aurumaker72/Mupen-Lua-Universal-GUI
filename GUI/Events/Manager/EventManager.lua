@@ -7,12 +7,21 @@ end
 function EventManager.PropagateTo(key, scene)
 
     local skipOtherControls = false
+    local wndInForeground = true
+    if emu.ismainwindowinforeground then
+            wndInForeground = emu.ismainwindowinforeground()
+    end
 
     for k, control in pairs(scene.Controls) do
 
         -- this MUST fire on every single control of every single scene, no exceptions
         if Appearance.HasChanged then
             control:OnThemeChanged(ThemeChangedEvent.new(Appearance.CurrentTheme))
+        end
+
+        -- skip propagation of input events when unfocused 
+        if not wndInForeground then
+            goto iteration_end
         end
 
         if scene.IsActive then
@@ -69,6 +78,8 @@ function EventManager.PropagateTo(key, scene)
             end
 
         end
+
+        ::iteration_end::
     end
 
 end
