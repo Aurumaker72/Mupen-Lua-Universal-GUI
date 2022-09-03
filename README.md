@@ -75,14 +75,12 @@ SceneManager.ChangeScene(Scenes.Main)
 - Scenes (Tabs)
   - Switch with one function call
   - Can define non-scene (persistent) controls for navigation OR scene-linked controls
-- Theming
-  you can define... 
+- Theming defines... 
   - Colors
   - Margins
   - Sizes
   - Alignment
-- Styling
-  you can define...
+- Styling defines...
   - High-level Drawing
   - Decorations
 - Compatibility
