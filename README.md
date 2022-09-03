@@ -1,6 +1,6 @@
 <div align="center">
   <a>
-    <img src="https://user-images.githubusercontent.com/48759429/188270723-d22df4f5-b714-4d10-abad-7af76091aedb.png" alt="Logo" width="140" height="140">
+    <img src="https://user-images.githubusercontent.com/48759429/188273706-e8077f99-a24f-4c6b-b861-d397b9220d1e.png" alt="Logo" width="140" height="140">
   </a>
 
   <h3 align="center">Mupen Lua Universal GUI</h3>
