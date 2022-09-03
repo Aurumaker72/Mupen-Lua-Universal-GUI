@@ -1,67 +1,76 @@
-# Mupen-Lua Universal GUI <img src="https://user-images.githubusercontent.com/48759429/182023742-7e2eebad-ccd2-4be8-8c81-6b4a14bf1164.png" height="128" align="right"/>
 
-<img src="https://img.shields.io/badge/Status-Work%20In%20Progress-yellow"/> <img src="https://img.shields.io/badge/Production-Not%20ready-red"/> <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluaUniversalGUI"/> 
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://user-images.githubusercontent.com/48759429/188270279-1acfed34-09ed-4743-af63-8391ebbcf458.png" alt="Logo" width="120" height="120">
+  </a>
 
-This framework helps you create a GUI for your lua script.
+  <h3 align="center">Mupen Lua Universal GUI</h3>
 
-It provides many built-in controls, themes and styles which help you fulfill your requirements and has patterns encouraging clean, legible code.
-
-## ℹ️ Examples
-
-<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036331-ca348923-dc75-4a7a-a2d1-97a82b80bf0a.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036366-515ebd01-fa88-4b18-a254-fb1366eb2955.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036403-9f318d6f-7707-42ab-97b5-8ac4f6d54908.png" height="300"/> 
-
-*Example of built-in themes*
-
-<img src="https://user-images.githubusercontent.com/48759429/181444977-cd5cedc0-06f2-4910-b32d-f7a7351ee6dd.gif" width="250"/>
-
-*A ComboBox control which sets the theme*
+  <p align="center">
+    A feature-rich GUI framework for production scripts and prototyping
+    <br>
+    It provides many built-in controls, themes and styles which help you fulfill your requirements and has patterns encouraging clean, legible code.
+    <br />
+    <br />
+    <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluauniversalgui?style=for-the-badge"/> 
+    <img src="https://img.shields.io/badge/Status-Work%20In%20Progress-orange?style=for-the-badge"/>
+  </p>
+</div>
 
 ## 💨 Quickstart
 
-#### Adding a new scene
-Create a new scene using the `Scene` constructor and pass in `nil`
+#### Setting a renderer
+Before doing anything GUI-related, you must tell the SceneManager to activate and use a Renderer. This Renderer is essential for all measurement and low-level interactions and thus must be initialized first
 ```lua
-local mainScene = Scene:new(nil)
+RendererManager.SetCurrentRenderer(StandardRenderer:new())
+```
+
+#### Adding a new scene
+Create a new scene using the `Scene` constructor
+```lua
+local myScene = Scene:new()
 ```
 
 #### Adding controls to your scene
 Add a controls dictionary to the created scene by using its `AddControls(t)` method
 ```lua
-mainScene:AddControls({
+myScene:AddControls({
 
 YourButton = Button:new(
-     mainScene, -- The scene containing the button
-     1, -- The button's index in the scene. For each control, increase it by 1 heading downwards
-     nil, -- The keyboard key associated with the button (nil disables keyboard interaction)
-     20, -- X 
-     20, -- Y
-     128, -- Width
-     64, -- Height
-     "Hello World", -- Text 
-     function(o) -- Interaction callback, o is reference to button
+     myScene,           -- The scene containing the button
+     nil,               -- (OPTIONAL, only for layouted controls) The button's index in the scene. For each control, increase it by 1 heading downwards
+     nil,               -- The keyboard key associated with the button (nil disables keyboard interaction)
+     20,                -- X Position 
+     20,                -- Y Position
+     128,               -- Width
+     64,                -- Height
+     "Hello World",     -- Text 
+     function(o)        -- Interaction callback, o is reference to button
           print(o.Text)
      end)
 })
 ```
 
 #### Starting up the Scene Manager
-After defining your scenes and their respective controls, you need to signal the startup to `SceneManager` 
+You must now start the `SceneManager` and provide it with the necessary scenes and subsystems 
 ```lua
 SceneManager.Initialize(
-
-    { -- Dictionary of your scenes
-        Main = mainScene,
-    },
-    
-    persistentScene, -- A scene which is always active and doesn't suppress other scenes (Optional)
-    
-    GDIRenderer:new(), -- Instance of a rendering backend
-    Windows10Styler:new() -- Instance of a styler
-)
-
-SceneManager.ChangeScene(Scenes.Main) -- Switch to main scene and thereby signal start to SceneManager. You're done!
-
+    {                      
+        Main = myScene,    -- Dictionary of your regular scenes
+    }, 
+    persistentScene,       -- (OPTIONAL) Scene which will be active at all times
+    Windows10Styler:new()) -- Styler
 ```
+
+#### Displaying the scene
+With all of the initialization done, you can now activate your scene!
+```lua
+SceneManager.ChangeScene(Scenes.Main)
+```
+
+## ℹ️ Examples
+
+<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036331-ca348923-dc75-4a7a-a2d1-97a82b80bf0a.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036366-515ebd01-fa88-4b18-a254-fb1366eb2955.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036403-9f318d6f-7707-42ab-97b5-8ac4f6d54908.png" height="300"/> 
 
 ## ✨ Features
 - Scenes (Tabs)
