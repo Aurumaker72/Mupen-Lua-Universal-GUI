@@ -19,6 +19,8 @@ function ToggleButton:SetIsChecked(isChecked)
         if not self.ContainingScene.IsActive then
             self.BackColor:SetColorImmediately(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
             self.BorderColor:SetColorImmediately(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+        else
+            -- Uh
         end
     end
 end

@@ -24,7 +24,6 @@ function UserCodeAtInputPoll()
     Swimming.swim("A")
 
     if InputDirection.IsInitialized then
-
         
         Scenes.Main.Controls.Joystick.ValueX = Joypad.input.X
         Scenes.Main.Controls.Joystick.ValueY = -Joypad.input.Y

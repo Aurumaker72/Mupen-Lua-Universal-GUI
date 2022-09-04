@@ -1,5 +1,4 @@
 Scenes = {}
-PersistentScene = nil
 CurrentScene = nil
 CurrentRenderer = nil
 CurrentStyler = nil
@@ -10,10 +9,12 @@ function SceneManager.Initialize(scenes, persistentScene, styler)
     if not persistentScene then
         persistentScene = Scene:new()
     end
-    PersistentScene = persistentScene
-    PersistentScene:SetActive(true)
-    PersistentScene.HasBackColor = false
+
     StylerManager.SetCurrentStyler(styler)
+
+    persistentScene:SetActive(true)
+    persistentScene.HasBackColor = false
+    Scenes["PersistentScene"] = persistentScene
 end
 
 function SceneManager.ChangeScene(scene)
@@ -22,31 +23,26 @@ function SceneManager.ChangeScene(scene)
     end
     CurrentScene = scene
     CurrentScene:SetActive(true)
-    
-    -- perform layout pass
-    -- TODO: optimize to only do it once per scene
-    
 end
 
 function SceneManager.Update()
 
-    -- perform relayout if necessary
+    -- relayout and push controls if needed
     for k, scene in pairs(Scenes) do
-        scene:Relayout()
+        if scene.NeedsRelayout then
+            scene:Relayout()
+        end
     end
-    PersistentScene:Relayout()
-    
-    -- update all scenes
-    for k, scene in pairs(Scenes) do
-        scene:Update()
-    end
-    PersistentScene:Update()
 
     -- propagate events
     for k, scene in pairs(Scenes) do
         EventManager.PropagateTo(k, scene)
     end
-    EventManager.PropagateTo("persistentScene", PersistentScene)
+
+    -- update all scenes
+    for k, scene in pairs(Scenes) do
+        scene:Update()
+    end
 
     Appearance.FinalizeFrame()
 
@@ -54,8 +50,9 @@ function SceneManager.Update()
     for k, scene in pairs(Scenes) do
         SceneManager.ExecuteQueuedCallbacksForScene(scene)
     end
-    SceneManager.ExecuteQueuedCallbacksForScene(PersistentScene)
 
+    
+    
 end
 
 function SceneManager.ExecuteQueuedCallbacksForScene(scene)
@@ -74,7 +71,9 @@ end
 function SceneManager.Draw()
 
     CurrentScene:Draw()
-    PersistentScene:Draw()
+    if Scenes["PersistentScene"] then
+        Scenes["PersistentScene"]:Draw()
+    end
 
     CurrentRenderer:FinalizeFrame()
     

@@ -6,7 +6,7 @@ function StackPanel:initialize(containingScene, index, x, y, spacing, children, 
     self.IsHorizontal = isHorizontal
 end
 
-function LayoutControl:GetXForControl(control, i)
+function StackPanel:GetXForControl(control, i)
     if self.IsHorizontal then
         return self.X + ((i * control:GetLayoutWidth()) + i * self.Spacing)
     else
@@ -14,7 +14,7 @@ function LayoutControl:GetXForControl(control, i)
     end
 end
 
-function LayoutControl:GetYForControl(control, i)
+function StackPanel:GetYForControl(control, i)
     if self.IsHorizontal then
         return self.Y
     else

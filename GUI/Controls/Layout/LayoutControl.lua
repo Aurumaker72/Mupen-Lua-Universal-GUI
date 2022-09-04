@@ -13,8 +13,8 @@ end
 
 function LayoutControl:SendChildrenToScene()
     self.ContainingScene:AddQueuedCallback(function(o)
-        for key, control in pairs(o.Children) do
-            o.ContainingScene:SetControl(key, control)
+        for key, control in pairs(self.Children) do
+            self.ContainingScene:SetControl(key, control)
         end
     end, self)
 end

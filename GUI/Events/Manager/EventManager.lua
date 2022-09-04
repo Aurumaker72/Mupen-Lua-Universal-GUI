@@ -9,7 +9,8 @@ function EventManager.PropagateTo(key, scene)
     local skipOtherControls = false
     local wndInForeground = true
     if emu.ismainwindowinforeground then
-            wndInForeground = emu.ismainwindowinforeground()
+        -- TODO: cache this, as it internally calls GetForegroundWindow()
+        wndInForeground = emu.ismainwindowinforeground()
     end
 
     for k, control in pairs(scene.Controls) do

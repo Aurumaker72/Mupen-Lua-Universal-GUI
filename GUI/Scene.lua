@@ -2,14 +2,14 @@ Scene = middleclass('Scene')
 
 function Scene:initialize()
     self.Controls = {}
-    self.BackColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+    self.BackColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
     self.CurrentControlIndex = 1
     self.IsActive = false
     self.HasBackColor = true
-    self.QueuedLayoutPass = false
     self.QueuedCallbacks = {}
     self.QueuedCallbackParameters = {}
-
+    self.NeedsRelayout = false
 end
 
 function Scene:GetControls()
@@ -46,17 +46,14 @@ end
 
 function Scene:SetActive(isActive)
     self.IsActive = isActive
-    self:QueueLayoutPass()
-end
-
-function Scene:QueueLayoutPass()
-    self.QueuedLayoutPass = true
+    self.NeedsRelayout = true
 end
 
 function Scene:Update()
 
     if self.HasBackColor then
-        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].WINDOW_BACK_COLOR))
     end
 
     self.BackColor:Update()
@@ -71,20 +68,18 @@ function Scene:Update()
 end
 
 function Scene:Relayout()
-    if self.QueuedLayoutPass then
-        for k, v in pairs(self.Controls) do
-            if v.Relayout then
-                v:Relayout()
-            end
+    for k, v in pairs(self.Controls) do
+        if v.Relayout then
+            v:Relayout()
         end
-        self.QueuedLayoutPass = false
     end
 end
 
 function Scene:Draw()
     if self.HasBackColor then
-        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor), Screen.Dimensions.Width - Screen.ExpandedOffset, 0,
-            (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2, Screen.Dimensions.Height)
+        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor),
+            Screen.Dimensions.Width - Screen.ExpandedOffset, 0, (Screen.Dimensions.Width - Screen.ExpandedOffset) * 2,
+            Screen.Dimensions.Height)
     end
     if self.IsActive then
         for key, control in pairs(self.Controls) do
