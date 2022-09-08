@@ -19,8 +19,13 @@ function CarrouselButton:initialize(containingScene, index, x, y, w, h, items, w
     self.RightChevronX.Speed = 0.25
 end
 
+function CarrouselButton:GetInteractionKeys()
+    return {"left", "right"}
+end
+
 function CarrouselButton:GetBaseLeftChevronX()
-    return self.X - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_MARGIN
+    return self.X - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE +
+               Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_MARGIN
 end
 
 function CarrouselButton:GetBaseRightChevronX()
@@ -50,6 +55,42 @@ function CarrouselButton:Draw()
 
 end
 
+function CarrouselButton:CanBeInteracted(e)
+    return e.Source == InteractionEvent.KeyboardSource and Mouse.IsInside(self.X, self.Y, self.Width, self.Height)
+end
+
+function CarrouselButton:OnPrimaryInteracted(e)
+    if e.Key == "left" then
+        self:AdvanceIndexBy(-1)
+    end
+    if e.Key == "right" then
+        self:AdvanceIndexBy(1)
+    end
+end
+
+function CarrouselButton:AdvanceIndexBy(i)
+    if self.WrapAround then
+        self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + i, 1, #self.Items)
+    else
+        self.SelectedItemIndex = math.max(self.SelectedItemIndex + i, 1)
+    end
+    self.ContainingScene:AddQueuedCallback(self.OnSelectedItemChangedCallback, self)
+end
+
+function CarrouselButton:OnMouseEnter(e)
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+end
+
+function CarrouselButton:OnMouseLeave(e)
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+end
+
 function CarrouselButton:OnMouseDown(e)
     self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
@@ -57,26 +98,18 @@ function CarrouselButton:OnMouseDown(e)
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
 
     if MouseEvent.IsInside(e, self.X, self.Y, self.Width / 2, self.Height) then
-        if self.WrapAround then
-            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex - 1, 1, #self.Items)
-        else
-            self.SelectedItemIndex = math.max(self.SelectedItemIndex - 1, 1)
-        end
-        self.ContainingScene:AddQueuedCallback(self.OnSelectedItemChangedCallback, self)
+        self:AdvanceIndexBy(1)
     end
     if MouseEvent.IsInside(e, self.X + self.Width / 2, self.Y, self.Width / 2, self.Height) then
-        if self.WrapAround then
-            self.SelectedItemIndex = Numeric.WrappingClamp(self.SelectedItemIndex + 1, 1, #self.Items)
-        else
-            self.SelectedItemIndex = math.min(self.SelectedItemIndex + 1, #self.Items)
-        end
-        self.ContainingScene:AddQueuedCallback(self.OnSelectedItemChangedCallback, self)
+        self:AdvanceIndexBy(-1)
     end
 end
 
 function CarrouselButton:OnMouseLeave(e)
-    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
-    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
     self.LeftChevronX:SetTargetNumber(self:GetBaseLeftChevronX())
     self.RightChevronX:SetTargetNumber(self:GetBaseRightChevronX())
 end
@@ -88,7 +121,7 @@ function CarrouselButton:OnMouseMove(e)
     else
         self.LeftChevronX:SetTargetNumber(self:GetBaseLeftChevronX())
     end
-    
+
     if MouseEvent.IsInside(e, self.X + self.Width / 2, self.Y, self.Width / 2, self.Height) then
         self.RightChevronX:SetTargetNumber(self:GetBaseRightChevronX() + 10)
     else

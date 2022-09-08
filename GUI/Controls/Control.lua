@@ -58,6 +58,14 @@ function Control:GetBounds()
     }
 end
 
+function Control:CanBeInteracted(e)
+    return true
+end
+
+function Control:GetInteractionKeys()
+    return nil -- {x}!
+end
+
 function Control:OnKeyDown(e)
 end
 
@@ -75,4 +83,11 @@ end
 function Control:OnMouseLeave(e)
 end
 function Control:OnThemeChanged(e)
+end
+
+function Control:OnPrimaryInteracted(e)
+end
+function Control:OnInteractionBegin(e)
+end
+function Control:OnInteractionEnd(e)
 end

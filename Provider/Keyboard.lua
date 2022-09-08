@@ -22,6 +22,9 @@ end
 function Keyboard.KeyHeld(key)
     return Keyboard.Input[key]
 end
+function Keyboard.WasKeyHeld(key)
+    return Keyboard.LastInput[key]
+end
 
 function Keyboard.IsNumeric(key)
     for i = 0, 9, 1 do

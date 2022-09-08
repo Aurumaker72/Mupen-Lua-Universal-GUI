@@ -13,6 +13,10 @@ function Button:initialize(containingScene, index, clickKey, x, y, w, h, text, p
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
 end
 
+function Button:GetInteractionKeys()
+    return {self.ClickKey}
+end
+
 function Button:PersistentUpdate()
     self.BackColor:Update()
     self.BorderColor:Update()
@@ -65,19 +69,30 @@ function Button:Draw()
 
 end
 
-function Button:OnMouseDown(e)
+function Button:OnPrimaryInteracted(e)
+    self.ContainingScene:AddQueuedCallback(self.PrimaryMouseClickCallback, self)
+end
+
+function Button:OnInteractionBegin(e)
     self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
     self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
-    self.ContainingScene:AddQueuedCallback(self.PrimaryMouseClickCallback, self)
 end
 
-function Button:OnMouseUp(e)
-    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
-        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR))
-    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
-        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+function Button:OnInteractionEnd(e)
+    if e.Source == InteractionEvent.MouseSource then
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR))
+        self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+    elseif e.Source == InteractionEvent.KeyboardSource then
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    end
+
 end
 
 function Button:OnMouseEnter(e)

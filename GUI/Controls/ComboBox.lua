@@ -180,3 +180,60 @@ function ComboBox:Draw()
         self.Items[self.SelectedItemIndex], self.X + 3, self.Y + 2)
 
 end
+
+function ComboBox:GetInteractionKeys()
+    return {"enter", "up", "down"}
+end
+
+function ComboBox:CanBeInteracted(e)
+    return e.Source == InteractionEvent.KeyboardSource and Mouse.IsInside(self.X, self.Y, self.Width, self.Height)
+end
+
+function ComboBox:OnPrimaryInteracted(e)
+    if e.Key == "enter" then
+        self:SetOpen(not self.IsOpened)
+    end
+    if e.Key == "up" then
+        self:SetSelectedIndex(self.SelectedItemIndex - 1)
+    end
+    if e.Key == "down" then
+        self:SetSelectedIndex(self.SelectedItemIndex + 1)
+    end
+
+end
+
+function ComboBox:OnInteractionBegin(e)
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_PUSHED_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+end
+
+function ComboBox:OnInteractionEnd(e)
+    if e.Source == InteractionEvent.MouseSource then
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR))
+        self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+    elseif e.Source == InteractionEvent.KeyboardSource then
+        self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+        self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+    end
+
+end
+
+function ComboBox:OnMouseEnter(e)
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_HOVERED_BORDER_COLOR))
+end
+
+function ComboBox:OnMouseLeave(e)
+    self.BackColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BACK_COLOR))
+    self.BorderColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
+        Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+end

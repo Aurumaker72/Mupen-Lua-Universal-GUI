@@ -28,28 +28,72 @@ function EventManager.PropagateTo(key, scene)
         if scene.IsActive then
 
             local bounds = control:GetBounds()
+            local hasInteractionKey = (control.GetInteractionKeys and control:GetInteractionKeys() == nil == false)
+
+            if hasInteractionKey then
+                for i = 1, #control:GetInteractionKeys(), 1 do
+                    local interactedKey = control:GetInteractionKeys()[i]
+                    if Keyboard.KeyPressed(interactedKey) then
+                        local _e = PrimaryInteractionEvent.new(interactedKey, InteractionEvent.KeyboardSource)
+                        if control:CanBeInteracted(_e) then
+                            control:OnPrimaryInteracted(_e)
+                        end
+                        skipOtherControls = true
+                    end
+                    if (Keyboard.KeyHeld(interactedKey) and not Keyboard.WasKeyHeld(interactedKey)) then
+                        local _e = InteractionBeginEvent.new(InteractionEvent.KeyboardSource)
+                        if control:CanBeInteracted(_e) then
+                            control:OnInteractionBegin(_e)
+                        end
+                        
+                        skipOtherControls = true
+                    end
+
+                    if (not Keyboard.KeyHeld(interactedKey) and Keyboard.WasKeyHeld(interactedKey)) then
+                        local _e = InteractionEndEvent.new(InteractionEvent.KeyboardSource)
+                        if control:CanBeInteracted(_e) then
+                            control:OnInteractionEnd(_e)
+                        end
+                        skipOtherControls = true
+                    end
+                end
+
+            end
 
             if Mouse.IsInside(bounds.X, bounds.Y, bounds.Width, bounds.Height) or control.IsCapturingMouse then
+
+                -- TODO: restructure, this is horrendous
+
                 if Mouse.IsPrimaryClicked() then
                     control:OnMouseDown(MouseDownEvent.new(Mouse.X, Mouse.Y, MOUSE_BUTTON_LEFT))
+                    control:OnPrimaryInteracted(PrimaryInteractionEvent.new(nil, InteractionEvent.MouseSource))
                     skipOtherControls = true
                 end
-                if Mouse.IsSecondaryClicked() then
-                    control:OnMouseDown(MouseDownEvent.new(Mouse.X, Mouse.Y, MOUSE_BUTTON_RIGHT))
+
+                if (Mouse.IsPrimaryClicked()) then
+                    control:OnInteractionBegin(InteractionBeginEvent.new(InteractionEvent.MouseSource))
                     skipOtherControls = true
                 end
-                if not Mouse.IsPrimaryDown() and Mouse.WasPrimaryDown() then
-                    control:OnMouseUp(MouseUpEvent.new(Mouse.X, Mouse.Y, MOUSE_BUTTON_LEFT))
+
+                if (Numeric.PointIsInsideRectangle(Mouse.PositionOnLastClick.X, Mouse.PositionOnLastClick.Y, bounds.X,
+                    bounds.Y, bounds.Width, bounds.Height) and (not Mouse.IsPrimaryDown() and Mouse.WasPrimaryDown())) then
+                    control:OnInteractionEnd(InteractionEndEvent.new(InteractionEvent.MouseSource))
                     skipOtherControls = true
                 end
-                if not Mouse.IsSecondaryDown() and Mouse.WasSecondaryDown() then
-                    control:OnMouseUp(MouseUpEvent.new(Mouse.X, Mouse.Y, MOUSE_BUTTON_RIGHT))
-                    skipOtherControls = true
+
+                if Numeric.PointIsInsideRectangle(Mouse.PositionOnLastClick.X, Mouse.PositionOnLastClick.Y, bounds.X,
+                    bounds.Y, bounds.Width, bounds.Height) then
+                    if not Mouse.IsPrimaryDown() and Mouse.WasPrimaryDown() then
+                        control:OnMouseUp(MouseUpEvent.new(Mouse.X, Mouse.Y, MOUSE_BUTTON_LEFT))
+                        skipOtherControls = true
+                    end
                 end
+
                 if Mouse.HasMoved() then
                     control:OnMouseMove(MouseMoveEvent.new(Mouse.X, Mouse.Y))
                     skipOtherControls = true
                 end
+
             end
 
             if not control.IsCapturingMouse then

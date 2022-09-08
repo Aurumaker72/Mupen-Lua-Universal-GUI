@@ -5,11 +5,16 @@ Mouse = {
     ScrollDelta = 0,
     IsPrimaryButtonDown = false,
     IsSecondaryButtonDown = false,
+    PositionOnLastClick = {
+        X = 0,
+        Y = 0,
+    },
     _mouseTable = {
         xmouse = 0,
         ymouse = 0,
     },
     _previousMouseTable = {}
+
 }
 
 MOUSE_BUTTON_NONE = -1
@@ -26,15 +31,19 @@ function Mouse.Update()
         Mouse.PreviousScrollDelta = Mouse.ScrollDelta
         Mouse.ScrollDelta = (WindowsMessageManager.CurrentWindowsMessage.wParam & 0xFFFF0000) >> 16
     end
+    if Mouse.IsPrimaryDown() and not Mouse.WasPrimaryDown() then
+        Mouse.PositionOnLastClick.X = Mouse.X
+        Mouse.PositionOnLastClick.Y = Mouse.Y
+    end
 end
 
 
 function Mouse.IsInside(x, y, w, h)
-    return Mouse.X > x and Mouse.X < x + w and Mouse.Y > y and Mouse.Y < y + h
+    return Numeric.PointIsInsideRectangle(Mouse.X, Mouse.Y, x, y, w, h)
 end
 
 function Mouse.IsLastInside(x, y, w, h)
-    return Mouse._previousMouseTable.xmouse > x and Mouse._previousMouseTable.xmouse < x + w and Mouse._previousMouseTable.ymouse > y and Mouse._previousMouseTable.ymouse < y + h
+    return Numeric.PointIsInsideRectangle(Mouse._previousMouseTable.xmouse, Mouse._previousMouseTable.ymouse, x, y, w, h)
 end
 
 function Mouse.HasMoved()

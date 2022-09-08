@@ -155,10 +155,10 @@ function UserCodeOnInitialize()
 
     mainScene:AddControls({
 
-        StrainingDisable = ToggleButton:new(mainScene, 0, nil, 5, 5, 127, 30, "Disabled", false, function(o)
+        StrainingDisable = ToggleButton:new(mainScene, 0, "I", 5, 5, 127, 30, "Disabled", false, function(o)
             InputDirection.SetStrainMode(o.Text:gsub('%s+', ''))
         end),
-        StrainingMatchYaw = ToggleButton:new(mainScene, 1, nil, 5, 5 + 35 * 1, 127, 30, " Match Yaw ", false,
+        StrainingMatchYaw = ToggleButton:new(mainScene, 1, "J", 5, 5 + 35 * 1, 127, 30, " Match Yaw ", false,
             function(o)
                 InputDirection.SetStrainMode(o.Text:gsub('%s+', ''))
             end),
@@ -204,7 +204,7 @@ function UserCodeOnInitialize()
                 InputDirection.SetGoalMag(Numeric.Clamp(tonumber(o.Text), 0, 127))
             end
         end),
-        Speedkick = Button:new(mainScene, 14, nil, 142, 229, 76, 21, "Speedkick", function(o)
+        Speedkick = Button:new(mainScene, 14, "R", 142, 229, 76, 21, "Speedkick", function(o)
             InputDirection.SetGoalMag(48)
         end),
         ResetMagnitude = Button:new(mainScene, 15, "G", 142, 253, 76, 21, "Reset Mag.", function(o)

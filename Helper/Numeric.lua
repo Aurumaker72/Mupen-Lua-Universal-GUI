@@ -8,20 +8,8 @@ function Numeric.Clamp(value, min, max)
     return math.max( min, math.min(value, max) )
 end
 
-function Numeric.TemporalInterpolateNumber(current, target)
-    return Numeric.TemporalInterpolateNumberWithSpeed(0.1, current, target)
-end
-
-function Numeric.TemporalInterpolateNumberWithSpeed(factor, current, target)
-    current = math.floor(current +  (target - current) * factor)
-    return current
-end
-
-function Numeric.TemporalInterpolateNumberWithEpsilon(e, current, target)
-    if target - current < e then
-        return target
-    end
-    return Numeric.TemporalInterpolateNumber(current, target)
+function Numeric.PointIsInsideRectangle(pX, pY, x, y, w, h)
+    return pX > x and pX < x + w and pY > y and pY < y + h
 end
 
 function Numeric.WrappingClamp(value, min, max) -- there has got to be branchless bithack for this!!!
