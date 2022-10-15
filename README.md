@@ -101,8 +101,5 @@ The user mustn't modify any code outside of the User directory and must interact
 ✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
 
-#### Rendering process and relations
-<img src="https://user-images.githubusercontent.com/48759429/182868104-523538f1-82e7-4eeb-9f0b-79fb206389d0.png" width="250"/>
-
-
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/48759429/195982354-11a00d7e-e770-4688-8836-62776cbc160e.svg)
 
