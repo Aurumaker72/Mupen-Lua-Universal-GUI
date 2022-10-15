@@ -6,10 +6,10 @@ end
 
 -- TODO: expand C side gdi+ API
 
-function GDIPlusRenderer:DrawRectangle(color, thickness, x, y, w, h)
+function GDIPlusRenderer:DrawRectangle(color, thickness, x, y, w, h, cW, cH)
     wgui.fillrecta(x, y, w, h, color) -- TODO: fix channel mismatch, proper no-fill
 end
-function GDIPlusRenderer:FillRectangle(color, x, y, w, h)
+function GDIPlusRenderer:FillRectangle(color, x, y, w, h, cW, cH)
     wgui.fillrecta(x, y, w, h, color) -- TODO: fix channel mismatch
 end
 function GDIPlusRenderer:DrawEllipse(color, thickness, x, y, w, h)

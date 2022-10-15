@@ -4,9 +4,9 @@ function Renderer:initialize()
     self.IsStable = true
 end
 
-function Renderer:DrawRectangle(color, thickness, x, y, w, h)
+function Renderer:DrawRectangle(color, thickness, x, y, w, h, cW, cH)
 end
-function Renderer:FillRectangle(color, x, y, w, h)
+function Renderer:FillRectangle(color, x, y, w, h, cW, cH)
 end
 function Renderer:DrawEllipse(color, thickness, x, y, w, h)
 end

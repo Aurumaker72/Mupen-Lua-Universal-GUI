@@ -4,20 +4,32 @@ function StandardRenderer:initialize()
     self.IsStable = true
 end
 
-function StandardRenderer:DrawRectangle(color, thickness, x, y, w, h)
+function StandardRenderer:DrawRectangle(color, thickness, x, y, w, h, cW, cH)
     if not color then
         print(debug.traceback())
     end
     wgui.setpen(color, thickness)
-    wgui.rect(x, y, x + w, y + h)
+    if not cW then
+        cW = 0
+    end
+    if not cH then
+        cH = 0
+    end
+    wgui.rect(x, y, x + w, y + h, cW, cH)
 end
-function StandardRenderer:FillRectangle(color, x, y, w, h)
+function StandardRenderer:FillRectangle(color, x, y, w, h, cW, cH)
     if not color then
         print(debug.traceback())
     end
     wgui.setbrush(color)
     wgui.setpen(color)
-    wgui.rect(x, y, x + w, y + h)
+    if not cW then
+        cW = 0
+    end
+    if not cH then
+        cH = 0
+    end
+    wgui.rect(x, y, x + w, y + h, cW, cH)
 end
 function StandardRenderer:DrawEllipse(color, thickness, x, y, w, h)
     if not color then

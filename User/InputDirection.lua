@@ -290,9 +290,12 @@ function UserCodeOnInitialize()
                 end
             end),
         StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20,
-            {"Windows 10", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
+            {"Windows 10", "Windows 11", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
                 if o.Items[o.SelectedItemIndex] == "Windows 10" then
                     StylerManager.SetCurrentStyler(Windows10Styler:new())
+                end
+                if o.Items[o.SelectedItemIndex] == "Windows 11" then
+                    StylerManager.SetCurrentStyler(Windows11Styler:new())
                 end
                 if o.Items[o.SelectedItemIndex] == "Windows 3" then
                     StylerManager.SetCurrentStyler(Windows3Styler:new())
