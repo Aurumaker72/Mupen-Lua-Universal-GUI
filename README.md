@@ -1,20 +1,17 @@
-<div align="center">
-  <a>
-    <img src="https://user-images.githubusercontent.com/48759429/188273706-e8077f99-a24f-4c6b-b861-d397b9220d1e.png" alt="Logo" width="140" height="140">
-  </a>
-
-  <h3 align="center">Mupen Lua Universal GUI</h3>
-
-  <p align="center">
-    A feature-rich GUI framework for production scripts and prototyping
-    <br>
-    It provides many built-in controls, themes and styles which help you fulfill your requirements and has patterns encouraging clean, legible code.
-    <br />
-    <br />
+<p align="center">
+  <img width="128" align="center" src="https://user-images.githubusercontent.com/48759429/188273706-e8077f99-a24f-4c6b-b861-d397b9220d1e.png">
+</p>
+<h1 align="center">
+  Mupen Lua Universal GUI
+</h1>
+<p align="center">
+  A feature-rich GUI framework for Mupen Lua
+</p>
+<p align="center">
     <img src="https://img.shields.io/github/last-commit/Aurumaker72/mupenluauniversalgui?style=for-the-badge"/> 
     <img src="https://img.shields.io/badge/Status-Work%20In%20Progress-orange?style=for-the-badge"/>
-  </p>
-</div>
+</p>
+
 
 ## 💨 Quickstart
 
