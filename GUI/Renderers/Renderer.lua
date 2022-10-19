@@ -25,3 +25,16 @@ end
 
 function Renderer:FinalizeFrame()
 end
+
+function Renderer:DrawPlaceholder(x, y, w, h)
+    self:DrawLine(self:RGBToHexadecimalColor({ 255, 0, 0 }), 1,
+    x,
+    y,
+    x+w,
+    h)
+    self:DrawLine(self:RGBToHexadecimalColor({ 255, 0, 0 }), 1,
+    x+w,
+    y,
+    x,
+    h)
+end

@@ -21,8 +21,12 @@ function SceneManager.ChangeScene(scene)
     if CurrentScene then
         CurrentScene:SetActive(false)
     end
-    CurrentScene = scene
-    CurrentScene:SetActive(true)
+    if scene then
+        CurrentScene = scene
+        CurrentScene:SetActive(true)
+    else
+        print("passed nil scene")
+    end
 end
 
 function SceneManager.Update()
@@ -51,8 +55,8 @@ function SceneManager.Update()
         SceneManager.ExecuteQueuedCallbacksForScene(scene)
     end
 
-    
-    
+
+
 end
 
 function SceneManager.ExecuteQueuedCallbacksForScene(scene)
@@ -70,11 +74,16 @@ end
 
 function SceneManager.Draw()
 
-    CurrentScene:Draw()
+    if CurrentScene then
+        CurrentScene:Draw()
+    else
+        CurrentRenderer:DrawPlaceholder(Screen.Dimensions.Width - Screen.ExpandedOffset, 0, Screen.ExpandedOffset, Screen.Dimensions.Height)
+    end
+
     if Scenes["PersistentScene"] then
         Scenes["PersistentScene"]:Draw()
     end
 
     CurrentRenderer:FinalizeFrame()
-    
+
 end

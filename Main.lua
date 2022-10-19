@@ -6,11 +6,15 @@ function AbsolutePathToCurrentFile()
     return str:match("^.*/(.*).lua$") or str
 end
 
-function AbsolutePathToCurrentFolder()
-    return AbsolutePathToCurrentFile():sub(1, -("Main.lua"):len() - 1)
+function AbsolutePathToCurrentFolder(thisFileName)
+    if not thisFileName then
+        thisFileName = "Main.lua"
+    end
+    return AbsolutePathToCurrentFile():sub(1, -(thisFileName):len() - 1)
 end
 
 FOLDER_USER_CODE = AbsolutePathToCurrentFolder() .. "User" .. "\\"
+FOLDER_USER_CODE_SAMPLES = AbsolutePathToCurrentFolder() .. "User" .. "\\" .. "Samples" .. "\\"
 FOLDER_LIBRARY = AbsolutePathToCurrentFolder() .. "Library" .. "\\"
 FOLDER_EMULATOR = AbsolutePathToCurrentFolder() .. "Emulator" .. "\\"
 FOLDER_HELPER = AbsolutePathToCurrentFolder() .. "Helper" .. "\\"
@@ -23,7 +27,10 @@ FOLDER_GUI_EVENTS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .
 FOLDER_GUI_EVENTS_MANAGER = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .. "\\" .. "Manager" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
-dofile(FOLDER_USER_CODE .. "InputDirection.lua")
+dofile(FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection.lua")
+-- dofile(FOLDER_USER_CODE_SAMPLES .. "Hello World" .. "\\" .. "HelloWorld.lua")
+--  dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
+
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
 dofile(FOLDER_EMULATOR .. "WindowsMessageManager.lua")
@@ -74,16 +81,23 @@ dofile(FOLDER_PROVIDER .. "Appearance.lua")
 -- Expand window for our drawing area
 Screen.Expand()
 
-UserCodeOnInitialize()
-
--- Appearance requires renderer initialization
+RendererManager.SetCurrentRenderer(StandardRenderer:new())
 Appearance.Initialize()
+
+if UserCodeOnInitialize then
+    UserCodeOnInitialize()
+end
+
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 function AtStop()
 
-    UserCodeAtStop()
+    if UserCodeAtStop then
+        UserCodeAtStop()
+    end
+    
     
     -- Restore pre-resize window dimensions
     Screen.Contract()
@@ -91,8 +105,9 @@ end
 
 function AtVisualInterrupt()
 
-    UserCodeAtVisualInterrupt()
-
+    if UserCodeAtVisualInterrupt then
+        UserCodeAtVisualInterrupt()
+    end
 
     SceneManager.Draw()
     

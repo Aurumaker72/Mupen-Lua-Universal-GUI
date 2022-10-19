@@ -3,7 +3,7 @@ InputDirection = {
     IsInitialized = false
 }
 
-FOLDER_INPUTDIRECTION = FOLDER_USER_CODE .. "InputDirection" .. "\\"
+FOLDER_INPUTDIRECTION = FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection" .. "\\"
 
 dofile(FOLDER_INPUTDIRECTION .. "Broker.lua")
 dofile(FOLDER_INPUTDIRECTION .. "Memory.lua")
