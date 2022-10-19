@@ -100,3 +100,11 @@ The user mustn't modify any code outside of the User directory and must interact
 
 ![Untitled Diagram drawio](https://user-images.githubusercontent.com/48759429/195982354-11a00d7e-e770-4688-8836-62776cbc160e.svg)
 
+## ⚕️ Troubleshooting
+
+### I'm seeing a red cross instead of my scene
+<img src="https://user-images.githubusercontent.com/48759429/196798099-0c59a377-7675-467f-9efc-11baff313e8a.png" height="200"/>
+
+This is caused by an improper, incomplete or just plain forgotten initialization of scenes. Take a look at the [samples](https://github.com/Aurumaker72/Mupen-Lua-Universal-GUI/tree/main/User/Samples) to check up and compare.
+
+
