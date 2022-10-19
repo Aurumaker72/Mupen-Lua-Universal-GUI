@@ -17,10 +17,6 @@
 ## 💨 Quickstart
 
 #### Setting a renderer
-Before doing anything GUI-related, you must tell the SceneManager to activate and use a Renderer. This Renderer is essential for all measurement and low-level interactions and thus must be initialized first
-```lua
-RendererManager.SetCurrentRenderer(StandardRenderer:new())
-```
 
 #### Adding a new scene
 Create a new scene using the `Scene` constructor
@@ -56,7 +52,7 @@ SceneManager.Initialize(
         Main = myScene,    -- Dictionary of your regular scenes
     }, 
     persistentScene,       -- (OPTIONAL) Scene which will be active at all times
-    Windows10Styler:new()) -- Styler
+    Windows11Styler:new()) -- Styler
 ```
 
 #### Displaying the scene
