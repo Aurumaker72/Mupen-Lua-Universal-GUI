@@ -1,6 +1,7 @@
 <p align="center">
-  <img width="128" align="center" src="https://user-images.githubusercontent.com/48759429/188273706-e8077f99-a24f-4c6b-b861-d397b9220d1e.png">
+  <img width="128" align="center" src="https://user-images.githubusercontent.com/48759429/196777604-aa4becd2-d6aa-45f6-824d-f05a493a088e.png">
 </p>
+
 <h1 align="center">
   Mupen Lua Universal GUI
 </h1>
@@ -65,8 +66,7 @@ SceneManager.ChangeScene(Scenes.Main)
 ```
 
 ## ℹ️ Examples
-
-<img src="https://user-images.githubusercontent.com/48759429/182022523-58ddb46f-7c66-43f7-aa3e-870c31085aaf.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036331-ca348923-dc75-4a7a-a2d1-97a82b80bf0a.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036366-515ebd01-fa88-4b18-a254-fb1366eb2955.png" height="300"/> <img src="https://user-images.githubusercontent.com/48759429/182036403-9f318d6f-7707-42ab-97b5-8ac4f6d54908.png" height="300"/> 
+<img src="https://user-images.githubusercontent.com/48759429/195981965-5dfe19f0-ae3f-4183-87bf-2a8bc18be42d.png" height="400"/><img src="https://user-images.githubusercontent.com/48759429/195981968-327b2469-7f4d-49db-a7c9-5d6b4e69b1e4.png" height="400"/>
 
 ## ✨ Features
 - Scenes (Tabs)
@@ -102,8 +102,5 @@ The user mustn't modify any code outside of the User directory and must interact
 ✔️ ```RendererManager.SetCurrentRenderer(GDIRenderer:new())```
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
 
-#### Rendering process and relations
-<img src="https://user-images.githubusercontent.com/48759429/182868104-523538f1-82e7-4eeb-9f0b-79fb206389d0.png" width="250"/>
-
-
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/48759429/195982354-11a00d7e-e770-4688-8836-62776cbc160e.svg)
 
