@@ -1,6 +1,7 @@
 <p align="center">
-  <img width="128" align="center" src="https://user-images.githubusercontent.com/48759429/188273706-e8077f99-a24f-4c6b-b861-d397b9220d1e.png">
+  <img width="128" align="center" src="https://user-images.githubusercontent.com/48759429/196777604-aa4becd2-d6aa-45f6-824d-f05a493a088e.png">
 </p>
+
 <h1 align="center">
   Mupen Lua Universal GUI
 </h1>
