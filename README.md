@@ -17,10 +17,6 @@
 ## 💨 Quickstart
 
 #### Setting a renderer
-Before doing anything GUI-related, you must tell the SceneManager to activate and use a Renderer. This Renderer is essential for all measurement and low-level interactions and thus must be initialized first
-```lua
-RendererManager.SetCurrentRenderer(StandardRenderer:new())
-```
 
 #### Adding a new scene
 Create a new scene using the `Scene` constructor
@@ -56,7 +52,7 @@ SceneManager.Initialize(
         Main = myScene,    -- Dictionary of your regular scenes
     }, 
     persistentScene,       -- (OPTIONAL) Scene which will be active at all times
-    Windows10Styler:new()) -- Styler
+    Windows11Styler:new()) -- Styler
 ```
 
 #### Displaying the scene
@@ -103,4 +99,12 @@ The user mustn't modify any code outside of the User directory and must interact
 ❌ ```CurrentRenderer = GDIRenderer:new()```)
 
 ![Untitled Diagram drawio](https://user-images.githubusercontent.com/48759429/195982354-11a00d7e-e770-4688-8836-62776cbc160e.svg)
+
+## ⚕️ Troubleshooting
+
+### I'm seeing a red cross instead of my scene
+<img src="https://user-images.githubusercontent.com/48759429/196798099-0c59a377-7675-467f-9efc-11baff313e8a.png" height="200"/>
+
+This is caused by an improper, incomplete or just plain forgotten initialization of scenes. Take a look at the [samples](https://github.com/Aurumaker72/Mupen-Lua-Universal-GUI/tree/main/User/Samples) to check up and compare.
+
 
