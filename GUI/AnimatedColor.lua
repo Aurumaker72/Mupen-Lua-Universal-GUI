@@ -11,6 +11,11 @@ function AnimatedColor:initialize(currentColor)
     self.Epsilon = 5
 end
 
+function AnimatedColor:GetCompletion()
+    return ((self.CurrentColor[1] + self.CurrentColor[2] + self.CurrentColor[3]) / 3) /
+    ((self.targetColor[1] + self.targetColor[2] + self.targetColor[3]) / 3)
+end
+
 function AnimatedColor:IsLocked()
     return self.overrideTargetColor and true or false 
 end

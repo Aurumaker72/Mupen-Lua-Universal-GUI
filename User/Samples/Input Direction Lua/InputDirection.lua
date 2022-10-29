@@ -242,8 +242,7 @@ function UserCodeOnInitialize()
             128 + 30, "Y ?"),
         MLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4 - 64/2 - 16,
         128 + 30, "M ?"),
-        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
-            128 + 10 + 5, 128, 20, 0, -128, 127, true, false, nil),
+        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2, 128 + 10 + 5, 128, 20, 0, -128, 127, true, false, nil),
         YSlider = Slider:new(encodingScene, nil,
             (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 128 + 5, 10, 20, 128, 0, 128, -127,
             false, false, nil),
@@ -268,7 +267,7 @@ function UserCodeOnInitialize()
         RendererLabel = Label:new(settingsScene, 2, 5, 30, "Renderer"),
         StylerLabel = Label:new(settingsScene, 3, 5, 55, "Styler"),
 
-        Fuck = ComboBox:new(settingsScene, 4, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "Inverted"}, function(o)
+        Fuck = ComboBox:new(settingsScene, 4, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "DarkMica", "Inverted"}, function(o)
             Appearance.SetTheme(o.Items[o.SelectedItemIndex])
         end),
         FuckTextBox = TextBox:new(settingsScene, 11, 138, 110, 85, 30, nil, false, false, function(o)
@@ -290,7 +289,7 @@ function UserCodeOnInitialize()
                 end
             end),
         StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20,
-            {"Windows 10", "Windows 11", "Windows 3", "Flat", "3D", "Plastic"}, function(o)
+            {"Windows 11", "Windows 10", "Windows 3", "Plastic"}, function(o)
                 if o.Items[o.SelectedItemIndex] == "Windows 10" then
                     StylerManager.SetCurrentStyler(Windows10Styler:new())
                 end
@@ -299,12 +298,6 @@ function UserCodeOnInitialize()
                 end
                 if o.Items[o.SelectedItemIndex] == "Windows 3" then
                     StylerManager.SetCurrentStyler(Windows3Styler:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "Flat" then
-                    StylerManager.SetCurrentStyler(FlatStyler:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "3D" then
-                    StylerManager.SetCurrentStyler(DimensionalStyler:new())
                 end
                 if o.Items[o.SelectedItemIndex] == "Plastic" then
                     StylerManager.SetCurrentStyler(PlasticStyler:new())
@@ -343,7 +336,7 @@ function UserCodeOnInitialize()
         Main = mainScene,
         Encoding = encodingScene,
         Settings = settingsScene
-    }, persistentScene, Windows10Styler:new())
+    }, persistentScene)
 
     SceneManager.ChangeScene(Scenes.Main)
 
@@ -356,6 +349,7 @@ function UserCodeOnInitialize()
 
     UserCodeAtInputPoll()
 
+    StylerManager.SetCurrentStyler(Windows11Styler:new())
 end
 
 function UserCodeAtStop()

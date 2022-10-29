@@ -29,7 +29,7 @@ FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 dofile(FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection.lua")
 -- dofile(FOLDER_USER_CODE_SAMPLES .. "Hello World" .. "\\" .. "HelloWorld.lua")
---  dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
+-- dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
 
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
@@ -47,8 +47,6 @@ dofile(FOLDER_GUI_STYLERS .. "StylerManager.lua")
 dofile(FOLDER_GUI_STYLERS .. "Styler.lua")
 dofile(FOLDER_GUI_STYLERS .. "Windows10Styler.lua")
 dofile(FOLDER_GUI_STYLERS .. "Windows11Styler.lua")
-dofile(FOLDER_GUI_STYLERS .. "FlatStyler.lua")
-dofile(FOLDER_GUI_STYLERS .. "DimensionalStyler.lua")
 dofile(FOLDER_GUI_STYLERS .. "PlasticStyler.lua")
 dofile(FOLDER_GUI_STYLERS .. "Windows3Styler.lua")
 dofile(FOLDER_GUI .. "Scene.lua")
@@ -82,12 +80,12 @@ dofile(FOLDER_PROVIDER .. "Appearance.lua")
 Screen.Expand()
 
 RendererManager.SetCurrentRenderer(StandardRenderer:new())
+StylerManager.SetCurrentStyler(Windows11Styler:new())
 Appearance.Initialize()
 
 if UserCodeOnInitialize then
     UserCodeOnInitialize()
 end
-
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------

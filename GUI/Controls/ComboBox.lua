@@ -136,8 +136,7 @@ end
 function ComboBox:LateDraw()
     if self.DropdownHeight.CurrentNumber > 1 then
 
-        CurrentStyler:DrawBorder(self, CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
-            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width,
+        CurrentStyler:DrawBorder(self.BorderColor.CurrentColor, self.X, self.Y, self.Width,
             self.DropdownHeight.CurrentNumber + self.ItemHeight / 2 + self.ItemHeight)
 
         CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.ItemBackColor.CurrentColor), self.X,
@@ -147,7 +146,6 @@ function ComboBox:LateDraw()
             CurrentRenderer:FillRectangle(
                 CurrentRenderer:RGBToHexadecimalColor(self.SelectedItemBackColor.CurrentColor), self.X,
                 self.ItemSelectorY.CurrentNumber, self.Width, self.ItemHeight)
-
         end
 
         for i = 1, #self.Items, 1 do
@@ -168,9 +166,7 @@ end
 
 function ComboBox:Draw()
 
-    CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor),
-        CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
-        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self)
 
     CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.RightChevronText,
         self.X + self.Width - Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_WIDTH / 2 - 4,
@@ -178,7 +174,6 @@ function ComboBox:Draw()
 
     CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor),
         self.Items[self.SelectedItemIndex], self.X + 3, self.Y + 2)
-
 end
 
 function ComboBox:GetInteractionKeys()

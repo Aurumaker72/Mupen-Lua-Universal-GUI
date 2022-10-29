@@ -39,9 +39,7 @@ end
 
 function CarrouselButton:Draw()
 
-    CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor),
-        CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
-        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self)
 
     CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), "<",
         self.LeftChevronX.CurrentNumber, self.Y + 1)

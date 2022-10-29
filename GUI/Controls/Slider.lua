@@ -9,9 +9,9 @@ function Slider:initialize(containingScene, index, x, y, w, h, value, min, max, 
     self.IsHorizontal = isHorizontal
     self.ValueChangedCallback = valueChangedCallback
 
-    self.HeadColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
+    self.ForeColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR))
-    self.TrackColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
+    self.BackColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_COLOR))
 
     self:SetReadOnly(isReadOnly)
@@ -20,21 +20,21 @@ end
 function Slider:SetReadOnly(isReadOnly)
     self.IsReadOnly = isReadOnly
     if self.IsReadOnly then
-        self.HeadColor:LockOverride(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
+        self.ForeColor:LockOverride(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR))
     else
-        self.HeadColor:UnlockOverride()
+        self.ForeColor:UnlockOverride()
     end
 end
 
 function Slider:OnMouseEnter(e)
     if not self.IsCapturingMouse then
-        self.HeadColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HOVERED_HEAD_COLOR))
+        self.ForeColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HOVERED_HEAD_COLOR))
     end
 end
 
 function Slider:OnMouseLeave(e)
     if not self.IsCapturingMouse then
-        self.HeadColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR))
+        self.ForeColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR))
     end
 end
 
@@ -42,13 +42,13 @@ function Slider:OnMouseDown(e)
     if not self.IsReadOnly then
         self.IsCapturingMouse = true
         self:MoveHeadToMouse(e)
-        self.HeadColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR))
+        self.ForeColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_PRESSED_HEAD_COLOR))
     end
 end
 
 function Slider:OnMouseUp(e)
     self.IsCapturingMouse = false
-    self.HeadColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR))
+    self.ForeColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_COLOR))
 end
 
 function Slider:OnMouseMove(e)
@@ -70,42 +70,45 @@ function Slider:MoveHeadToMouse(mousePositions)
 end
 
 function Slider:PersistentUpdate()
-    self.HeadColor:Update()
-    self.TrackColor:Update()
+    self.BackColor:Update()
+    self.ForeColor:Update()
 end
 
 function Slider:Draw()
 
-    if self.IsHorizontal then
-        CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.TrackColor.CurrentColor),
-            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
-            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y + self.Height / 2 -
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-    else
-        CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.TrackColor.CurrentColor),
-            Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
-            Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X + self.Width / 2 -
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, self.Y,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, self.Height)
-    end
+    CurrentStyler:DrawSlider(self)
+    CurrentStyler:DrawSliderHead(self)
 
-    if self.IsHorizontal then
-        CurrentStyler:DrawGenericAccentShape(self, CurrentRenderer:RGBToHexadecimalColor(self.HeadColor.CurrentColor),
-            (self.Minimum == self.Maximum and self.X or
-                Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width)) -
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2, self.Y +
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT -
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
-    else
-        CurrentStyler:DrawGenericAccentShape(self, CurrentRenderer:RGBToHexadecimalColor(self.HeadColor.CurrentColor),
-            self.X + 1, (self.Minimum == self.Maximum and self.Y or
-                Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.Y + self.Height, self.Y)) -
-                Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT,
-            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH)
-    end
+    -- if self.IsHorizontal then
+    --     CurrentStyler:DrawSlider(self, CurrentRenderer:RGBToHexadecimalColor(self.TrackColor.CurrentColor),
+    --         Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+    --         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y + self.Height / 2 -
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT, self.Width,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
+    -- else
+    --     CurrentStyler:DrawSlider(self, CurrentRenderer:RGBToHexadecimalColor(self.TrackColor.CurrentColor),
+    --         Appearance.Themes[Appearance.CurrentTheme].BUTTON_BORDER_COLOR,
+    --         Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X + self.Width / 2 -
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, self.Y,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, self.Height)
+    -- end
+
+    -- if self.IsHorizontal then
+    --     CurrentStyler:DrawGenericAccentShape(self, CurrentRenderer:RGBToHexadecimalColor(self.HeadColor.CurrentColor),
+    --         (self.Minimum == self.Maximum and self.X or
+    --             Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.X, self.X + self.Width)) -
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2, self.Y +
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT -
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2 + 1)
+    -- else
+    --     CurrentStyler:DrawGenericAccentShape(self, CurrentRenderer:RGBToHexadecimalColor(self.HeadColor.CurrentColor),
+    --         self.X + 1, (self.Minimum == self.Maximum and self.Y or
+    --             Numeric.Remap(self.Value, self.Minimum, self.Maximum, self.Y + self.Height, self.Y)) -
+    --             Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT,
+    --         Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH)
+    -- end
 
 end

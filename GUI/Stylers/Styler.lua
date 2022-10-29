@@ -7,19 +7,17 @@ Styler = middleclass('Styler')
 function Styler:initialize()
 end
 
-function Styler:DrawRaisedFrame(control, backColor, borderColor, borderSize, x, y, w, h)
+function Styler:DrawButton(button)
 end
 
-function Styler:DrawBorder(control, borderColor, borderSize, x, y, w, h)
+function Styler:DrawSlider(slider)
 end
 
-function Styler:DrawGenericAccentShape(control, backColor, x, y, w, h)
+function Styler:DrawSliderHead(slider)
 end
 
+function Styler:DrawTextBox(textBox)
+end
 
-function Styler:ControlShouldBeDeep(control)
-    if control:isInstanceOf(TextBox) then
-        return false
-    end
-    return control.IsChecked or (control.ShouldBePushed and control:ShouldBePushed() or false) or control.IsOpened or control.IsActive or control.IsCapturingMouse
+function Styler:DrawBorder(borderColor, borderSize, x, y, w, h)
 end

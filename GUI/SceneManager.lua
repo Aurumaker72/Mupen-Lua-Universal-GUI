@@ -4,14 +4,12 @@ CurrentRenderer = nil
 CurrentStyler = nil
 SceneManager = {}
 
-function SceneManager.Initialize(scenes, persistentScene, styler)
+function SceneManager.Initialize(scenes, persistentScene)
     Scenes = scenes
     if not persistentScene then
         persistentScene = Scene:new()
     end
-
-    StylerManager.SetCurrentStyler(styler)
-
+    
     persistentScene:SetActive(true)
     persistentScene.HasBackColor = false
     Scenes["PersistentScene"] = persistentScene

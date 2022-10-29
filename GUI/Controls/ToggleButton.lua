@@ -45,8 +45,7 @@ end
 
 
 function ToggleButton:Draw()
-    CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor), CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
-        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawButton(self)
 
     if (self.Text) then
         CurrentRenderer:DrawText(self.IsChecked and

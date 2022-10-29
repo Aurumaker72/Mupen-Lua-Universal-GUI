@@ -249,12 +249,10 @@ end
 
 function TextBox:Draw()
 
-    CurrentStyler:DrawRaisedFrame(self, CurrentRenderer:RGBToHexadecimalColor(self.BackColor.CurrentColor),
-        CurrentRenderer:RGBToHexadecimalColor(self.BorderColor.CurrentColor),
-        Appearance.Themes[Appearance.CurrentTheme].BORDER_SIZE, self.X, self.Y, self.Width, self.Height)
+    CurrentStyler:DrawTextBox(self)
 
-    CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.Text, self.X + 2,
-        self.Y + 2)
+    CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.Text, self.X + 2, self.Y + 2)
+    
     if self.Text:len() > 0 and self.IsReadOnly == false then
         CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.CaretColor.CurrentColor),
             self.CaretX.CurrentNumber, self.Y + self.Height - 5, 6, 1)
