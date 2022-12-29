@@ -16,21 +16,19 @@
 
 ## 💨 Quickstart
 
-#### Setting a renderer
-
 #### Adding a new scene
 Create a new scene using the `Scene` constructor
 ```lua
-local myScene = Scene:new()
+local mainScene = Scene:new()
 ```
 
 #### Adding controls to your scene
 Add a controls dictionary to the created scene by using its `AddControls(t)` method
 ```lua
-myScene:AddControls({
+mainScene:AddControls({
 
 YourButton = Button:new(
-     myScene,           -- The scene containing the button
+     mainScene,           -- The scene containing the button
      nil,               -- (OPTIONAL, only for layouted controls) The button's index in the scene. For each control, increase it by 1 heading downwards
      nil,               -- The keyboard key associated with the button (nil disables keyboard interaction)
      20,                -- X Position 
@@ -49,10 +47,10 @@ You must now start the `SceneManager` and provide it with the necessary scenes a
 ```lua
 SceneManager.Initialize(
     {                      
-        Main = myScene,    -- Dictionary of your regular scenes
+        Main = mainScene,    -- Dictionary of your regular scenes
     }, 
-    persistentScene,       -- (OPTIONAL) Scene which will be active at all times
-    Windows11Styler:new()) -- Styler
+    nil,       -- (OPTIONAL) Scene which will be active at all times
+    Windows11Styler:new()) -- The global styler responsible
 ```
 
 #### Displaying the scene
