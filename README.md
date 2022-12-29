@@ -16,13 +16,13 @@
 
 ## 💨 Quickstart
 
-#### Adding a new scene
+#### ➕ Adding a scene
 Create a new scene using the `Scene` constructor
 ```lua
 local mainScene = Scene:new()
 ```
 
-#### Adding controls to your scene
+#### ➕ Adding controls
 Add a controls dictionary to the created scene by using its `AddControls(t)` method
 ```lua
 mainScene:AddControls({
@@ -42,7 +42,7 @@ YourButton = Button:new(
 })
 ```
 
-#### Starting up the Scene Manager
+#### 📈 Starting up
 You must now start the `SceneManager` and provide it with the necessary scenes and subsystems 
 ```lua
 SceneManager.Initialize(
@@ -53,7 +53,7 @@ SceneManager.Initialize(
     Windows11Styler:new()) -- The global styler responsible
 ```
 
-#### Displaying the scene
+#### 🖥️ Displaying
 With all of the initialization done, you can now activate your scene!
 ```lua
 SceneManager.ChangeScene(Scenes.Main)
@@ -63,27 +63,11 @@ SceneManager.ChangeScene(Scenes.Main)
 <img src="https://user-images.githubusercontent.com/48759429/195981965-5dfe19f0-ae3f-4183-87bf-2a8bc18be42d.png" height="400"/><img src="https://user-images.githubusercontent.com/48759429/195981968-327b2469-7f4d-49db-a7c9-5d6b4e69b1e4.png" height="400"/>
 
 ## ✨ Features
-- Scenes (Tabs)
-  - Switch with one function call
-  - Can define non-scene (persistent) controls for navigation OR scene-linked controls
-- Theming defines... 
-  - Colors
-  - Margins
-  - Sizes
-  - Alignment
-- Styling defines...
-  - High-level Drawing
-  - Decorations
-- Compatibility
-  - Automatically scales controls depending on resolution
 
-|                      | Button | ToggleButton | TextBox                                 | Slider | Joystick                       | ComboBox | CarrouselButton |
-|----------------------|--------|--------------|-----------------------------------------|--------|--------------------------------|----------|-----------------|
-| Animations           | ✔️      | ✔️            | ✔️                                       | ✔️      | ✔️                              | ✔️        | ✔️               |
-| Transitions          | ✔️      | ✔️            | ➖                                       | ➖      | ✔️                              | ✔️        | ❌               |
-| Keyboard interaction | ✔️      | ✔️            | ✔️                                       | ❌      | ❌                              | ✔️        | ✔️               |
-| Read-only mode       | ❌      | ❌            | ✔️                                       | ✔️      | ✔️                              | ❌        | ❌               |
-| Miscellaneous        |        |              | Supports numerical, alphanumerical mode |        | Configurable magnitude ellipse |          |                 |
+- **Scenes** allow easy navigation with tabs
+- **Themes** change the color scheme
+- **Stylers** change the look and feel of controls
+- **Autosize** scales your GUI to any emulator resolution, guaranteeing no overflows
 
 ## 📐 Architecture
 This framework is split into two major code sections:
