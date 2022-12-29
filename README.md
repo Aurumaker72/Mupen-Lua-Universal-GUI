@@ -26,31 +26,32 @@ local mainScene = Scene:new()
 Add a controls dictionary to the created scene by using its `AddControls(t)` method
 ```lua
 mainScene:AddControls({
-
-YourButton = Button:new(
-     mainScene,           -- The scene containing the button
-     nil,               -- (OPTIONAL, only for layouted controls) The button's index in the scene. For each control, increase it by 1 heading downwards
-     nil,               -- The keyboard key associated with the button (nil disables keyboard interaction)
-     20,                -- X Position 
-     20,                -- Y Position
-     128,               -- Width
-     64,                -- Height
-     "Hello World",     -- Text 
-     function(o)        -- Interaction callback, o is reference to button
+  YourButton = Button:new(
+       mainScene,           -- The scene containing the button
+       nil,               -- (OPTIONAL, only for layouted controls) The button's index in the scene. For each control, increase it by 1 heading downwards
+       nil,               -- The keyboard key associated with the button (nil disables keyboard interaction)
+       20,                -- X Position 
+       20,                -- Y Position
+       128,               -- Width
+       64,                -- Height
+       "Hello World",     -- Text 
+       function(o)        -- Interaction callback, o is reference to button
           print(o.Text)
-     end)
-})
+       end)
+  }
+)
 ```
 
 #### 📈 Starting up
 You must now start the `SceneManager` and provide it with the necessary scenes and subsystems 
 ```lua
 SceneManager.Initialize(
-    {                      
-        Main = mainScene,    -- Dictionary of your regular scenes
-    }, 
-    nil,       -- (OPTIONAL) Scene which will be active at all times
-    Windows11Styler:new()) -- The global styler responsible
+  {                      
+      Main = mainScene,    -- Dictionary of your regular scenes
+  }, 
+  nil,       -- (OPTIONAL) Scene which will be active at all times
+  Windows11Styler:new() -- The global styler
+)
 ```
 
 #### 🖥️ Displaying
