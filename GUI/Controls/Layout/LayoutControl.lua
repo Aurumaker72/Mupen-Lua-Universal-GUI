@@ -1,10 +1,8 @@
 LayoutControl = middleclass('LayoutControl', Control)
 
-function LayoutControl:initialize(containingScene, index, x, y, spacing, children)
+function LayoutControl:initialize(containingScene, index, x, y, children)
     Control.initialize(self, containingScene, index, x, y, 0, 0, nil, nil)
     self.IsLayoutControl = true
-    self.Spacing = self.IsHorizontal and (spacing * Screen.Dimensions.ScalingX) or
-                       (spacing * Screen.Dimensions.ScalingY)
     self.Children = children
 end
 

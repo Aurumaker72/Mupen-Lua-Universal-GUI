@@ -2,46 +2,53 @@ StackPanel = middleclass('StackPanel', LayoutControl)
 
 -- Children must inherit from Control
 function StackPanel:initialize(containingScene, index, x, y, spacing, children, isHorizontal)
-    LayoutControl.initialize(self, containingScene, index, x, y, spacing, children)
+    LayoutControl.initialize(self, containingScene, index, x, y, children)
     self.IsHorizontal = isHorizontal
-end
-
-function StackPanel:GetXForControl(control, i)
-    if self.IsHorizontal then
-        return self.X + ((i * control:GetLayoutWidth()) + i * self.Spacing)
-    else
-        return self.X
-    end
-end
-
-function StackPanel:GetYForControl(control, i)
-    if self.IsHorizontal then
-        return self.Y
-    else
-        return self.Y + ((i * control:GetLayoutHeight()) + i * self.Spacing)
-    end
+    self.Spacing = self.IsHorizontal and (spacing * Screen.Dimensions.ScalingX) or
+        (spacing * Screen.Dimensions.ScalingY)
+    print(self.X .. " " .. self.Y)
 end
 
 function StackPanel:Relayout()
 
-    -- TODO:
-    --  - labels are broken in horizontal stack direction 
-    --  - horizontal stack direction just sucks
-    --  - mixing controls of different types is catastrophic    
-    
     local lowestIndex = -1
     for key, control in pairs(self.Children) do
-
         if control.Index < lowestIndex or lowestIndex == -1 then
             lowestIndex = control.Index
         end
     end
 
-    for key, control in pairs(self.Children) do
+    local childrenSortedByIndex = {};
+    for key, value in pairs(self.Children) do
+        childrenSortedByIndex[#childrenSortedByIndex + 1] = {
+            key = key,
+            control = value,
+        };
+    end
+    table.sort(childrenSortedByIndex, function(k1, k2) return k1.control.Index < k2.control.Index end)
 
-        control.X = self:GetXForControl(control, control.Index - lowestIndex)
-        control.Y = self:GetYForControl(control, control.Index - lowestIndex)
+    if self.IsHorizontal then
+        local currentX = self.X;
+        for i = 1, #childrenSortedByIndex, 1 do
 
+            childrenSortedByIndex[i].control.X = currentX;
+            childrenSortedByIndex[i].control.Y = self.Y;
+
+            currentX = currentX + childrenSortedByIndex[i].control:GetLayoutWidth() + self.Spacing;
+        end
+    else
+        local currentY = self.Y;
+        for i = 1, #childrenSortedByIndex, 1 do
+
+            childrenSortedByIndex[i].control.X = self.X;
+            childrenSortedByIndex[i].control.Y = currentY;
+
+            currentY = currentY + childrenSortedByIndex[i].control:GetLayoutHeight() + self.Spacing;
+        end
+    end
+
+    for i = 1, #childrenSortedByIndex, 1 do
+        self.Children[childrenSortedByIndex[i].key] = childrenSortedByIndex[i].control;
     end
 
     self:SendChildrenToScene()
