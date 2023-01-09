@@ -1,6 +1,3 @@
--- GUI Framework for mupen lua
--- by Aurumaker72
----------------------------------------------------------------------------------------------------------------------------------------
 function AbsolutePathToCurrentFile()
     local str = debug.getinfo(2, "S").source:sub(2)
     return str:match("^.*/(.*).lua$") or str
@@ -29,7 +26,7 @@ FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
 -- dofile(FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection.lua")
 -- dofile(FOLDER_USER_CODE_SAMPLES .. "Hello World" .. "\\" .. "HelloWorld.lua")
-dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
+--dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
 
 dofile(FOLDER_LIBRARY .. "middleclass.lua")
 dofile(FOLDER_EMULATOR .. "Screen.lua")
@@ -95,8 +92,8 @@ function AtStop()
     if UserCodeAtStop then
         UserCodeAtStop()
     end
-    
-    
+
+
     -- Restore pre-resize window dimensions
     Screen.Contract()
 end
@@ -108,7 +105,7 @@ function AtVisualInterrupt()
     end
 
     SceneManager.Draw()
-    
+
 end
 
 function AtInterval()
@@ -118,8 +115,8 @@ function AtInterval()
 
     SceneManager.Update()
 
-    
-    
+
+
 end
 
 function AtReset()
@@ -127,7 +124,7 @@ function AtReset()
 end
 
 function AtWindowsMessage(hwnd, id, wparam, lparam)
-	WindowsMessageManager.Update(hwnd, id, wparam, lparam)
+    WindowsMessageManager.Update(hwnd, id, wparam, lparam)
 end
 
 -- Register callbacks
