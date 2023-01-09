@@ -1,6 +1,6 @@
 Joypad = {
 	input = {
-	
+
 	}
 }
 

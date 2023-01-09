@@ -100,7 +100,7 @@ function ComboBox:SetOpen(isOpen)
     end
     self.IsOpened = isOpen
     self.DropdownHeight:SetTargetNumber(self.IsOpened and (#self.Items * self.ItemHeight) - self.ItemHeight / 2 or
-                                            -self.ItemHeight)
+        -self.ItemHeight)
     self.RightChevronText = self.IsOpened and "^" or "v"
 end
 
@@ -177,7 +177,7 @@ function ComboBox:Draw()
 end
 
 function ComboBox:GetInteractionKeys()
-    return {"enter", "up", "down"}
+    return { "enter", "up", "down" }
 end
 
 function ComboBox:CanBeInteracted(e)

@@ -1,7 +1,7 @@
 TextBox = middleclass('TextBox', Control)
 
 function TextBox:initialize(containingScene, index, x, y, w, h, maxLength, isReadOnly, isNumericOnly,
-    textChangedCallback)
+                            textChangedCallback)
     Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
     self.MaxLength = maxLength and maxLength or 100
     self.TextChangedCallback = textChangedCallback
@@ -18,7 +18,7 @@ function TextBox:initialize(containingScene, index, x, y, w, h, maxLength, isRea
         Appearance.Themes[Appearance.CurrentTheme].BUTTON_FORE_COLOR))
     self.CaretColor = AnimatedColor:new(CurrentRenderer:HexadecimalColorToRGB(
         Appearance.Themes[Appearance.CurrentTheme].TEXTBOX_BACK_COLOR))
-    
+
     self.CaretX = AnimatedNumber:new(self.X)
     self.CaretX.Speed = 0.5
 
@@ -71,18 +71,18 @@ function TextBox:SetCaretIndex(i)
 end
 
 function TextBox:GetTextAfterIncrementingNumberAtIndex(increment, index)
-    if self.Text and self.Text:len() > 1 then 
+    if self.Text and self.Text:len() > 1 then
         local str = tostring(Numeric.Clamp(tonumber(String.GetCharAt(self.Text, self.CaretIndex)) + increment, 0, 9))
         return String.SetAt(self.Text, str, self.CaretIndex)
     else
-       -- uhh
-       return ""
+        -- uhh
+        return ""
     end
 end
 
 function TextBox:CanTypeCharacter()
     return (self.Text:len() * Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE < self.Width) and
-               (self.Text:len() + 1 <= self.MaxLength)
+        (self.Text:len() + 1 <= self.MaxLength)
 end
 
 function TextBox:IsTextEmpty()
@@ -202,7 +202,7 @@ function TextBox:OnKeyDown(e)
             appendedText = tostring(tonumber(e.Key))
         end
     else
-        if Keyboard.IsAlphanumericKey(e.Key) then 
+        if Keyboard.IsAlphanumericKey(e.Key) then
             appendedText = tostring(e.Key)
         end
     end
@@ -215,8 +215,6 @@ function TextBox:OnKeyDown(e)
     end
 end
 
-
-
 function TextBox:Update()
 
     self.CaretTimer = self.CaretTimer + 1
@@ -224,10 +222,10 @@ function TextBox:Update()
     if self.IsActive then
         if self.CaretTimer % 100 == 50 then
             self.CaretColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(self.IsReadOnly and
-                                                                                     Appearance.Themes[Appearance.CurrentTheme]
-                                                                                         .TEXTBOX_READONLY_FORE_COLOR or
-                                                                                     Appearance.Themes[Appearance.CurrentTheme]
-                                                                                         .BUTTON_FORE_COLOR))
+                Appearance.Themes[Appearance.CurrentTheme]
+                .TEXTBOX_READONLY_FORE_COLOR or
+                Appearance.Themes[Appearance.CurrentTheme]
+                .BUTTON_FORE_COLOR))
         end
         if self.CaretTimer % 100 == 1 then
             self.CaretColor:SetTargetColor(CurrentRenderer:HexadecimalColorToRGB(
@@ -251,8 +249,9 @@ function TextBox:Draw()
 
     CurrentStyler:DrawTextBox(self)
 
-    CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.Text, self.X + 2, self.Y + 2)
-    
+    CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor), self.Text, self.X + 2,
+        self.Y + 2)
+
     if self.Text:len() > 0 and self.IsReadOnly == false then
         CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(self.CaretColor.CurrentColor),
             self.CaretX.CurrentNumber, self.Y + self.Height - 5, 6, 1)

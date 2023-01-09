@@ -13,18 +13,18 @@ end
 
 function AnimatedColor:GetCompletion()
     return ((self.CurrentColor[1] + self.CurrentColor[2] + self.CurrentColor[3]) / 3) /
-    ((self.targetColor[1] + self.targetColor[2] + self.targetColor[3]) / 3)
+        ((self.targetColor[1] + self.targetColor[2] + self.targetColor[3]) / 3)
 end
 
 function AnimatedColor:IsLocked()
-    return self.overrideTargetColor and true or false 
+    return self.overrideTargetColor and true or false
 end
 
 function AnimatedColor:GetEffectiveTargetColor()
     if not self.overrideTargetColor then
         return self.targetColor
     else
-       return self.overrideTargetColor 
+        return self.overrideTargetColor
     end
 end
 
@@ -64,9 +64,12 @@ function AnimatedColor:Update()
     if (differenceR + differenceG + differenceB) / 3 < self.Epsilon then
         self.CurrentColor = self:GetEffectiveTargetColor()
     else
-        self.CurrentColor[1] = math.floor(self.CurrentColor[1] + (self:GetEffectiveTargetColor()[1] - self.CurrentColor[1]) * self.Speed)
-        self.CurrentColor[2] = math.floor(self.CurrentColor[2] + (self:GetEffectiveTargetColor()[2] - self.CurrentColor[2]) * self.Speed)
-        self.CurrentColor[3] = math.floor(self.CurrentColor[3] + (self:GetEffectiveTargetColor()[3] - self.CurrentColor[3]) * self.Speed)    
+        self.CurrentColor[1] = math.floor(self.CurrentColor[1] +
+            (self:GetEffectiveTargetColor()[1] - self.CurrentColor[1]) * self.Speed)
+        self.CurrentColor[2] = math.floor(self.CurrentColor[2] +
+            (self:GetEffectiveTargetColor()[2] - self.CurrentColor[2]) * self.Speed)
+        self.CurrentColor[3] = math.floor(self.CurrentColor[3] +
+            (self:GetEffectiveTargetColor()[3] - self.CurrentColor[3]) * self.Speed)
     end
 end
 

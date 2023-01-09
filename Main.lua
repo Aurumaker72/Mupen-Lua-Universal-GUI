@@ -24,7 +24,7 @@ FOLDER_GUI_EVENTS = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .
 FOLDER_GUI_EVENTS_MANAGER = AbsolutePathToCurrentFolder() .. "GUI" .. "\\" .. "Events" .. "\\" .. "Manager" .. "\\"
 FOLDER_PROVIDER = AbsolutePathToCurrentFolder() .. "Provider" .. "\\"
 
--- dofile(FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection.lua")
+dofile(FOLDER_USER_CODE_SAMPLES .. "Input Direction Lua" .. "\\" .. "InputDirection.lua")
 -- dofile(FOLDER_USER_CODE_SAMPLES .. "Hello World" .. "\\" .. "HelloWorld.lua")
 --dofile(FOLDER_USER_CODE_SAMPLES .. "Layout Controls" .. "\\" .. "LayoutControls.lua")
 

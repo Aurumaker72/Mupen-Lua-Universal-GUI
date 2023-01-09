@@ -5,7 +5,7 @@ function Numeric.Remap(value, from1, to1, from2, to2)
 end
 
 function Numeric.Clamp(value, min, max)
-    return math.max( min, math.min(value, max) )
+    return math.max(min, math.min(value, max))
 end
 
 function Numeric.PointIsInsideRectangle(pX, pY, x, y, w, h)

@@ -1,7 +1,7 @@
 Button = middleclass('Button', Control)
 
 function Button:initialize(containingScene, index, clickKey, x, y, w, h, text, primaryMouseClickCallback,
-    secondaryMouseClickCallback)
+                           secondaryMouseClickCallback)
     Control.initialize(self, containingScene, index, x, y, w, h, primaryMouseClickCallback, secondaryMouseClickCallback)
     self.Text = text
     self.ClickKey = clickKey
@@ -14,7 +14,7 @@ function Button:initialize(containingScene, index, clickKey, x, y, w, h, text, p
 end
 
 function Button:GetInteractionKeys()
-    return {self.ClickKey}
+    return { self.ClickKey }
 end
 
 function Button:PersistentUpdate()
@@ -52,7 +52,7 @@ end
 
 function Button:ShouldBePushed()
     return (Mouse.IsInside(self.X, self.Y, self.Width, self.Height) and Mouse.IsPrimaryDown()) or
-               Keyboard.KeyHeld(self.ClickKey)
+        Keyboard.KeyHeld(self.ClickKey)
 end
 
 function Button:Draw()

@@ -26,8 +26,6 @@ function String.SetAt(str, str2, index)
     return str:sub(1, index - 1) .. str2 .. str:sub(index + str2:len(), str:len())
 end
 
-
 function String.GetCharAt(str, index)
     return str:sub(index, index)
 end
-

@@ -20,12 +20,12 @@ function CarrouselButton:initialize(containingScene, index, x, y, w, h, items, w
 end
 
 function CarrouselButton:GetInteractionKeys()
-    return {"left", "right"}
+    return { "left", "right" }
 end
 
 function CarrouselButton:GetBaseLeftChevronX()
     return self.X - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE +
-               Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_MARGIN
+        Appearance.Themes[Appearance.CurrentTheme].CARROUSEL_BUTTON_CHEVRON_MARGIN
 end
 
 function CarrouselButton:GetBaseRightChevronX()
@@ -49,7 +49,7 @@ function CarrouselButton:Draw()
     CurrentRenderer:DrawText(CurrentRenderer:RGBToHexadecimalColor(self.ForeColor.CurrentColor),
         self.Items[self.SelectedItemIndex],
         self.X + self.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE / 3 *
-            self.Items[self.SelectedItemIndex]:len(), self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
+        self.Items[self.SelectedItemIndex]:len(), self.Y + self.Height / 2 - 6.5, self.Y + self.Height / 2 - 6.5)
 
 end
 

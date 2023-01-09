@@ -33,18 +33,24 @@ end
 
 function Control:PersistentUpdate()
 end
+
 function Control:Update()
 end
+
 function Control:Draw()
 end
+
 function Control:LateDraw()
 end
+
 function Control:PointToSelf(x, y)
 
 end
+
 function Control:GetLayoutWidth()
     return self.Width
 end
+
 function Control:GetLayoutHeight()
     return self.Height
 end
@@ -74,20 +80,27 @@ end
 
 function Control:OnMouseDown(e)
 end
+
 function Control:OnMouseUp(e)
 end
+
 function Control:OnMouseMove(e)
 end
+
 function Control:OnMouseEnter(e)
 end
+
 function Control:OnMouseLeave(e)
 end
+
 function Control:OnThemeChanged(e)
 end
 
 function Control:OnPrimaryInteracted(e)
 end
+
 function Control:OnInteractionBegin(e)
 end
+
 function Control:OnInteractionEnd(e)
 end

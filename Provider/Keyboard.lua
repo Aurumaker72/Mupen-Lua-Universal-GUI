@@ -22,6 +22,7 @@ end
 function Keyboard.KeyHeld(key)
     return Keyboard.Input[key]
 end
+
 function Keyboard.WasKeyHeld(key)
     return Keyboard.LastInput[key]
 end
@@ -62,10 +63,9 @@ function Keyboard.Update()
     for key, value in pairs(Keyboard.LastInput) do
         if not Keyboard.Input[key] and Keyboard.LastInput[key] then
             Keyboard.ReleasedKeys[key] = value
-            
+
         end
 
     end
-    
-end
 
+end

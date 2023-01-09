@@ -20,7 +20,7 @@ function EventManager.PropagateTo(key, scene)
             control:OnThemeChanged(ThemeChangedEvent.new(Appearance.CurrentTheme))
         end
 
-        -- skip propagation of input events when unfocused 
+        -- skip propagation of input events when unfocused
         if not wndInForeground then
             goto iteration_end
         end
@@ -45,7 +45,7 @@ function EventManager.PropagateTo(key, scene)
                         if control:CanBeInteracted(_e) then
                             control:OnInteractionBegin(_e)
                         end
-                        
+
                         skipOtherControls = true
                     end
 
@@ -75,8 +75,10 @@ function EventManager.PropagateTo(key, scene)
                     skipOtherControls = true
                 end
 
-                if (Numeric.PointIsInsideRectangle(Mouse.PositionOnLastClick.X, Mouse.PositionOnLastClick.Y, bounds.X,
-                    bounds.Y, bounds.Width, bounds.Height) and (not Mouse.IsPrimaryDown() and Mouse.WasPrimaryDown())) then
+                if (
+                    Numeric.PointIsInsideRectangle(Mouse.PositionOnLastClick.X, Mouse.PositionOnLastClick.Y, bounds.X,
+                        bounds.Y, bounds.Width, bounds.Height) and (not Mouse.IsPrimaryDown() and Mouse.WasPrimaryDown()
+                        )) then
                     control:OnInteractionEnd(InteractionEndEvent.new(InteractionEvent.MouseSource))
                     skipOtherControls = true
                 end

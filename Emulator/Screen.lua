@@ -23,7 +23,7 @@ function Screen.Dimensions.Update()
     d = wgui.info()
     Screen.Dimensions.Width = d.width
     Screen.Dimensions.Height = d.height
-    
+
     if Screen.Dimensions.InitialWidth == 0 or Screen.Dimensions.InitialHeight == 0 then
         Screen.Dimensions.InitialWidth = d.width
         Screen.Dimensions.InitialHeight = d.height

@@ -24,7 +24,7 @@ function UserCodeAtInputPoll()
     Swimming.swim("A")
 
     if InputDirection.IsInitialized then
-        
+
         Scenes.Main.Controls.Joystick.ValueX = Joypad.input.X
         Scenes.Main.Controls.Joystick.ValueY = -Joypad.input.Y
 
@@ -42,19 +42,20 @@ function UserCodeAtInputPoll()
 
         Scenes.Encoding.Controls.XLabel.Text = "X " .. Joypad.input.X
         Scenes.Encoding.Controls.YLabel.Text = "Y " .. -Joypad.input.Y
-        Scenes.Encoding.Controls.MLabel.Text = "M " .. math.floor(math.sqrt((0 - Joypad.input.X) ^ 2 + ((0 - -Joypad.input.Y) ^ 2)))
+        Scenes.Encoding.Controls.MLabel.Text = "M " ..
+            math.floor(math.sqrt((0 - Joypad.input.X) ^ 2 + ((0 - -Joypad.input.Y) ^ 2)))
 
         Scenes.Main.Controls.LabelsStackPanel.Children.YawFacing.Text = "Yaw (Facing): " ..
-                                                                            Engine.getEffectiveAngle(
+            Engine.getEffectiveAngle(
                 Memory.Mario.FacingYaw)
         Scenes.Main.Controls.LabelsStackPanel.Children.YawIntended.Text = "Yaw (Intended): " ..
-                                                                              Engine.getEffectiveAngle(
+            Engine.getEffectiveAngle(
                 Memory.Mario.IntendedYaw)
         Scenes.Main.Controls.LabelsStackPanel.Children.OppositeFacing.Text = "Opposite (Intended): " ..
-                                                                                 (Engine.getEffectiveAngle(
+            (Engine.getEffectiveAngle(
                 Memory.Mario.FacingYaw) + 32768) % 65536
         Scenes.Main.Controls.LabelsStackPanel.Children.OppositeIntended.Text = "Opposite (Intended): " ..
-                                                                                   (Engine.getEffectiveAngle(
+            (Engine.getEffectiveAngle(
                 Memory.Mario.IntendedYaw) + 32768) % 65536
 
         local speed = 0
@@ -70,12 +71,12 @@ function UserCodeAtInputPoll()
         local yStr = "Y: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Y), 4)
         local zStr = "Z: " .. MoreMaths.Round(MoreMaths.DecodeDecToFloat(Memory.Mario.Z), 4)
         local xzMovementStr = "XZ Movement: " .. MoreMaths.Round(Engine.GetDistMoved(), 6)
-        local actionStr = "Action: " .. (Engine.GetCurrentAction():gsub("^%l", string.upper)) 
-        local movedDistStr = "Moved Dist: " 
+        local actionStr = "Action: " .. (Engine.GetCurrentAction():gsub("^%l", string.upper))
+        local movedDistStr = "Moved Dist: "
         if (Broker.DistanceMeasurement == false) then
             movedDistStr = movedDistStr .. Broker.DistanceMeasurementSaved
         else
-            movedDistStr = movedDistStr .. Engine.GetTotalDistMoved() 
+            movedDistStr = movedDistStr .. Engine.GetTotalDistMoved()
         end
 
         Scenes.Main.Controls.LabelsStackPanel.Children.HSpd.Text = hSpdStr
@@ -103,12 +104,12 @@ function InputDirection.SetStrainMode(mode)
     Broker.SelectedItem = mode
     Scenes.Main.Controls.StrainingDisable:SetIsChecked(mode == Scenes.Main.Controls.StrainingDisable.Text:gsub('%s+', ''))
     Scenes.Main.Controls.StrainingMatchYaw:SetIsChecked(mode ==
-                                                           Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', ''))
-    Scenes.Main.Controls.StrainingMatchAngle:SetIsChecked( mode ==
-                                                             Scenes.Main.Controls.StrainingMatchAngle.Text:gsub('%s+',
+        Scenes.Main.Controls.StrainingMatchYaw.Text:gsub('%s+', ''))
+    Scenes.Main.Controls.StrainingMatchAngle:SetIsChecked(mode ==
+        Scenes.Main.Controls.StrainingMatchAngle.Text:gsub('%s+',
             ''))
-    Scenes.Main.Controls.StrainingReverseAngle:SetIsChecked( mode ==
-                                                               Scenes.Main.Controls.StrainingReverseAngle.Text:gsub(
+    Scenes.Main.Controls.StrainingReverseAngle:SetIsChecked(mode ==
+        Scenes.Main.Controls.StrainingReverseAngle.Text:gsub(
             '%s+', ''))
     Scenes.Main.Controls.AngleTextBox:SetReadOnly(Scenes.Main.Controls.StrainingMatchAngle.IsChecked == false)
 end
@@ -127,8 +128,8 @@ end
 function InputDirection.SetBias(left, right)
     Broker.Left = left
     Broker.Right = right
-    Scenes.Main.Controls.Left:SetIsChecked( Broker.Left)
-    Scenes.Main.Controls.Right:SetIsChecked( Broker.Right)
+    Scenes.Main.Controls.Left:SetIsChecked(Broker.Left)
+    Scenes.Main.Controls.Right:SetIsChecked(Broker.Right)
 end
 
 function InputDirection.SetTargetStrain(targetStrain, always)
@@ -140,13 +141,13 @@ function InputDirection.SetTargetStrain(targetStrain, always)
     end
 
     Scenes.Main.Controls.StrainTo99:SetIsChecked(Broker.TargetStrain)
-    Scenes.Main.Controls.Always99:SetIsChecked( Broker.Always)
+    Scenes.Main.Controls.Always99:SetIsChecked(Broker.Always)
 end
 
 function UserCodeOnInitialize()
-    
+
     RendererManager.SetCurrentRenderer(StandardRenderer:new())
-    
+
     local mainScene = Scene:new()
     local encodingScene = Scene:new()
     local settingsScene = Scene:new()
@@ -235,14 +236,16 @@ function UserCodeOnInitialize()
         Joystick = Joystick:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
             10, 128, 128, true, function(o)
 
-            end),
+        end),
         XLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
             128 + 30, "X ?"),
         YLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4,
             128 + 30, "Y ?"),
-        MLabel = Label:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4 - 64/2 - 16,
-        128 + 30, "M ?"),
-        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2, 128 + 10 + 5, 128, 20, 0, -128, 127, true, false, nil),
+        MLabel = Label:new(encodingScene, nil,
+            (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 + 128 / 4 - 64 / 2 - 16,
+            128 + 30, "M ?"),
+        XSlider = Slider:new(encodingScene, nil, (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2,
+            128 + 10 + 5, 128, 20, 0, -128, 127, true, false, nil),
         YSlider = Slider:new(encodingScene, nil,
             (Screen.ExpandedOffset / Screen.Dimensions.ScalingX) / 2 - 128 / 2 + 128 + 5, 10, 20, 128, 0, 128, -127,
             false, false, nil),
@@ -267,9 +270,10 @@ function UserCodeOnInitialize()
         RendererLabel = Label:new(settingsScene, 2, 5, 30, "Renderer"),
         StylerLabel = Label:new(settingsScene, 3, 5, 55, "Styler"),
 
-        Fuck = ComboBox:new(settingsScene, 4, 50, 5, 150, 20, {"Classic", "Dark", "DarkFlat", "DarkMica", "Inverted"}, function(o)
-            Appearance.SetTheme(o.Items[o.SelectedItemIndex])
-        end),
+        Fuck = ComboBox:new(settingsScene, 4, 50, 5, 150, 20, { "Classic", "Dark", "DarkFlat", "DarkMica", "Inverted" },
+            function(o)
+                Appearance.SetTheme(o.Items[o.SelectedItemIndex])
+            end),
         FuckTextBox = TextBox:new(settingsScene, 11, 138, 110, 85, 30, nil, false, false, function(o)
         end),
         FuckTestA = Button:new(settingsScene, 14, nil, 132, 229, 76, 21, "Text A", function(o)
@@ -278,7 +282,7 @@ function UserCodeOnInitialize()
         FuckTestB = Button:new(settingsScene, 14, nil, 140, 239, 76, 21, "Text B", function(o)
             print(o.Text)
         end),
-        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, {"Standard", "Pure GDI+"},
+        RendererBackendComboBox = ComboBox:new(settingsScene, 5, 70, 30, 120, 20, { "Standard", "Pure GDI+" },
             function(o)
                 -- when the GC pressure is high
                 if o.Items[o.SelectedItemIndex] == "Standard" then
@@ -289,20 +293,20 @@ function UserCodeOnInitialize()
                 end
             end),
         StylerComboBox = ComboBox:new(settingsScene, 6, 70, 55, 120, 20,
-            {"Windows 11", "Windows 10", "Windows 3", "Plastic"}, function(o)
-                if o.Items[o.SelectedItemIndex] == "Windows 10" then
-                    StylerManager.SetCurrentStyler(Windows10Styler:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "Windows 11" then
-                    StylerManager.SetCurrentStyler(Windows11Styler:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "Windows 3" then
-                    StylerManager.SetCurrentStyler(Windows3Styler:new())
-                end
-                if o.Items[o.SelectedItemIndex] == "Plastic" then
-                    StylerManager.SetCurrentStyler(PlasticStyler:new())
-                end
-            end),
+            { "Windows 11", "Windows 10", "Windows 3", "Plastic" }, function(o)
+            if o.Items[o.SelectedItemIndex] == "Windows 10" then
+                StylerManager.SetCurrentStyler(Windows10Styler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "Windows 11" then
+                StylerManager.SetCurrentStyler(Windows11Styler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "Windows 3" then
+                StylerManager.SetCurrentStyler(Windows3Styler:new())
+            end
+            if o.Items[o.SelectedItemIndex] == "Plastic" then
+                StylerManager.SetCurrentStyler(PlasticStyler:new())
+            end
+        end),
         -- TestStackPanel = StackPanel:new(settingsScene, 7, 5, 90, 10, {
         --     -- LabelA = Label:new(settingsScene, nil, nil, "Dame tu"),
         --     -- LabelB = Label:new(settingsScene, nil, nil, "Cosita"),
@@ -320,7 +324,7 @@ function UserCodeOnInitialize()
     persistentScene:AddControls({
         NavigationCarrouselButton = CarrouselButton:new(persistentScene, 1, 5, 290 +
             (Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE + 10) * 10,
-            Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, {"Main", "Encoding", "Settings"}, true,
+            Screen.ExpandedOffset / Screen.Dimensions.ScalingX - 10, 20, { "Main", "Encoding", "Settings" }, true,
             function(o)
                 SceneManager.ChangeScene(Scenes[o.Items[o.SelectedItemIndex]])
             end),
@@ -359,4 +363,3 @@ end
 function UserCodeAtVisualInterrupt()
 
 end
-

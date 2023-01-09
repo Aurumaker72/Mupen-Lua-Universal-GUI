@@ -2,6 +2,7 @@ Engine = {}
 function Engine.getEffectiveAngle(angle)
     return angle - (angle % 16)
 end
+
 function Engine.getDyaw(angle)
     if Broker.Left == true and Broker.Right == false then
         return Memory.Mario.FacingYaw + angle
@@ -13,6 +14,7 @@ function Engine.getDyaw(angle)
         return angle
     end
 end
+
 function Engine.getDyawsign()
     if Broker.Left == true and Broker.Right == false then
         return 1
@@ -24,6 +26,7 @@ function Engine.getDyawsign()
         return 0
     end
 end
+
 ENABLE_REVERSE_ANGLE_ON_WALLKICK = 1
 actionflag = 0
 speedsign = 0
@@ -35,21 +38,30 @@ function Engine.getgoal(targetspd) -- getting angle for target speed
         return math.floor(math.acos((targetspd - 0.35 - Memory.Mario.FSpeed) / 1.5) * 32768 / math.pi)
     end
 end
+
 function Engine.inputsForAngle()
     goal = Engine.getEffectiveAngle(Broker.GoalAngle)
     if (Broker.SelectedItem == "MatchYaw") then
         goal = Engine.getEffectiveAngle(Memory.Mario.FacingYaw)
-        if ((Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or Memory.Mario.Action == 0x010208B0 or
-            Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343) and ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
-            1) then
+        if (
+            (
+                Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or
+                    Memory.Mario.Action == 0x010208B0 or
+                    Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343) and
+                ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
+                1) then
             goal = (goal + 32768) % 65536
         end
     end
     if (Broker.SelectedItem == "ReverseAngle") then
         goal = Engine.getEffectiveAngle(Memory.Mario.FacingYaw) + 32768 % 65536
-        if ((Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or Memory.Mario.Action == 0x010208B0 or
-            Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343) and ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
-            1) then
+        if (
+            (
+                Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or
+                    Memory.Mario.Action == 0x010208B0 or
+                    Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343) and
+                ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
+                1) then
             goal = Engine.getEffectiveAngle(Memory.Mario.FacingYaw)
         end
     end
@@ -66,9 +78,12 @@ function Engine.inputsForAngle()
     end
     if (ENABLE_TARGET_SPEED == 1) then
         if Memory.Mario.Action == 0x04000440 or Memory.Mario.Action == 0x0400044A or Memory.Mario.Action == 0x08000239 or
-            Memory.Mario.Action == 0x0C000232 or Memory.Mario.Action == 0x04000442 or Memory.Mario.Action == 0x04000443 or
-            Memory.Mario.Action == 0x010208B7 or Memory.Mario.Action == 0x04000445 or Memory.Mario.Action == 0x00840454 or
-            Memory.Mario.Action == 0x00840452 or (Memory.Mario.Action > 0x0400046F and Memory.Mario.Action < 0x04000474) or
+            Memory.Mario.Action == 0x0C000232 or Memory.Mario.Action == 0x04000442 or Memory.Mario.Action == 0x04000443
+            or
+            Memory.Mario.Action == 0x010208B7 or Memory.Mario.Action == 0x04000445 or Memory.Mario.Action == 0x00840454
+            or
+            Memory.Mario.Action == 0x00840452 or (Memory.Mario.Action > 0x0400046F and Memory.Mario.Action < 0x04000474)
+            or
             (Memory.Mario.Action > 0x00000473 and Memory.Mario.Action < 0x00000478) then
             actionflag = 1
         else
@@ -83,8 +98,9 @@ function Engine.inputsForAngle()
             end
             speedsign = 1
             goal = Engine.getEffectiveAngle(Engine.getDyaw(Engine.getgoal(targetspeed)))
-        elseif (Memory.Mario.FSpeed > -337 / 30 - offset / 1.5 and Memory.Mario.FSpeed < -9.9 and Memory.Mario.Action ==
-            0x00000479 and Broker.SelectedItem == "ReverseAngle") then
+        elseif (
+            Memory.Mario.FSpeed > -337 / 30 - offset / 1.5 and Memory.Mario.FSpeed < -9.9 and Memory.Mario.Action ==
+                0x00000479 and Broker.SelectedItem == "ReverseAngle") then
             targetspeed = -16 - Memory.Mario.FSpeed / 2
             if (Memory.Mario.FSpeed < -11.9) then
                 targetspeed = targetspeed - 2
@@ -120,17 +136,21 @@ function Engine.inputsForAngle()
             end
             speedsign = -1
             goal = Engine.getEffectiveAngle(Engine.getDyaw(Engine.getgoal(targetspeed)))
-        elseif (Memory.Mario.FSpeed > -21.0625 - offset / 0.8 and Memory.Mario.FSpeed < -18.5625 and Memory.Mario.Action ~=
-            0x00000479 and (actionflag == 1 or Memory.Mario.Action == 0x04808459) and Broker.SelectedItem ==
-            "ReverseAngle") then
+        elseif (
+            Memory.Mario.FSpeed > -21.0625 - offset / 0.8 and Memory.Mario.FSpeed < -18.5625 and
+                Memory.Mario.Action ~=
+                0x00000479 and (actionflag == 1 or Memory.Mario.Action == 0x04808459) and Broker.SelectedItem ==
+                "ReverseAngle") then
             targetspeed = -16 + Memory.Mario.FSpeed / 5
             if (Memory.Mario.FSpeed < -22.3125) then
                 targetspeed = targetspeed - 2
             end
             speedsign = -1
             goal = Engine.getEffectiveAngle(Engine.getDyaw(Engine.getgoal(targetspeed)))
-        elseif (Memory.Mario.FSpeed > 38.5625 and Memory.Mario.FSpeed < 39.8125 + offset / 0.9 and Memory.Mario.Action ~=
-            0x00000479 and Memory.Mario.Action ~= 0x03000888 and actionflag == 1 and Broker.SelectedItem == "MatchYaw") then
+        elseif (
+            Memory.Mario.FSpeed > 38.5625 and Memory.Mario.FSpeed < 39.8125 + offset / 0.9 and Memory.Mario.Action ~=
+                0x00000479 and Memory.Mario.Action ~= 0x03000888 and actionflag == 1 and
+                Broker.SelectedItem == "MatchYaw") then
             targetspeed = 32 + Memory.Mario.FSpeed / 5
             if (Memory.Mario.FSpeed > 42.3125) then
                 targetspeed = targetspeed + 1
@@ -144,9 +164,12 @@ function Engine.inputsForAngle()
     end
     if (Broker.SelectedItem == "MatchAngle" and Broker.DYaw == true) then
         goal = Engine.getEffectiveAngle(Engine.getDyaw(goal))
-        if (Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or Memory.Mario.Action == 0x010208B0 or
-            Memory.Mario.Action == 0x08100340 or Memory.Mario.Action == 0x00100343 and ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
-            1) then
+        if (
+            Memory.Mario.Action == 0x000008A7 or Memory.Mario.Action == 0x010208B6 or Memory.Mario.Action == 0x010208B0
+                or
+                Memory.Mario.Action == 0x08100340 or
+                Memory.Mario.Action == 0x00100343 and ENABLE_REVERSE_ANGLE_ON_WALLKICK ==
+                1) then
             goal = (goal + 32768) % 65536
         end
     end
@@ -200,20 +223,23 @@ function Engine.inputsForAngle()
         Y = Angles.ANGLE[minang].Y
     }
 end
+
 function Engine.GetQFs(Mariospeed)
     -- print(math.sqrt(math.abs(math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.PreviousPos.X))) - math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.Mario.X)))) ^ 2 + math.abs(math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.PreviousPos.Z))) - math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.Mario.Z)))) ^ 2))
     -- return math.floor(4 * (math.sqrt(math.abs(math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.PreviousPos.X))) - math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.Mario.X)))) ^ 2 + math.abs(math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.PreviousPos.Z))) - math.abs(MoreMaths.hexToFloat(string.format("%x", Memory.Mario.Z)))) ^ 2)) / math.abs(Mariospeed))
 end
+
 function Engine.GetSpeedEfficiency()
     if Memory.Mario.XSlideSpeed + Memory.Mario.ZSlideSpeed > 0 then
         return MoreMaths.Round(Engine.GetDistMoved() /
-                                   math.abs(math.sqrt(MoreMaths.DecodeDecToFloat(Memory.Mario.XSlideSpeed) ^ 2 +
-                                                          MoreMaths.DecodeDecToFloat(Memory.Mario.ZSlideSpeed) ^ 2)) *
-                                   100, 5)
+            math.abs(math.sqrt(MoreMaths.DecodeDecToFloat(Memory.Mario.XSlideSpeed) ^ 2 +
+                MoreMaths.DecodeDecToFloat(Memory.Mario.ZSlideSpeed) ^ 2)) *
+            100, 5)
     else
         return 0
     end
 end
+
 function Engine.GetDistMoved()
     if not Memory.PreviousPos.X then
         Memory.PreviousPos.X = 0
@@ -221,8 +247,9 @@ function Engine.GetDistMoved()
     end
     return math.sqrt(
         (MoreMaths.DecodeDecToFloat(Memory.PreviousPos.X) - MoreMaths.DecodeDecToFloat(Memory.Mario.X)) ^ 2 +
-            (MoreMaths.DecodeDecToFloat(Memory.PreviousPos.Z) - MoreMaths.DecodeDecToFloat(Memory.Mario.Z)) ^ 2)
+        (MoreMaths.DecodeDecToFloat(Memory.PreviousPos.Z) - MoreMaths.DecodeDecToFloat(Memory.Mario.Z)) ^ 2)
 end
+
 function Engine.GetCurrentAction()
     for i = 1, Actions.COUNT, 1 do
         if Actions.ACTION[i].value == Memory.Mario.Action then
@@ -231,21 +258,25 @@ function Engine.GetCurrentAction()
     end
     return "INVALID ACTION"
 end
+
 function Engine.GetTotalDistMoved()
     eckswhy = (Broker.DistAxisX - MoreMaths.DecodeDecToFloat(Memory.Mario.X)) ^ 2 +
-                  (Broker.DistAxisZ - MoreMaths.DecodeDecToFloat(Memory.Mario.Z)) ^ 2
+        (Broker.DistAxisZ - MoreMaths.DecodeDecToFloat(Memory.Mario.Z)) ^ 2
     if (Broker.IgnoreY == false) then
         eckswhy = eckswhy + (Broker.DistAxisY - MoreMaths.DecodeDecToFloat(Memory.Mario.Y)) ^ 2
     end
     return math.sqrt(eckswhy)
 end
+
 function Engine.GetHSlidingSpeed()
     return math.sqrt(MoreMaths.DecodeDecToFloat(Memory.Mario.XSlideSpeed) ^ 2 +
-                         MoreMaths.DecodeDecToFloat(Memory.Mario.ZSlideSpeed) ^ 2)
+        MoreMaths.DecodeDecToFloat(Memory.Mario.ZSlideSpeed) ^ 2)
 end
+
 local function magnitude(x, y)
     return math.sqrt(math.max(0, math.abs(x) - 6) ^ 2 + math.max(0, math.abs(y) - 6) ^ 2)
 end
+
 local function clamp(min, n, max)
     if n < min then
         return min
@@ -255,6 +286,7 @@ local function clamp(min, n, max)
     end
     return n
 end
+
 local function effectiveAngle(x, y)
     if math.abs(x) < 8 then
         x = 0
@@ -272,6 +304,7 @@ local function effectiveAngle(x, y)
     end
     return math.atan2(-y, x)
 end
+
 function Engine.scaleInputsForMagnitude(result, goal_mag)
     if goal_mag >= 127 then
         return

@@ -37,7 +37,6 @@ function Mouse.Update()
     end
 end
 
-
 function Mouse.IsInside(x, y, w, h)
     return Numeric.PointIsInsideRectangle(Mouse.X, Mouse.Y, x, y, w, h)
 end
@@ -47,7 +46,8 @@ function Mouse.IsLastInside(x, y, w, h)
 end
 
 function Mouse.HasMoved()
-    return (Mouse.X == Mouse._previousMouseTable.xmouse == false) or (Mouse.Y == Mouse._previousMouseTable.ymouse == false)
+    return (Mouse.X == Mouse._previousMouseTable.xmouse == false) or
+        (Mouse.Y == Mouse._previousMouseTable.ymouse == false)
 end
 
 function Mouse.IsPrimaryDown()

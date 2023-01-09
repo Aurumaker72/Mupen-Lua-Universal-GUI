@@ -11,14 +11,12 @@ function PrimaryInteractionEvent.new(key, source)
     }
 end
 
-
 InteractionBeginEvent = {}
 function InteractionBeginEvent.new(source)
     return {
         Source = source
     }
 end
-
 
 InteractionEndEvent = {}
 function InteractionEndEvent.new(source)

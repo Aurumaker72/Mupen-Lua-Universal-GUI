@@ -3,7 +3,7 @@ function UserCodeAtInputPoll()
 end
 
 function UserCodeOnInitialize()
-        
+
     local mainScene = Scene:new()
 
 

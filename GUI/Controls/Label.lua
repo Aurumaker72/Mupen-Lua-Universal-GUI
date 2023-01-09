@@ -40,4 +40,3 @@ end
 function Label:GetLayoutHeight()
     return Appearance.Themes[Appearance.CurrentTheme].FONT_SIZE
 end
-

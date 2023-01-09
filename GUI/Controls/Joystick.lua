@@ -43,8 +43,10 @@ end
 function Joystick:MoveJoystickToMouse(mousePositions)
     if self.IsReadOnly == false then
         if self.IsCapturingMouse then
-            self.ValueX = Numeric.Remap(Numeric.Clamp(self.X - mousePositions.X, -self.Width, 0), 0, -self.Width, -128, 127)
-            self.ValueY = Numeric.Remap(Numeric.Clamp(self.Y - mousePositions.Y, -self.Height, 0), 0, -self.Height, -127, 128)
+            self.ValueX = Numeric.Remap(Numeric.Clamp(self.X - mousePositions.X, -self.Width, 0), 0, -self.Width, -128,
+                127)
+            self.ValueY = Numeric.Remap(Numeric.Clamp(self.Y - mousePositions.Y, -self.Height, 0), 0, -self.Height, -127
+                , 128)
 
             self.ContainingScene:AddQueuedCallback(self.ValueChangedCallback, self)
         end
@@ -111,4 +113,3 @@ function Joystick:Draw()
         self.JoystickTipSize.CurrentNumber - 1, self.JoystickTipSize.CurrentNumber - 1) -- idk what the fuck is going on here
     -- ellipse draw routine in gdi side is exhibiting small pixel precision issues
 end
-

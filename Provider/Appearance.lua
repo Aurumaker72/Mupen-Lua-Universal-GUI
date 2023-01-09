@@ -1,4 +1,3 @@
-
 Appearance = {
     HasChanged = false,
     Themes = {
@@ -21,7 +20,7 @@ Appearance = {
             SLIDER_PRESSED_HEAD_COLOR = "#CCCCCC",
             SLIDER_HOVERED_HEAD_COLOR = "#171717",
             JOYSTICK_LINE_COLOR = "#0000E5",
-            JOYSTICK_TIP_COLOR = "#E50000", 
+            JOYSTICK_TIP_COLOR = "#E50000",
             LABEL_FORE_COLOR = "#000000",
             TOGGLEBUTTON_UNCHECKED_FORE_COLOR = "#000000",
             TOGGLEBUTTON_CHECKED_FORE_COLOR = "#000000",
@@ -196,4 +195,3 @@ function Appearance.FinalizeFrame()
         Appearance.HasChanged = false -- branch for no reason idk
     end
 end
-

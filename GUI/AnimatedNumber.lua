@@ -9,24 +9,26 @@ function AnimatedNumber:initialize(currentNumber)
 end
 
 function AnimatedNumber:IsLocked()
-    return self.overrideTargetNumber and true or false 
+    return self.overrideTargetNumber and true or false
 end
 
 function AnimatedNumber:GetEffectiveTargetNumber()
     if not self.overrideTargetNumber then
         return self.targetNumber
     else
-       return self.overrideTargetNumber 
+        return self.overrideTargetNumber
     end
 end
 
 function AnimatedNumber:SetTargetNumber(targetNumber)
     self.targetNumber = targetNumber
 end
+
 function AnimatedNumber:SetNumberImmediately(targetNumber)
     self.targetNumber = targetNumber
     self.CurrentNumber = targetNumber
 end
+
 function AnimatedNumber:LockOverride(lockedNumber)
     self.overrideTargetNumber = lockedNumber
 end
@@ -42,7 +44,8 @@ function AnimatedNumber:Update()
     if difference < self.Epsilon then
         self.CurrentNumber = self:GetEffectiveTargetNumber()
     else
-        self.CurrentNumber = math.floor(self.CurrentNumber + (self:GetEffectiveTargetNumber() - self.CurrentNumber) * self.Speed)
+        self.CurrentNumber = math.floor(self.CurrentNumber +
+            (self:GetEffectiveTargetNumber() - self.CurrentNumber) * self.Speed)
     end
 end
 

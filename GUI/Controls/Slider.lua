@@ -1,7 +1,7 @@
 Slider = middleclass('Slider', Control)
 
 function Slider:initialize(containingScene, index, x, y, w, h, value, min, max, isHorizontal, isReadOnly,
-    valueChangedCallback)
+                           valueChangedCallback)
     Control.initialize(self, containingScene, index, x, y, w, h, nil, nil)
     self.Minimum = min
     self.Maximum = max
@@ -60,10 +60,12 @@ end
 
 function Slider:MoveHeadToMouse(mousePositions)
     if self.IsHorizontal then
-        self.Value = Numeric.Remap(Numeric.Clamp(self.X - mousePositions.X, -self.Width, 0), 0, -self.Width, self.Minimum,
+        self.Value = Numeric.Remap(Numeric.Clamp(self.X - mousePositions.X, -self.Width, 0), 0, -self.Width, self.Minimum
+            ,
             self.Maximum)
     else
-        self.Value = Numeric.Remap(Numeric.Clamp(self.Y - mousePositions.Y, -self.Height, 0), 0, -self.Height, self.Maximum,
+        self.Value = Numeric.Remap(Numeric.Clamp(self.Y - mousePositions.Y, -self.Height, 0), 0, -self.Height,
+            self.Maximum,
             self.Minimum)
     end
     self.ContainingScene:AddQueuedCallback(self.ValueChangedCallback, self)

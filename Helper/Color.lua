@@ -6,7 +6,7 @@ function Color.TemporalInterpolateRGBColor(currentColor, targetColor)
     if not currentColor then
         print(debug.traceback())
     end
-    
+
     local differenceR = math.abs(targetColor[1] - currentColor[1])
     local differenceG = math.abs(targetColor[2] - currentColor[2])
     local differenceB = math.abs(targetColor[3] - currentColor[3])
@@ -21,4 +21,3 @@ function Color.TemporalInterpolateRGBColor(currentColor, targetColor)
 
     return CurrentRenderer:RGBToHexadecimalColor(currentColor)
 end
-

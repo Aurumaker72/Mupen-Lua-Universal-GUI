@@ -9,7 +9,7 @@ function SceneManager.Initialize(scenes, persistentScene)
     if not persistentScene then
         persistentScene = Scene:new()
     end
-    
+
     persistentScene:SetActive(true)
     persistentScene.HasBackColor = false
     Scenes["PersistentScene"] = persistentScene
@@ -75,7 +75,8 @@ function SceneManager.Draw()
     if CurrentScene then
         CurrentScene:Draw()
     else
-        CurrentRenderer:DrawPlaceholder(Screen.Dimensions.Width - Screen.ExpandedOffset, 0, Screen.ExpandedOffset, Screen.Dimensions.Height)
+        CurrentRenderer:DrawPlaceholder(Screen.Dimensions.Width - Screen.ExpandedOffset, 0, Screen.ExpandedOffset,
+            Screen.Dimensions.Height)
     end
 
     if Scenes["PersistentScene"] then

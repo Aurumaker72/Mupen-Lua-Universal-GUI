@@ -34,30 +34,42 @@ function Windows10Styler:DrawButton(button)
 end
 
 function Windows10Styler:DrawSlider(slider)
-     
-    
+
+
     if slider.IsHorizontal then
         local y = slider.Y + slider.Height / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT / 2
-        self:DrawBorder(slider.BackColor.CurrentColor, slider.X, y, slider.Width, Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-        self:DrawFluentRectangleExplicit(slider.BackColor.CurrentColor, slider.X, y, slider.Width, Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
-     else
+        self:DrawBorder(slider.BackColor.CurrentColor, slider.X, y, slider.Width,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
+        self:DrawFluentRectangleExplicit(slider.BackColor.CurrentColor, slider.X, y, slider.Width,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_HEIGHT)
+    else
         local x = slider.X + slider.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH / 2
-        self:DrawBorder(slider.BackColor.CurrentColor, x, slider.Y, Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, slider.Height)
-        self:DrawFluentRectangleExplicit(slider.BackColor.CurrentColor, x, slider.Y,Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, slider.Height)
-     end
+        self:DrawBorder(slider.BackColor.CurrentColor, x, slider.Y,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, slider.Height)
+        self:DrawFluentRectangleExplicit(slider.BackColor.CurrentColor, x, slider.Y,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_TRACK_WIDTH, slider.Height)
+    end
 end
 
 function Windows10Styler:DrawSliderHead(slider)
     if slider.IsHorizontal then
-        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor),             (slider.Minimum == slider.Maximum and slider.X or Numeric.Remap(slider.Value, slider.Minimum, slider.Maximum, slider.X, slider.X + slider.Width)) - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2, 
-        slider.Y + slider.Height / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT / 2,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT)
+        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor),
+            (
+            slider.Minimum == slider.Maximum and slider.X or
+                Numeric.Remap(slider.Value, slider.Minimum, slider.Maximum, slider.X, slider.X + slider.Width)) -
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
+            slider.Y + slider.Height / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT / 2,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT)
     else
-        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor), slider.X + slider.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT / 2, 
-        (slider.Minimum == slider.Maximum and slider.Y or Numeric.Remap(slider.Value, slider.Minimum, slider.Maximum, slider.Y + slider.Height, slider.Y)) - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT,
-        Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH)
+        CurrentRenderer:FillRectangle(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor),
+            slider.X + slider.Width / 2 - Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT / 2,
+            (
+            slider.Minimum == slider.Maximum and slider.Y or
+                Numeric.Remap(slider.Value, slider.Minimum, slider.Maximum, slider.Y + slider.Height, slider.Y)) -
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH / 2,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_HEIGHT,
+            Appearance.Themes[Appearance.CurrentTheme].SLIDER_HEAD_WIDTH)
     end
 end
 

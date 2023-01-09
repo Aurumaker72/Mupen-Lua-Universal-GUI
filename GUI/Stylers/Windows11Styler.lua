@@ -64,8 +64,10 @@ function Windows11Styler:DrawSliderHead(slider)
             Numeric.Remap(slider.Value, slider.Minimum, slider.Maximum, slider.Y + slider.Height, slider.Y) -
             radius / 2)
 
-    CurrentRenderer:FillEllipse(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor), x, y, radius, radius)
-    CurrentRenderer:FillEllipse(CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(20, slider.ForeColor.CurrentColor)), x + radius / 4, y + radius / 4, radius / 2, radius / 2)
+    CurrentRenderer:FillEllipse(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor), x, y, radius,
+        radius)
+    CurrentRenderer:FillEllipse(CurrentRenderer:RGBToHexadecimalColor(RendererHelper.DarkenRGBColor(20,
+        slider.ForeColor.CurrentColor)), x + radius / 4, y + radius / 4, radius / 2, radius / 2)
 
     -- if slider.IsHorizontal then
     --     CurrentRenderer:FillEllipse(CurrentRenderer:RGBToHexadecimalColor(slider.ForeColor.CurrentColor),
