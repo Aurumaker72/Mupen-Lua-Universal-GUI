@@ -1,6 +1,16 @@
 
-## Are you looking for the continuation of Mupen Lua Universal GUI?
-https://github.com/Aurumaker72/mupen-lua-ugui
+# Are you looking for the continuation of Mupen Lua Universal GUI?
+# https://github.com/Aurumaker72/mupen-lua-ugui
+
+
+## This project is not being actively maintained, as it's too unattractive for new developers to adopt a highly opinionated GUI framework
+
+
+
+
+
+
+
 
 
 ---
